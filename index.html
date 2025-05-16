@@ -157,18 +157,18 @@
                 total += 10000;
                 break;
               case "著作権譲渡":
-                total *= 0.5;
+                multiplier *= 1.5;
                 break;
               case "商用利用":
-                total *= 0.5;
+                multiplier *= 1.5;
                 break;
               case "ポートフォリオ掲載不可":
-                total *= 1;
+                multiplier *= 2;
                 break;
             }
           }
-        })
-    
+        });
+        total = Math.round(total * multiplier);
         resultDisplay.textContent = `🧮 参考料金：¥${total.toLocaleString()}`;
       }
 
