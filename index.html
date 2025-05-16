@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>依頼受付サイト</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>ご依頼について</h1>
+    <p>以下の内容をご確認の上、フォームからご相談ください。</p>
+  </header>
+
+  <section class="pricing">
+    <h2>料金の目安</h2>
+    <ul>
+      <li>イラスト1枚：¥5,000〜</li>
+      <li>3DCG追加：＋¥10,000〜</li>
+      <li>モーショングラフィックス付き：＋¥15,000〜</li>
+    </ul>
+  </section>
+
+  <section class="form">
+    <h2>依頼フォーム</h2>
+    <form action="https://formspree.io/f/あなたのID" method="POST">
+      <label>
+        依頼内容：
+        <select name="type" required>
+          <option value="">選択してください</option>
+          <option value="illustration">イラスト</option>
+          <option value="3dcg">3DCG</option>
+          <option value="motion">モーショングラフィックス</option>
+        </select>
+      </label>
+
+      <label>
+        枚数：
+        <select name="count" required>
+          <option value="">選択してください</option>
+          <option value="1">1枚</option>
+          <option value="2-3">2〜3枚</option>
+          <option value="4+">4枚以上</option>
+        </select>
+      </label>
+
+      <label>
+        納期希望日：
+        <input type="date" name="deadline" required />
+      </label>
+
+      <label>
+        メールアドレス：
+        <input type="email" name="email" required />
+      </label>
+
+      <label>
+        その他ご要望：
+        <textarea name="message" rows="4"></textarea>
+      </label>
+
+      <button type="submit">送信</button>
+    </form>
+  </section>
+</body>
+</html>
