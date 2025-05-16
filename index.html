@@ -106,80 +106,77 @@
   </section>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const basePrice = 8000;
-      const cgSelect = document.querySelector('select[name="3DCG使用"]');
-      const chorusSelect = document.querySelector('select[name="合唱人数"]');
-      const checkboxes = document.querySelectorAll('input[type="checkbox"][name="オプション"]')
-      const resultDisplay = document.createElement("p");
-      resultDisplay.style.fontWeight = "bold";
-      resultDisplay.style.marginTop = "1rem";
+     document.addEventListener("DOMContentLoaded", function () {
+        const basePrice = 8000;
+        const cgSelect = document.querySelector('select[name="3DCG使用"]');
+        const chorusSelect = document.querySelector('select[name="合唱人数"]');
+        const checkboxes = document.querySelectorAll('input[type="checkbox"][name="オプション"]');
+        const totalDisplay = document.getElementById("totalDisplay");
     
-      const form = document.querySelector("form");
-      form.insertBefore(resultDisplay, form.querySelector("button"));
+        function calculate() {
+          let total = basePrice;
+          let multiplier = 1;
     
-      function calculate() {
-        let total = basePrice;
-    
-        // 3DCG使用
-        switch (cgSelect.value) {
-          case "一部使用":
-            total += 5000;
-            break;
-          case "全部使用":
-            total += 20000;
-            break;
-        }
-    
-        // 合唱人数
-        switch (chorusSelect.value) {
-          case "2人":
-            total += 2000;
-            break;
-          case "3人":
-            total += 4000;
-            break;
-          case "4人":
-            total += 6000;
-            break;
-          case "5人以上":
-            total += 8000;
-            break;
-        }
-
-        //　チェックボックス項目
-        checkboxes.forEach((cb) => {
-          if (cb.checked) {
-            switch (cb.value) {
-              case "立ち絵の髪揺れあり":
-                total += 2000;
-                break;
-              case "クレジット記載なし":
-                total += 10000;
-                break;
-              case "著作権譲渡":
-                multiplier *= 1.5;
-                break;
-              case "商用利用":
-                multiplier *= 1.5;
-                break;
-              case "ポートフォリオ掲載不可":
-                multiplier *= 2;
-                break;
-            }
+          // 3DCG使用
+          switch (cgSelect.value) {
+            case "一部使用":
+              total += 5000;
+              break;
+            case "全部使用":
+              total += 20000;
+              break;
           }
-        });
-        total = Math.round(total * multiplier);
-        resultDisplay.textContent = `🧮 参考料金：¥${total.toLocaleString()}`;
-      }
-
-      cgSelect.addEventListener("change", calculate);
-      chorusSelect.addEventListener("change", calculate);
-      checkboxes.forEach((cb) => cb.addEventListener("change", calculate));
-
-      //　初回計算
-      calculate();
-    });
+    
+          // 合唱人数
+          switch (chorusSelect.value) {
+            case "2人":
+              total += 2000;
+              break;
+            case "3人":
+              total += 4000;
+              break;
+            case "4人":
+              total += 6000;
+              break;
+            case "5人以上":
+              total += 8000;
+              break;
+          }
+    
+          // チェックボックス項目
+          checkboxes.forEach((cb) => {
+            if (cb.checked) {
+              switch (cb.value) {
+                case "立ち絵の髪揺れあり":
+                  total += 2000;
+                  break;
+                case "クレジット記載なし":
+                  total += 10000;
+                  break;
+                case "著作権譲渡":
+                  multiplier *= 1.5;
+                  break;
+                case "商用利用":
+                  multiplier *= 1.5;
+                  break;
+                case "ポートフォリオ掲載不可":
+                  multiplier *= 2;
+                  break;
+              }
+            }
+          });
+    
+          const finalTotal = Math.round(total * multiplier);
+          totalDisplay.textContent = `🧮 参考料金：¥${finalTotal.toLocaleString()}`;
+        }
+    
+        cgSelect.addEventListener("change", calculate);
+        chorusSelect.addEventListener("change", calculate);
+        checkboxes.forEach((cb) => cb.addEventListener("change", calculate));
+    
+        // 初回表示
+        calculate();
+      });
   </script>
 </body>
 </html>
