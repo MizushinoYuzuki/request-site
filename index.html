@@ -15,9 +15,7 @@
   <section class="pricing">
     <h2>料金の目安</h2>
     <ul>
-      <li>イラスト1枚：¥5,000〜</li>
-      <li>3DCG追加：＋¥10,000〜</li>
-      <li>モーショングラフィックス付き：＋¥15,000〜</li>
+      <li>基本料金：¥8,000</li>
     </ul>
   </section>
 
@@ -25,33 +23,74 @@
     <h2>依頼フォーム</h2>
     <form action="https://formspree.io/f/xvgalrbr" method="POST">
       <label>
+        お名前：
+        <textarea name="penname" rows="1"></textarea>
+      </label>
+
+      <label>
+        SNS：
+        <textarea name="sns" rows="4"></textarea>
+      </label>
+      
+      <label>
         依頼内容：
         <select name="type" required>
           <option value="">選択してください</option>
-          <option value="illustration">イラスト</option>
+          <option value="original">オリジナルMV</option>
+          <option value="honke">本家風MV</option>
           <option value="3dcg">3DCG</option>
           <option value="motion">モーショングラフィックス</option>
+          <option value="video">動画編集（Premiere Pro）</option>
         </select>
       </label>
 
       <label>
-        枚数：
+        納期の希望：
         <select name="count" required>
           <option value="">選択してください</option>
-          <option value="1">1枚</option>
-          <option value="2-3">2〜3枚</option>
-          <option value="4+">4枚以上</option>
+          <option>2週間以内</option>
+          <option>1月以内</option>
+          <option>2月以内</option>
+          <option>3月以内</option>
+          <option>4月以内</option>
+          <option>5月以内</option>
+          <option>半年以内</option>
+          <option>指定なし</option>
         </select>
       </label>
 
       <label>
-        納期希望日：
-        <input type="date" name="deadline" required />
+        映像スタイル：
+        <select name="映像スタイル" required>
+          <option value="">選択してください</option>
+          <option>歌詞入れのみ</option>
+          <option>シンプル</option>
+          <option>アドバンス</option>
+        </select>
       </label>
+
+      <label>
+        3DCGの使用：
+        <select name="3DCG使用" required>
+          <option value="">選択してください</option>
+          <option>未使用</option>
+          <option>一部使用</option>
+          <option>全部使用</option>
+        </select>
+      </label>
+
+      <fieldset>
+        <legend>追加オプション（該当するものにチェック）</legend>
+        <label><input type="checkbox" name="オプション" value="立ち絵の髪揺れあり" /> 立ち絵の髪揺れあり</label><br />
+        <label><input type="checkbox" name="オプション" value="クレジット記載なし" /> クレジット記載なし</label><br />
+        <label><input type="checkbox" name="オプション" value="著作権譲渡" /> 著作権譲渡</label><br />
+        <label><input type="checkbox" name="オプション" value="商用利用" /> 商用利用</label><br />
+        <label><input type="checkbox" name="オプション" value="ポートフォリオ掲載不可" /> ポートフォリオ掲載不可</label>
+      </fieldset>
 
       <label>
         メールアドレス：
-        <input type="email" name="email" required />
+        <input type="email" name="email">
       </label>
 
       <label>
