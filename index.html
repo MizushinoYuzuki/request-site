@@ -98,7 +98,10 @@
         <label><input type="checkbox" name="オプション" value="クレジット記載なし" /> クレジット記載なし</label><br />
         <label><input type="checkbox" name="オプション" value="著作権譲渡" /> 著作権譲渡</label><br />
         <label><input type="checkbox" name="オプション" value="商用利用" /> 商用利用</label><br />
-        <label><input type="checkbox" name="オプション" value="ポートフォリオ掲載不可" /> ポートフォリオ掲載不可</label>
+        <label><input type="checkbox" name="オプション" value="ポートフォリオ掲載不可" /> ポートフォリオ掲載不可</label><br />
+        <label><input type="checkbox" name="オプション" value="駆け出しクリエイター応援値引き" />駆け出しクリエイター応援値引き<br />
+        <small>※1 活動開始から1年以内の活動者さま<br />
+               ※2 月1のみの対応となります。</small></label>
       </fieldset>
 
       <label>
@@ -156,6 +159,8 @@
       }
 
       // チェックボックス項目
+      let discount = 0;
+      
       checkboxes.forEach((cb) => {
         if (cb.checked) {
           switch (cb.value) {
@@ -174,6 +179,9 @@
             case "ポートフォリオ掲載不可":
               multiplier *= 2;
               break;
+            case "駆け出しクリエイター応援値引き":
+              discount = Math.min(total / 2,5000);
+              break;
           }
         }
       });
@@ -183,7 +191,7 @@
         total += 10000;
       }
 
-      const finalTotal = Math.round(total * multiplier);
+      let finalTotal = Math.round(total * multiplier - discount);
       totalDisplay.textContent = `🧮 参考料金：¥${finalTotal.toLocaleString()}`;
     }
 
