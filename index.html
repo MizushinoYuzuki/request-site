@@ -81,6 +81,17 @@
         </select>
       </label>
 
+      <label>
+        ご希望の連絡手段：
+        <select name="contact" required>
+          <option value="">選択してください</option>
+          <option>XのDM</option>
+          <option>Discord</option>
+          <option>ココナラ</option>
+          <option>Slack</option>
+        </select>
+      </label>
+
       <fieldset>
         <legend>追加オプション（該当するものにチェック）</legend>
         <label><input type="checkbox" name="オプション" value="立ち絵の髪揺れあり" /> 立ち絵の髪揺れあり</label><br />
@@ -105,14 +116,10 @@
     </form>
   </section>
 
-  <footer>
-  <p>© 2025 Mizushino Yuzuki. All rights reserved.</p>
-  </footer>
-
-
   <script>
      document.addEventListener("DOMContentLoaded", function () {
         const basePrice = 8000;
+        const deadlineSelect = document.querySelector('select[name="count"]');
         const cgSelect = document.querySelector('select[name="3DCG使用"]');
         const chorusSelect = document.querySelector('select[name="合唱人数"]');
         const checkboxes = document.querySelectorAll('input[type="checkbox"][name="オプション"]');
@@ -169,6 +176,11 @@
                   break;
               }
             }
+
+            // 早い納品
+            if (deadlineSelect.value === "2週間以内"){
+          total += 10000;
+        }
           });
     
           const finalTotal = Math.round(total * multiplier);
