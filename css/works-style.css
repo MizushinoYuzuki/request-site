@@ -50,6 +50,18 @@
     justify-content: center;
   }
 
+/* <a>タグにブロックレベルを表示 */
+    .work-link {
+        text-decoration: none;
+        display: block;
+        transition: transform 0.3s;
+    }
+
+/* ホバー時も効果が続くように */
+    .work-link:hover {
+        transform: scale(1.02);
+    }
+
 /* 各作品カード */
   .work-item {
     position: relative;
