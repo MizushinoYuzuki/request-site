@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="icon_white.png" />
+        <title>Mizushino</title>
+        <link rel="stylesheet" href="css/pricing-style.css" />
+    </head>
+
+    <body class="link-transition">
+        <header>
+            <nav>
+                <ul class="menu">
+                    <li><a href="index.html">About</a></li>
+                    <li><a href="works.html">Works</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <!-- <h1>ご依頼について</h1>
+                <p>以下の内容をご確認の上、フォームからご相談ください。</p> -->
+            </nav>
+        </header>
+
+        <main>
+            <section class="pricing">
+                <h2>料金の目安</h2>
+                <ul>
+                <li>基本料金：¥8,000</li>
+                </ul>
+            </section>
+
+            <section class="form">
+                <h2>依頼フォーム</h2>
+                <form action="https://formspree.io/f/xvgalrbr" method="POST">
+                <label>
+                    お名前：
+                    <textarea name="penname" rows="1"></textarea>
+                </label>
+
+                <label>
+                    SNS：
+                    <textarea name="sns" rows="4"></textarea>
+                </label>
+                
+                <label>
+                    依頼内容：
+                    <select name="type" required>
+                    <option value="">選択してください</option>
+                    <option value="original">オリジナルMV</option>
+                    <option value="honke">本家風MV</option>
+                    <option value="3dcg">3DCG</option>
+                    <option value="motion">モーショングラフィックス</option>
+                    <option value="video">動画編集（Premiere Pro）</option>
+                    </select>
+                </label>
+
+                <label>
+                    納期の希望：
+                    <select name="count" required>
+                    <option value="">選択してください</option>
+                    <option>2週間以内</option>
+                    <option>1月以内</option>
+                    <option>2月以内</option>
+                    <option>3月以内</option>
+                    <option>4月以内</option>
+                    <option>5月以内</option>
+                    <option>半年以内</option>
+                    <option>指定なし</option>
+                    </select>
+                </label>
+
+                <label>
+                    3DCGの使用：
+                    <select name="3DCG使用" required>
+                    <option value="">選択してください</option>
+                    <option>未使用</option>
+                    <option>一部使用</option>
+                    <option>全部使用</option>
+                    </select>
+                </label>
+
+                <label>
+                    合唱人数（+1人ごとに+¥2,000）：
+                    <select name="合唱人数" required>
+                    <option value="">選択してください</option>
+                    <option>1人</option>
+                    <option>2人</option>
+                    <option>3人</option>
+                    <option>4人</option>
+                    <option>5人以上</option>
+                    </select>
+                </label>
+
+                <label>
+                    ご希望の連絡手段：
+                    <select name="contact" required>
+                    <option value="">選択してください</option>
+                    <option>XのDM</option>
+                    <option>Discord</option>
+                    <option>ココナラ</option>
+                    <option>Slack</option>
+                    </select>
+                </label>
+
+                <fieldset>
+                    <legend>追加オプション（該当するものにチェック）</legend>
+                    <label><input type="checkbox" name="オプション" value="立ち絵の髪揺れあり" /> 立ち絵の髪揺れあり</label><br />
+                    <label><input type="checkbox" name="オプション" value="クレジット記載なし" /> クレジット記載なし</label><br />
+                    <label><input type="checkbox" name="オプション" value="著作権譲渡" /> 著作権譲渡</label><br />
+                    <label><input type="checkbox" name="オプション" value="商用利用" /> 商用利用</label><br />
+                    <label><input type="checkbox" name="オプション" value="ポートフォリオ掲載不可" /> ポートフォリオ掲載不可</label><br />
+                    <label><input type="checkbox" name="オプション" value="駆け出しクリエイター応援値引き" />駆け出しクリエイター応援値引き<br />
+                    <small>※ 活動開始から1年以内の活動者さまのみです。<br />
+                        ※ 月1のみの対応となります。</small></label>
+                </fieldset>
+
+                <label>
+                    メールアドレス：
+                    <input type="email" name="email">
+                </label>
+
+                <label>
+                    その他ご要望：
+                    <textarea name="message" rows="4"></textarea>
+                </label>
+
+                <div id="totalDisplay">合計金額: ¥0</div>
+                <button type="submit">送信</button>
+                </form>
+            </section>
+
+            <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const basePrice = 8000;
+                const deadlineSelect = document.querySelector('select[name="count"]');
+                const cgSelect = document.querySelector('select[name="3DCG使用"]');
+                const chorusSelect = document.querySelector('select[name="合唱人数"]');
+                const checkboxes = document.querySelectorAll('input[type="checkbox"][name="オプション"]');
+                const totalDisplay = document.getElementById("totalDisplay");
+
+                function calculate() {
+                let total = basePrice;
+                let multiplier = 1;
+
+                // 3DCG使用
+                switch (cgSelect.value) {
+                    case "一部使用":
+                    total += 5000;
+                    break;
+                    case "全部使用":
+                    total += 20000;
+                    break;
+                }
+
+                // 合唱人数
+                switch (chorusSelect.value) {
+                    case "2人":
+                    total += 2000;
+                    break;
+                    case "3人":
+                    total += 4000;
+                    break;
+                    case "4人":
+                    total += 6000;
+                    break;
+                    case "5人以上":
+                    total += 8000;
+                    break;
+                }
+
+                // チェックボックス項目
+                let discount = 0;
+                
+                checkboxes.forEach((cb) => {
+                    if (cb.checked) {
+                    switch (cb.value) {
+                        case "立ち絵の髪揺れあり":
+                        total += 2000;
+                        break;
+                        case "クレジット記載なし":
+                        total += 10000;
+                        break;
+                        case "著作権譲渡":
+                        multiplier *= 1.5;
+                        break;
+                        case "商用利用":
+                        multiplier *= 1.5;
+                        break;
+                        case "ポートフォリオ掲載不可":
+                        multiplier *= 2;
+                        break;
+                        case "駆け出しクリエイター応援値引き":
+                        discount = Math.min(total / 2);
+                        break;
+                    }
+                    }
+                });
+
+                // ⏰ 納期が2週間以内なら追加料金
+                if (deadlineSelect.value === "2週間以内") {
+                    total += 10000;
+                }
+
+                let finalTotal = Math.round(total * multiplier - discount);
+                totalDisplay.textContent = `🧮 参考料金：¥${finalTotal.toLocaleString()}`;
+                }
+
+                cgSelect.addEventListener("change", calculate);
+                chorusSelect.addEventListener("change", calculate);
+                deadlineSelect.addEventListener("change", calculate);
+                checkboxes.forEach((cb) => cb.addEventListener("change", calculate));
+
+                calculate(); // 初回表示
+            });
+        </script>
+    </body>
+</html>
