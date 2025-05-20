@@ -177,12 +177,11 @@
               }
             }
 
-            // 早い納品
-            if (deadlineSelect.value === "2週間以内"){
-          total += 10000;
+        // 早い納品
+          if (deadlineSelect.value === "2週間以内"){
+            total += 10000;
         }
-          });
-    
+            
           const finalTotal = Math.round(total * multiplier);
           totalDisplay.textContent = `🧮 参考料金：¥${finalTotal.toLocaleString()}`;
         }
