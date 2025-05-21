@@ -45,11 +45,11 @@
 /* グリッド表示 */
   .works-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     /* flex-wrap: wrap; */
-    gap: 1.5rem;
+    gap: 2rem;
     justify-items: center;
-    padding: 1rem;
+    padding: 2rem;
   }
 
 /* <a>タグにブロックレベルを表示 */
@@ -67,10 +67,10 @@
 /* 各作品カード */
   .work-item {
     width: 100%;
-    max-width: 200px;
+    max-width: 400px;
     position: relative;
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     transition: transform 0.3s;
   }
@@ -89,7 +89,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         color: #fff;
-        font-size: 1.1rem;
+        font-size: 1.4rem;
         font-weight: bold;
         opacity: 0;
         transition: opacity 0.3s ease;
