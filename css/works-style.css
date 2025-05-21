@@ -44,11 +44,20 @@
 
 /* グリッド表示 */
   .works-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    /* flex-wrap: wrap; */
+    gap: 1.5rem;
+    justify-items: center;
+    padding: 1rem;
   }
+
+    @media (max-width: 600px) {
+        .work-grid {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+    }
 
 /* <a>タグにブロックレベルを表示 */
     .work-link {
@@ -64,8 +73,9 @@
 
 /* 各作品カード */
   .work-item {
+    width: 100%;
+    max-width: 200px;
     position: relative;
-    width: 280px;
     overflow: hidden;
     border-radius: 8px;
     cursor: pointer;
