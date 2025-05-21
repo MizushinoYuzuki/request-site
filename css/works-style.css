@@ -45,7 +45,7 @@
 /* グリッド表示 */
   .works-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     flex-wrap: wrap;
     gap: 2rem;
     justify-items: center;
