@@ -52,13 +52,6 @@
     padding: 1rem;
   }
 
-    @media (max-width: 600px) {
-        .work-grid {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-        }
-    }
-
 /* <a>タグにブロックレベルを表示 */
     .work-link {
         text-decoration: none;
