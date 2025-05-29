@@ -7,38 +7,117 @@
 
 /* 全体のベーススタイル */
 body {
-    font-family: 'Helvetica Neue', sans-serif;
-    line-height: 1.7;
-    margin: 0;
-    padding: 0;
     background-color: #f5f5f5;
     color: #222;
+    font-family: 'Josefin Sans', sans-serif;
   }
-  
-  /* ヘッダー */
-  header {
+
+/* ヘッダー / ナビ */
+header {
     background-color: #eaeaea;
-    padding: 1rem 2rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    /*text-align: center; */
-  }
-  
-  nav ul.menu {
+    padding: 1rem 0;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* メニュー */
+.menu {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  list-style: none;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+  gap: 2rem;
+}
+
+.menu li {
+  flex: 1 1 200px;
+  text-align: center;
+}
+
+.menu li a {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: #444;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.menu li a:hover {
+  color: #000;
+}
+
+/* ハンバーガーボタン */
+.hamburger {
+  width: 30px;
+  height: 24px;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  background-color: #333;
+  border-radius: 2px;
+  transform-origin: center;
+  transition: all 0.3s ease;
+}
+
+/* アニメーション */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px -5px);
+}
+
+/* レスポンシブ */
+@media (max-width: 700px) {
+  .hamburger {
     display: flex;
-    list-style: none;
-    gap: 2rem;
   }
   
-  nav ul.menu li a {
-    text-decoration: none;
-    color: #444;
-    font-weight: 600;
-    transition: color 0.3s;
+  .menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    flex-direction: column;
+    padding: 1rem;
+    display: none;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+    /* align-items: center; */
   }
   
-  nav ul.menu li a:hover {
-    color: #111;
+  .menu li {
+    flex: none;
+    width: 100%;
   }
+
+  .menu.show {
+    display: flex;
+  }
+}
 
   header h1 {
     margin: 0;
