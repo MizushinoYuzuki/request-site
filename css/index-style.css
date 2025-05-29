@@ -9,89 +9,64 @@ body {
   background-color: #f5f5f5;
   color: #222;
   font-family: 'Helvetica Neue', sans-serif;
-  line-height: 1.7;
 }
 
 /* --- ヘッダー / ナビ --- */
 header {
   background-color: #eaeaea;
   padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-nav ul.menu {
+.menu {
   display: flex;
   list-style: none;
   gap: 2rem;
+  justify-content: center;
 }
 
-nav ul.menu li a {
+.menu li a {
   text-decoration: none;
   color: #444;
-  font-weight: 600;
+  font-weight: bold;
   transition: color 0.3s;
 }
 
-nav ul.menu li a:hover {
-  color: #111;
+.menu li a:hover {
+  color: #000;
 }
 
-/* --- コンテンツ全体 --- */
-.site-wrap {
+/* --- メイン中央レイアウト --- */
+.main-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 2rem;
-}
-
-/* --- ビデオエリア --- */
-.video-area {
-  width: 100%;
-  max-width: 800px;
-  margin-bottom: 2rem;
-}
-
-video.portofolio {
-  width: 100%;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
-
-/* --- メインセクション --- */
-.site-container {
-  width: 100%;
-  max-width: 700px;
-}
-
-.page-container {
-  background-color: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 3rem 1rem;
   text-align: center;
+  min-height: 70vh;
 }
 
 /* --- ロゴ --- */
-.icon-image {
-  margin-bottom: 1.5rem;
+.icon-wrapper {
+  max-width: 500px;
 }
 
-.logo {
-  max-width: 150px;
+.main-icon {
+  width: 160px;
   height: auto;
+  margin-bottom: 1rem;
 }
 
 /* --- テキスト部分 --- */
-.texteditor-name {
-  font-size: 1.4rem;
+.name {
+  font-size: 1.8rem;
   font-weight: bold;
-  color: #222;
   margin-bottom: 1rem;
 }
 
 .description {
   font-size: 1rem;
   color: #333;
+  line-height: 1.6;
 }
 
 .descript-link {
