@@ -14,47 +14,86 @@ body {
 /* --- ヘッダー / ナビ --- */
 header {
   background-color: #eaeaea;
-  padding: 1rem 0;
+  padding: 1rem;
 }
 
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* メニュー */
 .menu {
   display: flex;
-  flex-wrap: wrap;
   list-style: none;
+  gap: 1rem;
+  /*
+  flex-wrap: wrap;
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 1rem;
-  gap: 1rem;
   justify-content: space-around;
+  */
 }
 
-.menu li {
+/* .menu li {
   flex: 1 1 150px;
   text-align: center;
 }
+*/
 
 .menu li a {
-  display: block;
-  padding: 0.5rem 1rem;
   text-decoration: none;
   color: #444;
   font-weight: bold;
   transition: color 0.3s;
+  /*display: block;
+  padding: 0.5rem 1rem;
+  */
 }
 
 .menu li a:hover {
   color: #000;
 }
 
-@media (max-width: 600px) {
+/* ハンバーガーボタン */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* レスポンシブ */
+@media (max-width: 700px) {
+  .hamburger {
+    display: block;
+  }
+  
   .menu {
+    position: absolute;
+    top: 70px;
+    right: 1rem;
+    background: #fff;
     flex-direction: column;
-    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    display: none;
+    /* align-items: center; */
   }
 
+   /*
   .menu li {
     flex: none;
     width: 100%;
+  }
+  */
+
+  .menu.show {
+    display: flex;
   }
 }
 
