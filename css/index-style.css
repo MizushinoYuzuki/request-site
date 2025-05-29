@@ -37,7 +37,14 @@ header {
   gap: 1rem;
 }
 
+.menu li {
+  flex: 1 1 150px;
+  text-align: center;
+}
+
 .menu li a {
+  display: block;
+  padding: 0.5rem 1rem;
   text-decoration: none;
   color: #444;
   font-weight: bold;
