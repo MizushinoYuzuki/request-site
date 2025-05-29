@@ -32,7 +32,7 @@ header {
   flex-wrap: nowrap;
   list-style: none;
   max-width: 1200px;
-  width: 100%
+  width: 100%;
   margin: 0 auto;
   padding: 0 2rem;
   gap: 2rem;
