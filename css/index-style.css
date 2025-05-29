@@ -50,15 +50,40 @@ header {
 
 /* ハンバーガーボタン */
 .hamburger {
+  width: 30px;
+  height: 24px;
   display: none;
-  font-size: 2rem;
+  flex-direction: column;
+  justify-content: space-between;
   cursor: pointer;
+  z-index: 10;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  background-color: #333;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* アニメーション */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px -6px);
 }
 
 /* レスポンシブ */
 @media (max-width: 700px) {
   .hamburger {
-    display: block;
+    display: flex;
   }
   
   .menu {
