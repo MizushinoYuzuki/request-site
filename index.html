@@ -13,8 +13,11 @@
 
     <body class="link-transition">
         <header>
-            <nav>
-                <ul class="menu">
+            <nav class="nav-container">
+                <div class="hamburger" id="hamburger">
+                    &#9776;
+                </div>
+                <ul class="menu" id="nav-menu">
                     <li><a href="#">About</a></li>
                     <li><a href="works.html">Works</a></li>
                     <li><a href="pricing.html">Pricing</a></li>
@@ -34,5 +37,17 @@
                         </p>                                
                 </div>
             </main>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const hamburger = document.getElementById("hamburger");
+                const navMenu = document.getElementById("nav-menu");
+
+                hamburger.addEventListener("click", function () {
+                    navMenu.classList.toggle(show);
+                });
+            });
+        </script>
+        
         </body>
     </html>
