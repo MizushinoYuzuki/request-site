@@ -29,7 +29,7 @@ header {
 .menu {
   display: flex;
   justify-content: space-around;
-  flex-direction: column;
+  flex-wrap: wrap;
   list-style: none;
   max-width: 1000px;
   margin: 0 auto;
@@ -37,18 +37,11 @@ header {
   gap: 1rem;
 }
 
-.menu li {
-  flex: 1 1 150px;
-  text-align: center;
-}
-
 .menu li a {
   text-decoration: none;
   color: #444;
   font-weight: bold;
   transition: color 0.3s;
-  display: block;
-  padding: 0.5rem 1rem;
 }
 
 .menu li a:hover {
