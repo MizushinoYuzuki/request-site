@@ -14,17 +14,28 @@ body {
 /* --- ヘッダー / ナビ --- */
 header {
   background-color: #eaeaea;
-  padding: 1rem 2rem;
+  padding: 1rem 0;
 }
 
 .menu {
   display: flex;
+  flex-wrap: wrap;
   list-style: none;
-  gap: 2rem;
-  justify-content: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  gap: 1rem;
+  justify-content: space-around;
+}
+
+.menu li {
+  flex: 1 1 150px;
+  text-align: center;
 }
 
 .menu li a {
+  display: block;
+  padding: 0.5rem 1rem;
   text-decoration: none;
   color: #444;
   font-weight: bold;
@@ -33,6 +44,18 @@ header {
 
 .menu li a:hover {
   color: #000;
+}
+
+@media (max-width: 600px) {
+  .menu {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .menu li {
+    flex: none;
+    width: 100%;
+  }
 }
 
 /* --- メイン中央レイアウト --- */
