@@ -2,6 +2,9 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Palette+Mosaic&family=Zen+Kaku+Gothic+New&display=swap" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="images/icon/icon_white.png" />
         <title>Mizushino</title>
@@ -10,8 +13,13 @@
 
     <body class="link-transition">
         <header>
-            <nav>
-                <ul class="menu">
+            <nav class="nav-container">
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="menu" id="av-menu">
                     <li><a href="index.html">About</a></li>
                     <li><a href="works.html">Works</a></li>
                     <li><a href="#">Pricing</a></li>
@@ -139,6 +147,8 @@
                 const chorusSelect = document.querySelector('select[name="合唱人数"]');
                 const checkboxes = document.querySelectorAll('input[type="checkbox"][name="オプション"]');
                 const totalDisplay = document.getElementById("totalDisplay");
+                const hamburger = document.getElementById("hamburger");
+                const navMenu = document.getElementById("nav-menu");
 
                 function calculate() {
                 let total = basePrice;
@@ -213,6 +223,11 @@
                 checkboxes.forEach((cb) => cb.addEventListener("change", calculate));
 
                 calculate(); // 初回表示
+
+                hamburger.addEventListener("click", function () {
+                    hamburger.classList.toggle("active");
+                    navMenu.classList.toggle("show");
+                });
             });
         </script>
     </body>
