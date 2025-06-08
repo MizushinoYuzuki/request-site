@@ -56,20 +56,23 @@
                     <select name="type" required>
                     <option value="">選択してください</option>
                     <option value="cover">カバー楽曲MV</option>
-                    <div id="coverOptions" style="display: none;">
-                        <label>
-                            スタイル：
-                            <select name="coverStyle">
-                                <option value="honke">本家風MV</option>
-                                <option value="original_cover">完全オリジナルMV</option>
-                        </label>
-                    </div>
                     <option value="original">オリジナル楽曲MV</option>
                     <option value="3dcg">3DCG</option>
                     <option value="motion">モーショングラフィックス</option>
                     <option value="video">動画編集（Premiere Pro）</option>
                     </select>
                 </label>
+
+                <div id="coverOptions" style="display: none; margin-top: 1rem;">
+                    <label>
+                        MVスタイル：
+                        <select name="coverStyle">
+                            <option value="">選択してください</option>
+                            <option value="honke">本家風MV</option>
+                            <option value="original_cover">完全オリジナルMV</option>
+                        </select>
+                    </label>
+                </div>
 
                 <label>
                     納期の希望：
@@ -122,17 +125,23 @@
 
                 <fieldset>
                     <legend>追加オプション（該当するものにチェック）</legend>
+                    <div id="originalOptions" style="display: none; margin-top: 1rem;">
+                        <label>
+                            <input type="checkbox" name="storyboardMeeting">
+                            絵コンテからの打ち合わせを希望する
+                        </label>
+                    </div>
                     <label><input type="checkbox" name="オプション" value="立ち絵の髪揺れあり" /> 立ち絵の髪揺れあり</label><br />
                     <label><input type="checkbox" name="オプション" value="クレジット記載なし" /> クレジット記載なし</label><br />
                     <label><input type="checkbox" name="オプション" value="著作権譲渡" /> 著作権譲渡</label><br />
                     <label><input type="checkbox" name="オプション" value="商用利用" /> 商用利用</label><br />
                     <label><input type="checkbox" name="オプション" value="ポートフォリオ掲載不可" /> ポートフォリオ掲載不可</label><br />
-                    <div id="originalOptions" style="display: none;">
-                        <label><input type="checkbox" name="オプション" value="打ち合わせ">絵コンテからの打ち合わせ</label><br />
-                    </div>
                     <label><input type="checkbox" name="オプション" value="駆け出しクリエイター応援値引き" />駆け出しクリエイター応援値引き<br />
-                    <small>※ 活動開始から1年以内の活動者さまのみです。<br />
-                        ※ 月1のみの対応となります。</small></label>
+                    <small>
+                        ※ 活動開始から1年以内の活動者さまのみです。<br />
+                        ※ 月1のみの対応となります。
+                    </small>
+                </label>
                 </fieldset>
 
                 <label>
@@ -155,7 +164,7 @@
                 const basePrice = 8000;
                 const deadlineSelect = document.querySelector('select[name="count"]');
                 const myType = document.getElementById("mvType");
-                const coverOptions = docunment.getElementById("coverOptions");
+                const coverOptions = document.getElementById("coverOptions");
                 const originalOptions = document.getElementById("originalOptions");
                 const cgSelect = document.querySelector('select[name="3DCG使用"]');
                 const chorusSelect = document.querySelector('select[name="合唱人数"]');
@@ -164,19 +173,6 @@
                 const hamburger = document.getElementById("hamburger");
                 const navMenu = document.getElementById("nav-menu");
 
-            mvType.addEventListener("change", function () {
-                const selected = mvType.value;
-
-                //初期状態で非表示
-                coverOptions.style.display = "none";
-                originalOptions.style.display = "none";
-
-                if (selected === "cover") {
-                    coverOptions.style.display = "block";
-                } else if (selected === "original") {
-                    originalOptions.style.display = "block";
-                }
-                
                 function calculate() {
                 let total = basePrice;
                 let multiplier = 1;
@@ -229,7 +225,7 @@
                         multiplier *= 2;
                         break;
                         case "駆け出しクリエイター応援値引き":
-                        discount = Math.min(total / 2);
+                        discount = total / 2;
                         break;
                     }
                     }
@@ -248,15 +244,28 @@
                 chorusSelect.addEventListener("change", calculate);
                 deadlineSelect.addEventListener("change", calculate);
                 checkboxes.forEach((cb) => cb.addEventListener("change", calculate));
+                mvType.addEventListener("change", function () {
+                    const selected = mvType.value;
 
-                calculate(); // 初回表示
+                    //初期状態で非表示
+                    coverOptions.style.display = "none";
+                    originalOptions.style.display = "none";
+    
+                    if (selected === "cover") {
+                        coverOptions.style.display = "block";
+                    } else if (selected === "original") {
+                        originalOptions.style.display = "block";
+                    }
+                });
 
                 hamburger.addEventListener("click", function () {
                     hamburger.classList.toggle("active");
                     navMenu.classList.toggle("show");
                 });
+
+                //　初回表示
+                calculate();
             });
-        });
         </script>
     </body>
 </html>
