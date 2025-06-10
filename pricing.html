@@ -122,6 +122,12 @@
                     <option>Slack</option>
                     </select>
                 </label>
+                    
+                <div id="mailaddress" style="display: none;">
+                    <label>
+                        メールアドレス：
+                        <input type="email" name="email">
+                    </label>
 
                 <fieldset>
                     <legend>追加オプション（該当するものにチェック）</legend>
@@ -144,10 +150,10 @@
                 </label>
                 </fieldset>
 
-                <label>
-                    メールアドレス<small>(optional)</small>：
+                <!-- <label>
+                    メールアドレス<small>(任意)</small>：
                     <input type="email" name="email">
-                </label>
+                </label> -->
 
                 <label>
                     その他ご要望：
@@ -168,6 +174,7 @@
                 const originalOptions = document.getElementById("originalOptions");
                 const cgSelect = document.querySelector('select[name="3DCG使用"]');
                 const chorusSelect = document.querySelector('select[name="合唱人数"]');
+                const mailaddress = document.getElementById("mailaddress");
                 const checkboxes = document.querySelectorAll('input[type="checkbox"][name="オプション"]');
                 const totalDisplay = document.getElementById("totalDisplay");
                 const hamburger = document.getElementById("hamburger");
@@ -244,6 +251,17 @@
                 chorusSelect.addEventListener("change", calculate);
                 deadlineSelect.addEventListener("change", calculate);
                 checkboxes.forEach((cb) => cb.addEventListener("change", calculate));
+                mailaddress.addEventListner("change", function () {
+                    const selected = mailaddress.value;
+
+                    //非表示
+                    mailaddress.style.display = "none";
+
+                    if (selected === "cover") {
+                        mailaddress.style.display = "block";
+                    }
+                });
+                
                 mvType.addEventListener("change", function () {
                     const selected = mvType.value;
 
