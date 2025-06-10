@@ -46,10 +46,10 @@
                     <textarea name="penname" rows="1"></textarea>
                 </label>
 
-                <label>
+                <!-- <label>
                     SNS：
                     <textarea name="sns" rows="4"></textarea>
-                </label>
+                </label> -->
                 
                 <label>
                     依頼内容：
@@ -116,9 +116,8 @@
                     <select name="contact" id="contactSelect" required>
                     <option value="">選択してください</option>
                     <option value="メール">メール</option>
-                    <option value="XのDM">XのDM</option>
+                    <option value="XのDM">X(旧Twitter)</option>
                     <option value="Discord">Discord</option>
-                    <option value="ココナラ">ココナラ</option>
                     <option value="Slack">Slack</option>
                     </select>
                 </label>
@@ -127,6 +126,27 @@
                     <label>
                         メールアドレス：
                         <input type="email" name="email">
+                    </label>
+                </div>
+
+                <div id="xDM" style="display: none;">
+                    <label>
+                        Xのアカウント：
+                        <textarea name="xAccount" rows="1"></textarea>
+                    </label>
+                </div>
+
+                <div id="discordDM" style="display: none;">
+                    <label>
+                        Discordアカウント：
+                        <textarea name="discordAccount" rows="1"></textarea>
+                    </label>
+                </div>
+
+                <div id="slackDM" style="display: none;">
+                    <label>
+                        Slack：
+                        <textarea name="slackAccount" rows="1"></textarea>
                     </label>
                 </div>
 
@@ -177,6 +197,9 @@
                 const chorusSelect = document.querySelector('select[name="合唱人数"]');
                 const contactSelect = document.getElementById("contactSelect");
                 const mailaddress = document.getElementById("mailaddress");
+                const xDM = document.getElementById("xDM");
+                const discordDM = document.getElementById("discordDM");
+                const slackDM = document.getElementById("slackDM");
                 const checkboxes = document.querySelectorAll('input[type="checkbox"][name="オプション"]');
                 const totalDisplay = document.getElementById("totalDisplay");
                 const hamburger = document.getElementById("hamburger");
@@ -261,8 +284,26 @@
                     } else {
                         mailaddress.style.display = "none";
                     }
+
+                    if (selected === "XのDM") {
+                        xDM.style.display = "block";
+                    } else {
+                        xDM.style.display = "none";
+                    }
+
+                    if (selected === "Discord") {
+                        discordDM.style.display = "block";
+                    } else {
+                        discordDM.style.display = "none";
+                    }
+
+                    if (selected === "Slack") {
+                        slackDM.style.display = "block";
+                    } else {
+                        slackDM.style.display = "none";
+                    }
                 });
-                
+
                 mvType.addEventListener("change", function () {
                     const selected = mvType.value;
 
