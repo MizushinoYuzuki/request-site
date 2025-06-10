@@ -113,13 +113,13 @@
 
                 <label>
                     ご希望の連絡手段：
-                    <select name="contact" required>
+                    <select name="contact" id="contactSelect" required>
                     <option value="">選択してください</option>
-                    <option>メール</option>
-                    <option>XのDM</option>
-                    <option>Discord</option>
-                    <option>ココナラ</option>
-                    <option>Slack</option>
+                    <option value="メール">メール</option>
+                    <option value="XのDM">XのDM</option>
+                    <option value="Discord">Discord</option>
+                    <option value="ココナラ">ココナラ</option>
+                    <option value="Slack">Slack</option>
                     </select>
                 </label>
                     
@@ -175,6 +175,7 @@
                 const originalOptions = document.getElementById("originalOptions");
                 const cgSelect = document.querySelector('select[name="3DCG使用"]');
                 const chorusSelect = document.querySelector('select[name="合唱人数"]');
+                const contactSelect = document.getElementById("contactSelect");
                 const mailaddress = document.getElementById("mailaddress");
                 const checkboxes = document.querySelectorAll('input[type="checkbox"][name="オプション"]');
                 const totalDisplay = document.getElementById("totalDisplay");
@@ -252,14 +253,13 @@
                 chorusSelect.addEventListener("change", calculate);
                 deadlineSelect.addEventListener("change", calculate);
                 checkboxes.forEach((cb) => cb.addEventListener("change", calculate));
-                mailaddress.addEventListner("change", function () {
-                    const selected = mailaddress.value;
+                contactSelect.addEventListener("change", function () {
+                    const selected = contactSelect.value;
 
-                    //非表示
-                    mailaddress.style.display = "none";
-
-                    if (selected === "cover") {
+                    if (selected === "メール") {
                         mailaddress.style.display = "block";
+                    } else {
+                        mailaddress.style.display = "none";
                     }
                 });
                 
