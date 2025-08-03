@@ -287,14 +287,20 @@
                 function copyToClipboard(text, message) {
                     navigator.clipboard.writeText(text).then(() => alert(message)).catch(() => alert("コピーに失敗しました。"));
                 }
+
+                function getFullTextFromValue(name, value) {
+                    if (!value) return '(未選択)';
+                    const el = document.querySelector(`select[name="${name}"] option[value="${value}"]`);
+                    return el ? el.textContent : value;
+                }
                 
-                /* function generateFullTextSummary() {
+                function generateFullTextSummary() {
                     const formData = new FormData(form);
                     const selectedOptionsText = [];
                     formData.getAll('opt').forEach(value => {
                         const label = document.querySelector(`input[name="opt"][value="${value}"]`).parentElement.textContent.trim();
                         selectedOptionsText.push(`- ${label}`);
-                    });
+                });
                     
                     const summary = `【ご依頼内容のご相談】
                         ■お名前:
@@ -317,7 +323,7 @@
                         ---------------------------------
                         ■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
                     return summary.trim();
-                } */
+                }
                 
                 // --- イベントリスナーと初期化 ---
                 
@@ -332,22 +338,7 @@
         
                 document.getElementById("shareViaUrl").addEventListener('click', () => copyToClipboard(window.location.href, "このページのURLをコピーしました。"));
         
-                document.getElementById("shareViaText").addEventListener('click', () => {
-                     // 全文テキスト生成は複雑なので、この部分は元のままにします
-                    const formData = new FormData(form);
-                    const selectedOptionsText = [];
-                    formData.getAll('opt').forEach(value => {
-                        const label = document.querySelector(`input[name="opt"][value="${value}"]`).parentElement.textContent.trim();
-                        selectedOptionsText.push(`- ${label}`);
-                    });
-                    function getFullTextFromValue(name, value) {
-                        if (!value) return '(未選択)';
-                        const el = document.querySelector(`select[name="${name}"] option[value="${value}"]`);
-                        return el ? el.textContent : value;
-                    }
-                    const summary = `【ご依頼内容のご相談】\n■お名前:\n${formData.get('pn') || '(未記入)'}\n■ご依頼内容:\n${getFullTextFromValue('t', formData.get('t'))}\n${formData.get('t') === 'c' ? `  - MVスタイル: ${getFullTextFromValue('cs', formData.get('cs'))}` : ''}\n■納期の希望:\n${getFullTextFromValue('d', formData.get('d'))}\n■3DCGの使用:\n${getFullTextFromValue('cg', formData.get('cg'))}\n■合唱人数:\n${getFullTextFromValue('p', formData.get('p'))}\n■追加オプション:\n${selectedOptionsText.length > 0 ? selectedOptionsText.join('\n') : 'なし'}\n■ご希望の連絡手段:\n${getFullTextFromValue('ct', formData.get('ct'))}\n■その他ご要望:\n${formData.get('msg') || '(未記入)'}\n---------------------------------\n■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
-                    copyToClipboard(summary.trim(), "ご依頼内容をクリップボードにコピーしました。");
-                });
+                document.getElementById("shareViaText").addEventListener('click', () => copyToClipboard(generateFullTextSummary(), "ご依頼内容をクリップボードにコピーしました。"));
                 
                 document.getElementById("hamburger").addEventListener("click", function () {
                     this.classList.toggle("active");
@@ -361,6 +352,7 @@
         </main>
     </body>
 </html>
+
 
 
 
