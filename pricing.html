@@ -209,6 +209,11 @@
                 const totalDisplay = document.getElementById("totalDisplay");
                 const hamburger = document.getElementById("hamburger");
                 const navMenu = document.getElementById("nav-menu");
+                const form = document.getElementById("requestForm");
+                const shareViaEmailBtn = document.getElementById("shareViaEmail");
+                const shareViaXBtn = document.getElementById("shareViaX");
+
+                let lastCalculatedTotal = 0;
 
                 function calculate() {
                 let total = basePrice;
@@ -274,6 +279,7 @@
                 }
 
                 let finalTotal = Math.round(total * multiplier - discount);
+                lastCalculatedTotal = finalTotal;
                 totalDisplay.textContent = `🧮 参考料金：¥${finalTotal.toLocaleString()}`;
                 }
 
@@ -284,6 +290,19 @@
                     formData.getAll('オプション').forEach(option => {
                         selectedOptions.push(`- ${option}`);
                     });
+
+                    let contactDetails = '';
+                    const contactMethod = formData.get('contact');
+
+                    if (contactMethod === 'メール') {
+                        contactDetails = ` - メールアドレス: ${formData.get('email') || '(未記入)'}`;
+                    } else if (contactMethod === 'XのDM') {
+                        contactDetails = `  - Xアカウント: ${formData.get('xAccount') || '(未記入)'}`;
+                    } else if (contactMethod === 'Discord') {
+                        contactDetails = `  - Discordアカウント: ${formData.get('discordAccount') || '(未記入)'}`;
+                    } else if (contactMethod === 'Slack') {
+                        contactDetails = `  - Slackアカウント: ${formData.get('slackAccount') || '(未記入)'}`;
+                    }
 
                     const summary = `
                     
@@ -319,8 +338,7 @@
                     ${formData.get('message') || ' (未記入) '}
                     
                     ---------------------------------
-                    ■参考料金: ¥${lastCalculatedTotal.toLocaleString()}
-                        `;
+                    ■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
                         return summary.trim();
                 }
 
@@ -397,4 +415,5 @@
         </script>
     </body>
 </html>
+
 
