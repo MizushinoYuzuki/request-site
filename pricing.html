@@ -337,16 +337,25 @@
                 /* フォームの値に基づいて表示が切り替わるUIを更新する */
                 function updateDependentUI() {
                     // 依頼内容によって表示切替する
-                    const mvTypeValue = mvTypeSelect.value;
-                    coverOptions.style.display = (mvTypeValue === "cover") ? "block" : "none";
-                    originalOptions.style.display = (mvTypeValue === "original") ? "block" : "none";
+                    contactSelect.addEventListener("change", function () {
+                    const selected = contactSelect.value;
+                    mailaddress.style.display = (selected === "メール") ? "block" : "none";
+                    xDM.style.display = (selected === "XのDM") ? "block" : "none";
+                    discordDM.style.display = (selected === "Discord") ? "block" : "none";
+                    slackDM.style.display = (selected === "Slack") ? "block" : "none";
+                    });
 
-                    // 連絡手段によって表示切替する
-                    const contactValue = contactSelect.value;
-                    mailaddress.style.display = (contactValue === "メール") ? "block" : "none";
-                    xDM.style.display = (contactValue === "XのDM") ? "block" : "none";
-                    discordDM.style.display = (contactValue === "Discord") ? "block" : "none";
-                    slackDM.style.display = (contactValue === "Slack") ? "block" : "none";
+                    mvType.addEventListener("change", function () {
+                        const selected = mvType.value;
+                        coverOptions.style.display = "none";
+                        originalOptions.style.display = "none";
+        
+                        if (selected === "cover") {
+                            coverOptions.style.display = "block";
+                        } else if (selected === "original") {
+                            originalOptions.style.display = "block";
+                        }
+                    });
                 }
 
                 /* フォームの内容が変更されたときに実行する */
@@ -456,6 +465,7 @@
         </script>
     </body>
 </html>
+
 
 
 
