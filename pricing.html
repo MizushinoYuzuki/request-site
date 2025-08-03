@@ -155,10 +155,11 @@
 
             <script>
             document.addEventListener("DOMContentLoaded", function () {
+                // --- 設定オブジェクト ---
                 const priceConfig = {
                     base: 8000,
                     cg: { "1": 5000, "2": 20000 },
-                    p: { "2": 2000, "3": 4000, "4": 6000, "5": 8000 },
+                    p: { "1": 0, "2": 2000, "3": 4000, "4": 6000, "5": 8000 },
                     d: { "2w": 10000 },
                     opt: {
                         hs: { price: 2000 },
@@ -169,20 +170,14 @@
                         bd: { isDiscount: true }
                     }
                 };
-                
+        
                 // --- 要素の取得 ---
                 const form = document.getElementById("requestForm");
                 const allInputs = form.querySelectorAll('select, input[type="checkbox"], textarea');
                 const totalDisplay = document.getElementById("totalDisplay");
                 const myTypeSelect = document.querySelector('select[name="t"]');
                 const contactSelect = document.getElementById("contactSelect");
-
-                // 共有ボタン
-                const shareViaEmailBtn = document.getElementById("shareViaEmail");
-                const shareViaUrlBtn = document.getElementById("shareViaUrl");
-                const shareViaTextBtn = document.getElementById("shareViaText");
                 
-                // UI要素
                 const uiGroups = {
                     t: {
                         c: [document.getElementById("coverOptions")],
@@ -194,26 +189,20 @@
                         discord: [document.getElementById("discordDM")],
                         slack: [document.getElementById("slackDM")]
                     }
-                };         
-
-                // const cgSelect = document.querySelector('select[name="3DCG使用"]');
-                // const deadlineSelect = document.querySelector('select[name="count"]');
-                // const chorusSelect = document.querySelector('select[name="合唱人数"]');
-                
-                // const checkboxes = document.querySelectorAll('input[type="checkbox"][name="オプション"]')
-                
+                };
+        
                 let lastCalculatedTotal = 0;
-                
-                // 料金計算
+        
+                // --- 関数定義 ---
                 function calculate() {
                     const formData = new FormData(form);
-                    let total = basePrice;
+                    let total = priceConfig.base;
                     let multiplier = 1;
-                
+        
                     total += priceConfig.cg[formData.get("cg")] || 0;
                     total += priceConfig.p[formData.get("p")] || 0;
                     total += priceConfig.d[formData.get("d")] || 0;
-
+        
                     let discount = 0;
                     formData.getAll('opt').forEach(value => {
                         const effect = priceConfig.opt[value];
@@ -222,34 +211,33 @@
                         if (effect.multiplier) multiplier *= effect.multiplier;
                         if (effect.isDiscount) discount = total / 2;
                     });
-
+        
                     lastCalculatedTotal = Math.round(total * multiplier - discount);
                     totalDisplay.textContent = `🧮 参考料金：¥${lastCalculatedTotal.toLocaleString()}`;
                 }
-
+        
                 function updateUrlFromState() {
                     const params = new URLSearchParams();
-                    // FormDataの代わりに手動で構築し、空の値は無視する
                     allInputs.forEach(input => {
                         const name = input.name;
                         if (!name) return;
                         if (input.type === 'checkbox') {
-                            if (input.checked) params.append(input.name, input.value);
+                            if (input.checked) params.append(name, input.value);
                         } else if (input.value) {
-                            params.append(input.name, input.value);
+                            params.append(name, input.value);
                         }
                     });
                     const newUrl = `${window.location.pathname}?${params.toString()}`;
                     history.replaceState({}, '', newUrl);
                 }
-
+        
                 function applyStateFromUrl() {
                     const params = new URLSearchParams(window.location.search);
                     params.forEach((value, key) => {
                         const elements = form.elements[key];
                         if (!elements) return;
-
-                        if (elements.nodeName === 'FIELDSET' || elements.length > 1) {
+        
+                        if (elements.nodeName === 'FIELDSET' || (elements.length && !elements.tagName)) { 
                             const values = params.getAll(key);
                             Array.from(elements).forEach(el => {
                                 if (el.type === 'checkbox') el.checked = values.includes(el.value);
@@ -260,7 +248,7 @@
                     });
                     updateDependentUI();
                 }
-
+        
                 function toggleVisibility(group, selectedKey) {
                     Object.entries(group).forEach(([key, elements]) => {
                         elements.forEach(el => {
@@ -268,28 +256,28 @@
                         });
                     });
                 }
-
+        
                 function updateDependentUI() {
-                    toggleVisibility(uiGroups.t, mvTypeSelect.value);
+                    toggleVisibility(uiGroups.t, myTypeSelect.value);
                     toggleVisibility(uiGroups.ct, contactSelect.value);
                 }
-
+        
                 function handleFormChange() {
                     calculate();
                     updateUrlFromState();
                     updateDependentUI();
                 }
-
+                
                 function copyToClipboard(text, message) {
                     navigator.clipboard.writeText(text).then(() => alert(message)).catch(() => alert("コピーに失敗しました。"));
                 }
-
+        
                 function getFullTextFromValue(name, value) {
                     if (!value) return '(未選択)';
                     const el = document.querySelector(`select[name="${name}"] option[value="${value}"]`);
                     return el ? el.textContent : value;
                 }
-
+                
                 function generateFullTextSummary() {
                     const formData = new FormData(form);
                     const selectedOptionsText = [];
@@ -297,7 +285,7 @@
                         const label = document.querySelector(`input[name="opt"][value="${value}"]`).parentElement.textContent.trim();
                         selectedOptionsText.push(`- ${label}`);
                     });
-
+                    
                     const summary = `【ご依頼内容のご相談】
                         ■お名前:
                         ${formData.get('pn') || '(未記入)'}
@@ -320,32 +308,34 @@
                         ■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
                     return summary.trim();
                 }
-
-                // イベントリスナーと初期化 ---
+                
+                // --- イベントリスナーと初期化 ---
+                
                 allInputs.forEach(input => input.addEventListener('change', handleFormChange));
-
+        
                 document.getElementById("shareViaEmail").addEventListener('click', () => {
                     const recipientEmail = "mirock.works@gmail.com";
                     const subject = "ご依頼内容のご相談";
                     const body = `参考料金結果になります。\n\n${window.location.href}\n金額: ¥${lastCalculatedTotal.toLocaleString()}\n\n--- ご依頼概要（曲名など）をこちらに書いてください。 ---\n\nご確認よろしくお願いいたします。`;
                     window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                 });
-
+        
                 document.getElementById("shareViaUrl").addEventListener('click', () => copyToClipboard(window.location.href, "このページのURLをコピーしました。"));
+        
                 document.getElementById("shareViaText").addEventListener('click', () => copyToClipboard(generateFullTextSummary(), "ご依頼内容をクリップボードにコピーしました。"));
-
+                
                 document.getElementById("hamburger").addEventListener("click", function () {
                     this.classList.toggle("active");
                     document.getElementById("nav-menu").classList.toggle("show");
                 });
-                
-                // --- 初期化処理 ---
+            
                 applyStateFromUrl();
                 calculate();
             });
         </script>
     </body>
 </html>
+
 
 
 
