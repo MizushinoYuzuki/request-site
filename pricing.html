@@ -43,7 +43,7 @@
                 <form action="https://formspree.io/f/xvgalrbr" method="POST" id="requestForm">
                 <label>
                     お名前：
-                    <textarea name="penname" rows="1"></textarea>
+                    <textarea name="pn" rows="1"></textarea>
                 </label>
 
                 <!-- <label>
@@ -53,39 +53,36 @@
                 
                 <label>
                     依頼内容：
-                    <select name="type" id="mvType" required>
-                    <option value="">選択してください</option>
-                    <option value="cover">カバー楽曲MV</option>
-                    <option value="original">オリジナル楽曲MV</option>
-                    <option value="3dcg">3DCG</option>
-                    <option value="motion">モーショングラフィックス</option>
-                    <option value="video">動画編集（Premiere Pro）</option>
+                    <select name="t" required><option value="">選択してください</option>
+                    <option value="c">カバー楽曲MV</option>
+                    <option value="o">オリジナル楽曲MV</option>
+                    <option value="3d">3DCG</option>
+                    <option value="mg">モーショングラフィックス</option>
+                    <option value="v">動画編集（Premiere Pro）</option>
                     </select>
                 </label>
 
                 <div id="coverOptions" style="display: none; /* margin-top: 1rem; */ ">
                     <label>
                         MVスタイル：
-                        <select name="coverStyle">
-                            <option value="">選択してください</option>
-                            <option value="honke">本家風MV</option>
-                            <option value="original_cover">完全オリジナルMV</option>
+                        <select name="cs"> <option value="">選択してください</option>
+                            <option value="h">本家風MV</option>
+                            <option value="o">完全オリジナルMV</option>
                         </select>
                     </label>
                 </div>
 
                 <label>
                     納期の希望：
-                    <select name="count" required>
-                    <option value="">選択してください</option>
-                    <option>2週間以内</option>
-                    <option>1月以内</option>
-                    <option>2月以内</option>
-                    <option>3月以内</option>
-                    <option>4月以内</option>
-                    <option>5月以内</option>
-                    <option>半年以内</option>
-                    <option>指定なし</option>
+                    <select name="d" required> <option value="">選択してください</option>
+                    <option value="2w">2週間以内</option>
+                    <option value="1m">1月以内</option>
+                    <option value="2m">2月以内</option>
+                    <option value="3m">3月以内</option>
+                    <option value="4m">4月以内</option>
+                    <option value="5m">5月以内</option>
+                    <option value="6m">半年以内</option>
+                    <option value="none">指定なし</option>
                     </select>
                 </label>
 
@@ -93,9 +90,9 @@
                     3DCGの使用：
                     <select name="3DCG使用" required>
                     <option value="">選択してください</option>
-                    <option>未使用</option>
-                    <option>一部使用</option>
-                    <option>全部使用</option>
+                    <option value="0">未使用</option>
+                    <option value="1">一部使用</option>
+                    <option value="2">全部使用</option>
                     </select>
                 </label>
 
@@ -103,11 +100,11 @@
                     合唱人数（+1人ごとに+¥2,000）：
                     <select name="合唱人数" required>
                     <option value="">選択してください</option>
-                    <option>1人</option>
-                    <option>2人</option>
-                    <option>3人</option>
-                    <option>4人</option>
-                    <option>5人以上</option>
+                    <option value="1">1人</option>
+                    <option value="2">2人</option>
+                    <option value="3">3人</option>
+                    <option value="4">4人</option>
+                    <option value="5">5人以上</option>
                     </select>
                 </label>
 
@@ -154,16 +151,16 @@
                     <legend>追加オプション（該当するものにチェック）</legend>
                     <div id="originalOptions" style="display: none; margin-bottom: 1.3rem;">
                         <label>
-                            <input type="checkbox" name="storyboardMeeting">
+                            <input type="checkbox" name="opt" name="sb">
                             絵コンテからの打ち合わせを希望する
                         </label>
                     </div>
-                    <label><input type="checkbox" name="オプション" value="hairSway" /> 立ち絵の髪揺れあり</label><br />
-                    <label><input type="checkbox" name="オプション" value="noCredit" /> クレジット記載なし</label><br />
-                    <label><input type="checkbox" name="オプション" value="copyrightTransfer" /> 著作権譲渡</label><br />
-                    <label><input type="checkbox" name="オプション" value="commercialUse" /> 商用利用</label><br />
-                    <label><input type="checkbox" name="オプション" value="noPortfolio" /> ポートフォリオ掲載不可</label><br />
-                    <label><input type="checkbox" name="オプション" value="beginnerDiscount" />駆け出しクリエイター応援値引き<br />
+                    <label><input type="checkbox" name="opt" value="hs" /> 立ち絵の髪揺れあり</label><br />
+                    <label><input type="checkbox" name="opt" value="nc" /> クレジット記載なし</label><br />
+                    <label><input type="checkbox" name="opt" value="ct" /> 著作権譲渡</label><br />
+                    <label><input type="checkbox" name="opt" value="cu" /> 商用利用</label><br />
+                    <label><input type="checkbox" name="opt" value="np" /> ポートフォリオ掲載不可</label><br />
+                    <label><input type="checkbox" name="opt" value="bd" />駆け出しクリエイター応援値引き<br />
                     <small>
                         ※ 活動開始から1年以内の活動者さまのみです。<br />
                         ※ 月1のみの対応となります。
@@ -178,7 +175,7 @@
 
                 <label>
                     その他ご要望：
-                    <textarea name="message" rows="4"></textarea>
+                    <textarea name="msg" rows="4"></textarea>
                 </label>
 
                 <div id="totalDisplay">合計金額: ¥0</div>
@@ -194,10 +191,27 @@
 
             <script>
             document.addEventListener("DOMContentLoaded", function () {
+                const priceConfig = {
+                    base: 8000,
+                    cg: { "1": 5000, "2": 20000 },
+                    p: { "2": 2000, "3": 4000, "4": 6000, "5": 8000 },
+                    d: { "2w": 10000 },
+                    opt: {
+                        hs: { price: 2000 },
+                        nc: { price: 10000 },
+                        ct: { multiplier: 1.5 },
+                        cu: { multiplier: 1.5 },
+                        np: { multiplier: 2 },
+                        bd: { isDiscount: true }
+                    }
+                };
+                
                 // --- 要素の取得 ---
                 const form = document.getElementById("requestForm");
                 const allInputs = form.querySelectorAll('select, input[type="checkbox"], textarea');
                 const totalDisplay = document.getElementById("totalDisplay");
+                const myTypeSelect = document.querySelector('select[name="t"]');
+                const contactSelect = document.getElementById("contactSelect");
 
                 // 共有ボタン
                 const shareViaEmailBtn = document.getElementById("shareViaEmail");
@@ -205,34 +219,165 @@
                 const shareViaTextBtn = document.getElementById("shareViaText");
                 
                 // UI要素
-                const hamburger = document.getElementById("hamburger");
-                const navMenu = document.getElementById("nav-menu");
-                const coverOptions = document.getElementById("coverOptions");
-                const originalOptions = document.getElementById("originalOptions");
-                const mailaddress = document.getElementById("mailaddress");
-                const xDM = document.getElementById("xDM");
-                const discordDM = document.getElementById("discordDM");
-                const slackDM = document.getElementById("slackDM");
-                const contactSelect = document.getElementById("contactSelect");
-                const myTypeSelect = document.getElementById("mvType");
+                const uiGroups = {
+                    t: {
+                        c: [document.getElementById("coverOptions")],
+                        o: [document.getElementById("originalOptions")]
+                    },
+                    ct: {
+                        email: [document.getElementById("mailaddress")],
+                        x: [document.getElementById("xDM")],
+                        discord: [document.getElementById("discordDM")],
+                        slack: [document.getElementById("slackDM")]
+                    }
+                };         
 
                 // const cgSelect = document.querySelector('select[name="3DCG使用"]');
                 // const deadlineSelect = document.querySelector('select[name="count"]');
                 // const chorusSelect = document.querySelector('select[name="合唱人数"]');
                 
-                // const checkboxes = document.querySelectorAll('input[type="checkbox"][name="オプション"]');
+                // const checkboxes = document.querySelectorAll('input[type="checkbox"][name="オプション"]')
                 
-                const basePrice = 8000;
                 let lastCalculatedTotal = 0;
                 
                 // 料金計算
                 function calculate() {
-                let total = basePrice;
-                let multiplier = 1;
-                const formData = new FormData(form);
+                    const formData = new FormData(form);
+                    let total = basePrice;
+                    let multiplier = 1;
+                
+                    total += priceConfig.cg[formData.get("cg")] || 0;
+                    total += priceConfig.p[formData.get("p")] || 0;
+                    total += priceConfig.d[formData.get("d")] || 0;
 
+                    let discount = 0;
+                    formData.getAll('opt').forEach(value => {
+                        const effect = priceConfig.opt[value];
+                        if (!effect) return;
+                        if (effect.price) total += effect.price;
+                        if (effect.multiplier) multiplier *= effect.multiplier;
+                        if (effect.isDiscount) discount = total / 2;
+                    });
+
+                    lastCalculatedTotal = Math.round(total * multiplier - discount);
+                    totalDisplay.textContent = `🧮 参考料金：¥${lastCalculatedTotal.toLocaleString()}`;
+                }
+
+                function updateUrlFromState() {
+                    const params = new URLSearchParams();
+                    // FormDataの代わりに手動で構築し、空の値は無視する
+                    allInputs.forEach(input => {
+                        if (input.type === 'checkbox') {
+                            if (input.checked) params.append(input.name, input.value);
+                        } else if (input.value) {
+                            params.append(input.name, input.value);
+                        }
+                    });
+                    const newUrl = `${window.location.pathname}?${params.toString()}`;
+                    history.replaceState({}, '', newUrl);
+                }
+
+                function applyStateFromUrl() {
+                    const params = new URLSerchParams(window.location.search);
+                    params.forEach((value, key) => {
+                        const elements = form.elements[key];
+                        if (!elements) return;
+
+                        if (elements.nodeName === 'FIELDSET' || elements.length > 1) {
+                            const values = params.getAll(key);
+                            Array.from(elements).forEach(el => {
+                                if (el.type === 'checkbox') el.checked = values.includes(el.value);
+                            });
+                        } else {
+                            elements.value = value;
+                        }
+                    });
+                    updateDependentUI();
+                }
+
+                function toggleVisibility(group, selectedKey) {
+                    Object.entries(group).forEach(([key, elements]) => {
+                        elements.forEach(el => {
+                            el.style.display = (key === selectedKey) ? 'block' : 'none';
+                        });
+                    });
+                }
+
+                function updateDependentUI() {
+                    toggleVisibility(uiGroups.t, mvTypeSelect.value);
+                    toggleVisibility(uiGroups.ct, contactSelect.value);
+                }
+
+                function handleFormChange() {
+                    calculate();
+                    updateUrlFromState();
+                    updateDependentUI();
+                }
+
+                function copyToClipboard(text, message) {
+                    navigator.clipboard.writeText(text).then(() => alert(message)).catch(() => alert("コピーに失敗しました。"));
+                }
+
+                function getFullTextFromValue(name, value) {
+                    if (!value) return '(未選択)';
+                    const el = document.querySelector(`select[name="${name}"] option[values="${value}"]`);
+                    return el ? el.textContent : value;
+                }
+
+                function generateFullTextSummary() {
+                    const formData = new FormData(form);
+                    const selectedOptionsText = [];
+                    formData.getAll('opt').forEach(value => {
+                        const label = document.querySelector(`input[name="opt"][value="${value}"]`).parentElement.textContent.trim();
+                        selectedOptionsText.push(`- ${label}`);
+                    });
+
+                    const summary = `【ご依頼内容のご相談】
+                        ■お名前:
+                        ${formData.get('pn') || '(未記入)'}
+                        ■ご依頼内容:
+                        ${getFullTextFromValue('t', formData.get('t'))}
+                        ${formData.get('t') === 'c' ? `  - MVスタイル: ${getFullTextFromValue('cs', formData.get('cs'))}` : ''}
+                        ■納期の希望:
+                        ${getFullTextFromValue('d', formData.get('d'))}
+                        ■3DCGの使用:
+                        ${getFullTextFromValue('cg', formData.get('cg'))}
+                        ■合唱人数:
+                        ${getFullTextFromValue('p', formData.get('p'))}
+                        ■追加オプション:
+                        ${selectedOptionsText.length > 0 ? selectedOptionsText.join('\n') : 'なし'}
+                        ■ご希望の連絡手段:
+                        ${getFullTextFromValue('ct', formData.get('ct'))}
+                        ■その他ご要望:
+                        ${formData.get('msg') || '(未記入)'}
+                        ---------------------------------
+                        ■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
+                    return summary.trim();
+                }
+
+                // イベントリスナーと初期化 ---
+                allInputs.forEach(input => input.addEventListener('change', handleFormChange));
+
+                document.getElementById("shareViaEmail").addEventListener('click', () => {
+                    const recipientEmail = "mirock.works@gmail.com";
+                    const subject = "ご依頼内容のご相談";
+                    const body = `参考料金結果になります。\n\n${window.location.href}\n金額: ¥${lastCalculatedTotal.toLocaleString()}\n\n--- ご依頼概要（曲名など）をこちらに書いてください。 ---\n\nご確認よろしくお願いいたします。`;
+                    window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                });
+
+                document.getElementById("shareViaUrl").addEventListener('click', () => copyToClipboard(window.location.href, "このページのURLをコピーしました。"));
+                document.getElementById("shareViaText").addEventListener('click', () => copyToClipboard(generateFullTextSummary(), "ご依頼内容をクリップボードにコピーしました。"));
+
+                document.getElementById("hamburger").addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    document.getElementById("nav-menu").classList.toggle("show");
+                })
+                
+                // const hamburger = document.getElementById("hamburger");
+                // const navMenu = document.getElementById("nav-menu"); 
+                
                 // 3DCG使用
-                switch (formData.get("3DCG使用")) {
+                /*switch (formData.get("3DCG使用")) {
                     case "一部使用":
                     total += 5000;
                     break;
@@ -305,10 +450,10 @@
 
                     const newUrl = `${window.location.pathname}?${params.toString()}`;
                     history.pushState({}, '', newUrl);
-                }
+                }*/
 
                 /* URLのパラメータを読み取ってフォームに適用する */
-                function applyStateFromUrl() {
+                /*function applyStateFromUrl() {
                     const params = new URLSearchParams(window.location.search);
                     // チェックボックスの値を保持する
                     const optionValues = params.getAll('オプション');
@@ -332,10 +477,10 @@
 
                     // フォームの値がリセットされたあとに、UIの表示を更新する
                     updateDependentUI();
-                }
+                }*/
 
                 /* フォームの値に基づいて表示が切り替わるUIを更新する */
-                function updateDependentUI() {
+                /*function updateDependentUI() {
                     // 依頼内容によって表示切替する
                     contactSelect.addEventListener("change", function () {
                     const selected = contactSelect.value;
@@ -356,17 +501,17 @@
                             originalOptions.style.display = "block";
                         }
                     });
-                }
+                }*/
 
                 /* フォームの内容が変更されたときに実行する */
-                function handleFormChange() {
+                /*function handleFormChange() {
                     calculate();
                     updateUrlFromState();
                     updateDependentUI();
-                }
+                }*/
 
                 /* 内容をコピー用の全文テキストを生成する */
-                function generateFullTextSummary() {
+                /*function generateFullTextSummary() {
                     const formData = new FormData(form);
                     const selectedOptions = [];
                     formData.getAll('オプション').forEach(option => {
@@ -456,8 +601,8 @@
                 hamburger.addEventListener("click", function () {
                     this.classList.toggle("active");
                     navMenu.classList.toggle("show");
-                });
-        
+                }); */
+                
                 // --- 初期化処理 ---
                 applyStateFromUrl();
                 calculate();
@@ -465,6 +610,7 @@
         </script>
     </body>
 </html>
+
 
 
 
