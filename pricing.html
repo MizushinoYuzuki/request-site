@@ -115,8 +115,8 @@
                     ご希望の連絡手段：
                     <select name="contact" id="contactSelect" required>
                     <option value="">選択してください</option>
-                    <option value="メール">メール</option>
-                    <option value="XのDM">X(旧Twitter)</option>
+                    <option value="email">メール</option>
+                    <option value="xDM">X(旧Twitter)</option>
                     <option value="Discord">Discord</option>
                     <option value="Slack">Slack</option>
                     </select>
@@ -158,12 +158,12 @@
                             絵コンテからの打ち合わせを希望する
                         </label>
                     </div>
-                    <label><input type="checkbox" name="オプション" value="立ち絵の髪揺れあり" /> 立ち絵の髪揺れあり</label><br />
-                    <label><input type="checkbox" name="オプション" value="クレジット記載なし" /> クレジット記載なし</label><br />
-                    <label><input type="checkbox" name="オプション" value="著作権譲渡" /> 著作権譲渡</label><br />
-                    <label><input type="checkbox" name="オプション" value="商用利用" /> 商用利用</label><br />
-                    <label><input type="checkbox" name="オプション" value="ポートフォリオ掲載不可" /> ポートフォリオ掲載不可</label><br />
-                    <label><input type="checkbox" name="オプション" value="駆け出しクリエイター応援値引き" />駆け出しクリエイター応援値引き<br />
+                    <label><input type="checkbox" name="オプション" value="hairSway" /> 立ち絵の髪揺れあり</label><br />
+                    <label><input type="checkbox" name="オプション" value="noCredit" /> クレジット記載なし</label><br />
+                    <label><input type="checkbox" name="オプション" value="copyrightTransfer" /> 著作権譲渡</label><br />
+                    <label><input type="checkbox" name="オプション" value="commercialUse" /> 商用利用</label><br />
+                    <label><input type="checkbox" name="オプション" value="noPortfolio" /> ポートフォリオ掲載不可</label><br />
+                    <label><input type="checkbox" name="オプション" value="beginnerDiscount" />駆け出しクリエイター応援値引き<br />
                     <small>
                         ※ 活動開始から1年以内の活動者さまのみです。<br />
                         ※ 月1のみの対応となります。
@@ -262,22 +262,22 @@
                 const options = formData.getAll('オプション');
                 options.forEach(value => {
                     switch (value) {
-                        case "立ち絵の髪揺れあり":
+                        case "hairSway":
                         total += 2000;
                         break;
-                        case "クレジット記載なし":
+                        case "noCredit":
                         total += 10000;
                         break;
-                        case "著作権譲渡":
+                        case "copyrightTrasfer":
                         multiplier *= 1.5;
                         break;
-                        case "商用利用":
+                        case "commercialUse":
                         multiplier *= 1.5;
                         break;
-                        case "ポートフォリオ掲載不可":
+                        case "noPortfolio":
                         multiplier *= 2;
                         break;
-                        case "駆け出しクリエイター応援値引き":
+                        case "beginnerDiscount":
                         discount = total / 2;
                         break;
                     }
@@ -339,8 +339,8 @@
                     // 依頼内容によって表示切替する
                     contactSelect.addEventListener("change", function () {
                     const selected = contactSelect.value;
-                    mailaddress.style.display = (selected === "メール") ? "block" : "none";
-                    xDM.style.display = (selected === "XのDM") ? "block" : "none";
+                    mailaddress.style.display = (selected === "email") ? "block" : "none";
+                    xDM.style.display = (selected === "xDM") ? "block" : "none";
                     discordDM.style.display = (selected === "Discord") ? "block" : "none";
                     slackDM.style.display = (selected === "Slack") ? "block" : "none";
                     });
@@ -465,6 +465,7 @@
         </script>
     </body>
 </html>
+
 
 
 
