@@ -429,7 +429,7 @@
                 shareViaEmailBtn.addEventListener('click', function() {
                     const recipientEmail = "mirock.works@gmail.com";
                     const subject = "ご依頼内容のご相談";
-                    const body = `以下のURLからご依頼内容をご確認ください。\n\n${window.location.href}`;
+                    const body = `参考料金結果になります。\n\n${window.location.href}\n金額: ¥${lastCalculatedTotal.toLocaleString()}\n\n--- ご依頼概要（曲名など）をこちらに書いてください。 ---\n\nご確認よろしくお願いいたします。`;
                     window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                 });
 
@@ -465,6 +465,7 @@
         </script>
     </body>
 </html>
+
 
 
 
