@@ -267,6 +267,8 @@
                     const params = new URLSearchParams();
                     // FormDataの代わりに手動で構築し、空の値は無視する
                     allInputs.forEach(input => {
+                        const name = input.name;
+                        if (!name) return;
                         if (input.type === 'checkbox') {
                             if (input.checked) params.append(input.name, input.value);
                         } else if (input.value) {
@@ -278,7 +280,7 @@
                 }
 
                 function applyStateFromUrl() {
-                    const params = new URLSerchParams(window.location.search);
+                    const params = new URLSearchParams(window.location.search);
                     params.forEach((value, key) => {
                         const elements = form.elements[key];
                         if (!elements) return;
@@ -320,7 +322,7 @@
 
                 function getFullTextFromValue(name, value) {
                     if (!value) return '(未選択)';
-                    const el = document.querySelector(`select[name="${name}"] option[values="${value}"]`);
+                    const el = document.querySelector(`select[name="${name}"] option[value="${value}"]`);
                     return el ? el.textContent : value;
                 }
 
@@ -610,6 +612,7 @@
         </script>
     </body>
 </html>
+
 
 
 
