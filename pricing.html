@@ -286,7 +286,6 @@
                 function generateSummaryText() {
                     const formData = new FormData(form);
                     const selectedOptions = [];
-
                     formData.getAll('オプション').forEach(option => {
                         selectedOptions.push(`- ${option}`);
                     });
@@ -328,12 +327,9 @@
                     ${selectedOptions.length > 0 ? selectedOptions.join('\n') : 'なし'}
                     
                     ■ご希望の連絡手段:
-                    ${formData.get('contact') || ' (未選択) '}
-                    ${formData.get('contact') || 'メール' ? ` - メールアドレス: ${formData.get('email') || ' (未記入) '}` : ''}
-                    ${formData.get('contact') || 'XのDM' ? ` - Xアカウント: ${formData.get('xAccount') || ' (未記入) '}` : ''}
-                    ${formData.get('contact') || 'Discord' ? ` - Discordアカウント: ${formData.get('discordAccount') || ' (未記入) '}` : ''}
-                    ${formData.get('contact') || 'Slack' ? ` - Slackアカウント: ${formData.get('slackAccount') || ' (未記入) '}` : ''}
-                    
+                    ${contactMethod || ' (未選択) '}
+                    ${contactDetails}
+                   
                     ■その他ご要望:
                     ${formData.get('message') || ' (未記入) '}
                     
@@ -355,8 +351,8 @@
                     }).catch(err => {
                         console.error('コピーに失敗しました', err);
                         alert("コピーに失敗しました。");
-                    })
-                })
+                    });
+                });
 
                 cgSelect.addEventListener("change", calculate);
                 chorusSelect.addEventListener("change", calculate);
@@ -415,5 +411,6 @@
         </script>
     </body>
 </html>
+
 
 
