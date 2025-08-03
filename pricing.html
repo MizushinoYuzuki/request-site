@@ -184,6 +184,11 @@
                 <div id="totalDisplay">合計金額: ¥0</div>
                 <button type="submit">送信</button>
                 </form>
+
+                <div class="share-buttons">
+                    <button id="shareViaEmail" type="button">メールで内容を共有</button>
+                    <button id="shareViaX" type="button">X用に内容をコピー</button>
+                </div>
             </section>
 
             <script>
@@ -272,6 +277,69 @@
                 totalDisplay.textContent = `🧮 参考料金：¥${finalTotal.toLocaleString()}`;
                 }
 
+                function generateSummaryText() {
+                    const formData = new FormData(form);
+                    const selectedOptions = [];
+
+                    formData.getAll('オプション').forEach(option => {
+                        selectedOptions.push(`- ${option}`);
+                    });
+
+                    const summary = `
+                    
+                    【ご依頼内容】
+                    
+                    ■お名前:
+                    ${formData.get('penname') || ' (未記入) '}
+                    
+                    ■ご依頼内容:
+                    ${formData.get('type') || ' (未選択) '}
+                    ${formData.get('type') === 'cover' ? ` - MVスタイル: ${formData.get('coverStyle') || ' (未記入) '}` : ''}
+                    
+                    ■納期の希望:
+                    ${formData.get('count') || ' (未選択) '}
+                    
+                    ■3DCGの使用:
+                    ${formData.get('3DCG使用') || ' (未選択) '}
+                    
+                    ■合唱人数:
+                    ${formData.get('合唱人数') || ' (未選択) '}
+                    
+                    ■追加オプション:
+                    ${selectedOptions.length > 0 ? selectedOptions.join('\n') : 'なし'}
+                    
+                    ■ご希望の連絡手段:
+                    ${formData.get('contact') || ' (未選択) '}
+                    ${formData.get('contact') || 'メール' ? ` - メールアドレス: ${formData.get('email') || ' (未記入) '}` : ''}
+                    ${formData.get('contact') || 'XのDM' ? ` - Xアカウント: ${formData.get('xAccount') || ' (未記入) '}` : ''}
+                    ${formData.get('contact') || 'Discord' ? ` - Discordアカウント: ${formData.get('discordAccount') || ' (未記入) '}` : ''}
+                    ${formData.get('contact') || 'Slack' ? ` - Slackアカウント: ${formData.get('slackAccount') || ' (未記入) '}` : ''}
+                    
+                    ■その他ご要望:
+                    ${formData.get('message') || ' (未記入) '}
+                    
+                    ---------------------------------
+                    ■参考料金: ¥${lastCalculatedTotal.toLocaleString()}
+                        `;
+                        return summary.trim();
+                }
+
+                shareViaEmailBtn.addEventListener("click", function() {
+                    const subject = "ご依頼内容のご相談";
+                    const body = encodeURIComponent(generateSummaryText());
+                    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+                });
+
+                shareViaXBtn.addEventListener("click", function() {
+                    const textToCopy = generateSummaryText();
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        alert("ご依頼内容をクリップボードにコピーしました。\nXのDMなどに貼り付けてご利用ください。");
+                    }).catch(err => {
+                        console.error('コピーに失敗しました', err);
+                        alert("コピーに失敗しました。");
+                    })
+                })
+
                 cgSelect.addEventListener("change", calculate);
                 chorusSelect.addEventListener("change", calculate);
                 deadlineSelect.addEventListener("change", calculate);
@@ -329,3 +397,4 @@
         </script>
     </body>
 </html>
+
