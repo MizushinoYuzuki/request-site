@@ -288,7 +288,7 @@
                     navigator.clipboard.writeText(text).then(() => alert(message)).catch(() => alert("コピーに失敗しました。"));
                 }
                 
-                function generateFullTextSummary() {
+                /* function generateFullTextSummary() {
                     const formData = new FormData(form);
                     const selectedOptionsText = [];
                     formData.getAll('opt').forEach(value => {
@@ -317,7 +317,7 @@
                         ---------------------------------
                         ■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
                     return summary.trim();
-                }
+                } */
                 
                 // --- イベントリスナーと初期化 ---
                 
@@ -360,6 +360,7 @@
         </script>
     </body>
 </html>
+
 
 
 
