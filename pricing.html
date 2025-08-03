@@ -324,7 +324,7 @@
 
                     // チェックボックスの状態を復元する
                     const checkboxes = form.querySelectorAll('input[name="オプション"]');
-                    checkboxes.forEach(cb => {
+                    options.forEach(cb => {
                         if (optionValues.includes(cb.value)) {
                             cb.checked = true;
                         }
@@ -456,6 +456,7 @@
         </script>
     </body>
 </html>
+
 
 
 
