@@ -260,7 +260,7 @@
                 // チェックボックス項目
                 let discount = 0;
                 const options = formData.getAll('オプション');
-                checkboxes.forEach(value => {
+                options.forEach(value => {
                     switch (value) {
                         case "立ち絵の髪揺れあり":
                         total += 2000;
@@ -324,7 +324,7 @@
 
                     // チェックボックスの状態を復元する
                     const checkboxes = form.querySelectorAll('input[name="オプション"]');
-                    options.forEach(cb => {
+                    checkboxes.forEach(cb => {
                         if (optionValues.includes(cb.value)) {
                             cb.checked = true;
                         }
@@ -456,6 +456,7 @@
         </script>
     </body>
 </html>
+
 
 
 
