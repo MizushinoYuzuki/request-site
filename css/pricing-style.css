@@ -268,5 +268,14 @@ header {
     background-color: #0c85d0;
 }
 
-    
+/* 警告メッセージ用のスタイル */
+.warning-text {
+    font-size: 0.9em;
+    color: #c0392b;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: #fbeae5;
+    border-radius: 4px;
+}
+
 
