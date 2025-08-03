@@ -338,6 +338,11 @@
                 function updateDependentUI() {
                     // 依頼内容によって表示切替する
                     const mvTypeValue = mvTypeSelect.value;
+
+                    // カバーが選択されているかどうかをisCoverに保存する
+                    const isCover = (mvTypeValue === "cover");
+
+                    // isCoverがtrueのとき、２つのオプションを表示する
                     coverOptions.style.display = (mvTypeValue === "cover") ? "block" : "none";
                     originalOptions.style.display = (mvTypeValue === "original") ? "block" : "none";
 
@@ -456,6 +461,7 @@
         </script>
     </body>
 </html>
+
 
 
 
