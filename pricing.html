@@ -42,12 +42,12 @@
                     <form action="https://formspree.io/f/xvgalrbr" method="POST" id="requestForm">
                         <label>
                             お名前：
-                            <textarea name="pn" rows="1"></textarea>
+                            <textarea name="pn" rows="1" required aria-required="true"></textarea>
                         </label>
                         
                         <label>
                             依頼内容：
-                            <select name="t" required>
+                            <select name="t" required aria-required="true">
                                 <option value="">選択してください</option>
                                 <option value="c">カバー楽曲MV</option>
                                 <option value="o">オリジナル楽曲MV</option>
@@ -85,7 +85,7 @@
                     
                         <label>
                             納期の希望：
-                            <select name="d" required>
+                            <select name="d" required aria-required="true" aria-describedby="deadline-warning">
                                 <option value="">選択してください</option>
                                 <option value="2w">2週間以内</option>
                                 <option value="1m">1月以内</option>
@@ -100,7 +100,7 @@
                     
                         <label>
                             3DCGの使用：
-                            <select name="cg" required>
+                            <select name="cg" required aria-required="true">
                                 <option value="">選択してください</option>
                                 <option value="0">未使用</option>
                                 <option value="1">一部使用</option>
@@ -128,7 +128,7 @@
                             
                         <label>
                             ご希望の連絡手段：
-                            <select name="ct" id="contactSelect" required>
+                            <select name="ct" id="contactSelect" required aria-required="true">
                                 <option value="">選択してください</option>
                                 <option value="email">メール</option>
                                 <option value="x">X(旧Twitter)</option>
@@ -152,8 +152,8 @@
                             <label><input type="checkbox" name="opt" value="ct" /> 著作権譲渡</label><br />
                             <label><input type="checkbox" name="opt" value="cu" /> 商用利用</label><br />
                             <label><input type="checkbox" name="opt" value="np" /> ポートフォリオ掲載不可</label><br />
-                            <label><input type="checkbox" name="opt" value="bd" />駆け出しクリエイター応援値引き<br />
-                            <small>※ 活動開始から1年以内の活動者さまのみです。<br />※ 月1のみの対応となります。</small>
+                            <label><input type="checkbox" name="opt" value="bd" aria-describedby="discount-description" />駆け出しクリエイター応援値引き<br />
+                            <small id="discount-description">※ 活動開始から1年以内の活動者さまのみです。<br />※ 月1のみの対応となります。</small>
                         </label>
                         </fieldset>
                     
@@ -185,12 +185,3 @@
         
     </body>
 </html>
-
-
-
-
-
-
-
-
-
