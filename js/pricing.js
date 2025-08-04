@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const item = config[value];
                 if (item.price) {
                     total += item.price;
-                    breakdown.item.push({ text: item.text, price: item.price });
+                    breakdown.items.push({ text: item.text, price: item.price });
                 }
             }
         };
