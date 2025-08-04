@@ -241,8 +241,12 @@ document.addEventListener("DOMContentLoaded", function () {
     function generateFullTextSummary() {
         const formData = new FormData(form);
         const summaryLines = [];
+        
         summaryMap.forEach(item => {
-            if (item.condition && !item.condition(formData)) return;
+            if (item.condition && !item.condition(formData)) {
+                return;
+            }
+            
             let valueText;
             if (item.type === 'checkboxGroup') {
                 const selectedOptions = formData.getAll(item.name);
@@ -260,9 +264,6 @@ document.addEventListener("DOMContentLoaded", function () {
             summaryLines.push(`■${item.label}:\n${valueText}`);
         });
         
-        // const isChorus = (formData.get('cs') === 'hg' || formData.get('cs') === 'og' || formData.get('os') === 'o-cho');
-        // const chorusCountText = isChorus ? `\n■合唱人数:\n${getFullTextFromValue('p', formData.get('p'))}` : '';
-
         const summary = `【ご依頼内容のご相談】
             ■お名前:
             ${formData.get('pn') || '(未記入)'}
