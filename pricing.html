@@ -214,7 +214,7 @@
                 const uiGroups = {
                     t: {
                         c: [document.getElementById("coverOptions")],
-                        o: [document.getElementById("originalOptions")]
+                        o: [document.getElementById("originalOptions"), document.getElementById("originalOptions-checkbox")]
                     },
                     ct: {
                         email: [document.getElementById("mailaddress")],
@@ -243,7 +243,7 @@
                         total += priceConfig.p[formData.get("p")] || 0;
                     }
         
-                    let discount = 0;
+                    // let discount = 0;
                     let isDiscountChecked = false;
                     formData.getAll('opt').forEach(value => {
                         const effect = priceConfig.opt[value];
@@ -424,6 +424,7 @@
         </main>
     </body>
 </html>
+
 
 
 
