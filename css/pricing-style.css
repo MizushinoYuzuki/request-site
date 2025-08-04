@@ -265,6 +265,23 @@ header {
     border-left: 5px solid #38d9a9;
     border-radius: 4px;
   }
+
+  /* 送信・リセットボタンのコンテナ */
+  .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+  }
+  /* コンテナ内のボタン共通スタイル */
+  .form-actions button {
+      flex: 1; /* ボタンの幅を均等に広げる */
+      padding: 0.8rem 1.2rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+  }
   
   /* 送信ボタン */
   button[type="submit"] {
@@ -277,10 +294,20 @@ header {
     cursor: pointer;
     transition: background-color 0.3s;
   }
-  
   button[type="submit"]:hover {
     background-color: #20c997;
   }
+
+  /* リセットボタン */
+  #resetButton {
+      background-color: #f1f3f5;
+      color: #495057;
+      border: 1px solid #dee2e6;
+  }
+  #resetButton:hover {
+      background-color: #e9ecef;
+  }
+
   
   /* 共有ボタン用のスタイル */
 .share-buttons {
@@ -344,6 +371,7 @@ header {
     background-color: #fbeae5;
     border-radius: 4px;
 }
+
 
 
 
