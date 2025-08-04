@@ -66,6 +66,8 @@
                                     <option value="">選択してください</option>
                                     <option value="h">本家風MV</option>
                                     <option value="o">完全オリジナルMV</option>
+                                    <option value="hg">本家風合唱MV</option>
+                                    <option value="og">完全オリジナル合唱MV</option>
                                 </select>
                             </label>
                         </div>
@@ -98,19 +100,21 @@
                         <div id="deadline-warning" class="warning-text" style="display: none;">
                             ※エフェクトや複雑なアニメーションを用いた映像は制作不可となります。
                         </div>
-                    
-                        <label>
-                            合唱人数（+1人ごとに+¥2,000）：
-                            <select name="p" required>
-                                <option value="">選択してください</option>
-                                <option value="1">1人</option>
-                                <option value="2">2人</option>
-                                <option value="3">3人</option>
-                                <option value="4">4人</option>
-                                <option value="5">5人以上</option>
-                            </select>
-                        </label>
-                    
+                        
+                        <div id="chorusCountOptions" style="display: none;">
+                            <label>
+                                合唱人数（+1人ごとに+¥2,000）：
+                                <select name="p" required>
+                                    <option value="">選択してください</option>
+                                    <option value="1">1人</option>
+                                    <option value="2">2人</option>
+                                    <option value="3">3人</option>
+                                    <option value="4">4人</option>
+                                    <option value="5">5人以上</option>
+                                </select>
+                            </label>
+                        </div>
+                            
                         <label>
                             ご希望の連絡手段：
                             <select name="ct" id="contactSelect" required>
@@ -191,10 +195,11 @@
                 const deliverySelect = document.querySelector('select[name="d"]');
                 const cgSelect = document.querySelector('select[name="cg"]');
                 const deadlineWarning = document.getElementById('deadline-warning');
+                const coverTypeSelect = document.querySelector('select[name="coverType"]');
                 
                 const uiGroups = {
                     t: {
-                        c: [document.getElementById("coverOptions")],
+                        c: [document.getElementById("coverOptions"), document.getElementById("coverTypeOptions")],
                         o: [document.getElementById("originalOptions")]
                     },
                     ct: {
@@ -202,6 +207,9 @@
                         x: [document.getElementById("xDM")],
                         discord: [document.getElementById("discordDM")],
                         slack: [document.getElementById("slackDM")]
+                    },
+                    coverType: {
+                        chorus: [document.getElementById("chorusCountOptions")]
                     }
                 };
         
@@ -214,7 +222,9 @@
                     let multiplier = 1;
         
                     total += priceConfig.cg[formData.get("cg")] || 0;
-                    total += priceConfig.p[formData.get("p")] || 0;
+                    if (formData.get("coverType") === 'chorus') {
+                        total += priceConfig.p[formData.get("p")] || 0;
+                    }
                     total += priceConfig.d[formData.get("d")] || 0;
         
                     let discount = 0;
@@ -274,6 +284,12 @@
                 function updateDependentUI() {
                     toggleVisibility(uiGroups.t, myTypeSelect.value);
                     toggleVisibility(uiGroups.ct, contactSelect.value);
+                    toggleVisibility(uiGroups.coverType, coverTypeSelect.value);
+
+                    if (coverTypeSelect.value !== 'chorus') {
+                        const chorusSelect = document.querySelector('select[name="p"]');
+                        if (chorusSelect) chorusSelect.value = '1';
+                    }
 
                     const isExpress = (deliverySelect.value === '2w');
 
@@ -308,6 +324,12 @@
                         const label = document.querySelector(`input[name="opt"][value="${value}"]`).parentElement.textContent.trim();
                         selectedOptionsText.push(`- ${label}`);
                 });
+                    let coverDetails = '';
+                    if (formData.get('t') === 'c') {
+                        coverDetails = ` - MVスタイル: ${getFullTextFromValue('cs', formData.get('cs'))}\n - カバーの種類: ${getFullTextFromValue('coverType', formData.get('coverType'))}`;
+                    }
+
+                    const chorusCount = formData.get('coverType') === 'chorus' ? `\n■合唱人数:\n${getFullTextFromValue('p', formData.get('p'))}` : '';
                     
                     const summary = `【ご依頼内容のご相談】
                         ■お名前:
@@ -319,8 +341,6 @@
                         ${getFullTextFromValue('d', formData.get('d'))}
                         ■3DCGの使用:
                         ${getFullTextFromValue('cg', formData.get('cg'))}
-                        ■合唱人数:
-                        ${getFullTextFromValue('p', formData.get('p'))}
                         ■追加オプション:
                         ${selectedOptionsText.length > 0 ? selectedOptionsText.join('\n') : 'なし'}
                         ■ご希望の連絡手段:
@@ -344,7 +364,6 @@
                 });
         
                 document.getElementById("shareViaUrl").addEventListener('click', () => copyToClipboard(window.location.href, "このページのURLをコピーしました。"));
-        
                 document.getElementById("shareViaText").addEventListener('click', () => copyToClipboard(generateFullTextSummary(), "ご依頼内容をクリップボードにコピーしました。"));
                 
                 document.getElementById("hamburger").addEventListener("click", function () {
@@ -359,6 +378,7 @@
         </main>
     </body>
 </html>
+
 
 
 
