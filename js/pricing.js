@@ -201,23 +201,25 @@ document.addEventListener("DOMContentLoaded", function () {
         const selectedType = myTypeSelect.value;
         const isCover = selectedType === 'c';
         const isOriginal = selectedType === 'o';
-        
+
+        // ラッパーのアニメーション
         toggleCollapsible(collapsibleElements.mvStyle, isCover || isOriginal);
         toggleCollapsible(collapsibleElements.originalCheckbox, isOriginal);
 
+        // ラッパーの中身の表示切替（アニメーションなし）
         document.getElementById('coverOptions').style.display = isCover ? 'block' : 'none';
         document.getElementById('originalOptions').style.display = isOriginal ? 'block' : 'none';
 
         if (!isCover) coverStyleSelect.value = '';
         if (!isOriginal) originalStyleSelect.value = '';
-
+        
         const isCoverChorus = (coverStyleSelect.value === 'hg' || coverStyleSelect.value === 'og');
-        const isOriginalChorus = (originalStyleSelect.value === 'o-cho');       
+        const isOriginalChorus = (originalStyleSelect.value === 'o-cho');
         toggleCollapsible(collapsibleElements.chorus, isCoverChorus || isOriginalChorus);
         
         if (!isCoverChorus && !isOriginalChorus) {
             const chorusSelect = document.querySelector('select[name="p"]');
-            if (chorusSelect) chorusSelect.value = '';
+            if (chorusSelect) chorusSelect.value = '1';
         }
 
         const isExpress = (deliverySelect.value === '2w');
