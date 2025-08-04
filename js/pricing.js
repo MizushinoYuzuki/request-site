@@ -169,3 +169,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         updateDependentUI();
     }
+
+    function toggleVisibility(group, selectedKey) {
+        Object.entries(group).forEach(([key, elements]) => {
+            elements.forEach(el => {
+                if(el) el.style.display = (key === selectedKey) ? 'block' : 'none';
+            });
+        });
+    }
