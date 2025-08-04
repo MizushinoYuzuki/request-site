@@ -306,8 +306,19 @@
                 }
         
                 function updateDependentUI() {
+                    const selectedType = mvTypeSelect.value;
                     toggleVisibility(uiGroups.t, myTypeSelect.value);
                     toggleVisibility(uiGroups.ct, contactSelect.value);
+
+                    // 依頼内容が「カバー」でない場合、カバースタイルの選択肢をリセット
+                    if (selectedType !== 'c') {
+                        coverStyleSelect.value = '';
+                    }
+
+                    // 依頼内容が「オリジナル」でない場合、オリジナルスタイルの選択肢をリセット
+                    if (selectedType !== 'o') {
+                        coverStyleSelect.value = '';
+                    }
 
                     const isCoverChorus = (coverStyleSelect.value === 'hg' || coverStyleSelect.value === 'og');
                     const isOriginalChorus = (originalStyleSelect.value === 'o-cho');
@@ -414,6 +425,7 @@
         </main>
     </body>
 </html>
+
 
 
 
