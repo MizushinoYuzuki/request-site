@@ -257,3 +257,24 @@ document.addEventListener("DOMContentLoaded", function () {
             ■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
         return summary.trim();
     }
+
+    // --- イベントリスナーと初期化 ---
+    allInputs.forEach(input => input.addEventListener('change', handleFormChange));
+
+    document.getElementById("shareViaEmail").addEventListener('click', () => {
+        const recipientEmail = "mirock.works@gmail.com";
+        const subject = "ご依頼内容のご相談";
+        const body = `参考料金結果になります。\n\n${window.location.href}\n金額: ¥${lastCalculatedTotal.toLocaleString()}\n\n--- ご依頼概要（曲名など）をこちらに書いてください。 ---\n\nご確認よろしくお願いいたします。`;
+        window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+
+    document.getElementById("shareViaUrl").addEventListener('click', () => copyToClipboard(window.location.href, "このページのURLをコピーしました。"));
+    document.getElementById("shareViaText").addEventListener('click', () => copyToClipboard(generateFullTextSummary(), "ご依頼内容をクリップボードにコピーしました。"));
+    document.getElementById("hamburger").addEventListener("click", function () {
+        this.classList.toggle("active");
+        document.getElementById("nav-menu").classList.toggle("show");
+    });
+
+    applyStateFromUrl();
+    calculate();
+});
