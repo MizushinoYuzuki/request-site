@@ -211,6 +211,48 @@ header {
     gap: 0.5rem;
     font-weight: normal;
   }
+
+  /* 料金内訳のスタイル */
+  #price-breakdown {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      font-size: 0.9em;
+      line-height: 1.7;
+
+      /* 内訳がない場合は非表示 */
+      display: none;
+  }
+  #price-breakdown ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+  }
+  #price-breakdown li {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #e9ecef;
+      padding: 0.5rem 0;
+  }
+  #price-breakdown li:last-child {
+      border-bottom: none;
+  }
+  #price-breakdown .item-text {
+      color: #495057;
+  }
+  #price-breakdown .item-price {
+      font-weight: bold;
+      color: #212529;
+  }
+  #price-breakdown .summary-item {
+      font-weight: bold;
+      color: #007bff;
+      border-top: 1px solid #dee2e6;
+      padding-top: 0.75rem;
+      margin-top: 0.5rem;
+  }
   
   /* 合計表示 */
   #totalDisplay,
@@ -302,6 +344,7 @@ header {
     background-color: #fbeae5;
     border-radius: 4px;
 }
+
 
 
 
