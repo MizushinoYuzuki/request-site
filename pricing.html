@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Palette+Mosaic&family=Zen+Kaku+Gothic+New&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="images/icon/icon_white.png" />
+        <title>Mizushino</title>
+        <link rel="stylesheet" href="css/pricing-style.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    </head>
+
+    <body class="link-transition">
+        <header>
+            <nav class="nav-container">
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="menu" id="nav-menu">
+                    <li><a href="index.html">About</a></li>
+                    <li><a href="works.html">Works</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="pricing">
+                <h2>料金の目安</h2>
+                <ul>
+                <li>基本料金：¥8,000</li>
+                </ul>
+            </section>
+
+            <section class="form">
+                <h2>依頼フォーム</h2>
+                    <form action="https://formspree.io/f/xvgalrbr" method="POST" id="requestForm">
+                        <label>
+                            お名前：
+                            <textarea name="pn" rows="1"></textarea>
+                        </label>
+                        
+                        <label>
+                            依頼内容：
+                            <select name="t" required>
+                                <option value="">選択してください</option>
+                                <option value="c">カバー楽曲MV</option>
+                                <option value="o">オリジナル楽曲MV</option>
+                                <option value="3d">3DCG</option>
+                                <option value="mg">モーショングラフィックス</option>
+                                <option value="v">動画編集（Premiere Pro）</option>
+                            </select>
+                        </label>
+                    
+                        <div id="coverOptions" style="display: none;">
+                            <label>
+                                MVスタイル：
+                                <select name="cs">
+                                    <option value="">選択してください</option>
+                                    <option value="h">本家風MV</option>
+                                    <option value="o">完全オリジナルMV</option>
+                                    <option value="hg">本家風合唱MV</option>
+                                    <option value="og">完全オリジナル合唱MV</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div id="originalOptions" style="display: none;">
+                            <label>
+                                MVスタイル：
+                                <select name="os">
+                                    <option value="">選択してください</option>
+                                    <option value="sp">シンプル</option>
+                                    <option value="st">ストーリー</option>
+                                    <option value="ly">リリックMV</option>
+                                    <option value="o-cho">合唱</option>
+                                </select>
+                            </label>
+                        </div>
+                    
+                        <label>
+                            納期の希望：
+                            <select name="d" required>
+                                <option value="">選択してください</option>
+                                <option value="2w">2週間以内</option>
+                                <option value="1m">1月以内</option>
+                                <option value="2m">2月以内</option>
+                                <option value="3m">3月以内</option>
+                                <option value="4m">4月以内</option>
+                                <option value="5m">5月以内</option>
+                                <option value="6m">半年以内</option>
+                                <option value="none">指定なし</option>
+                            </select>
+                        </label>
+                    
+                        <label>
+                            3DCGの使用：
+                            <select name="cg" required>
+                                <option value="">選択してください</option>
+                                <option value="0">未使用</option>
+                                <option value="1">一部使用</option>
+                                <option value="2">全部使用</option>
+                            </select>
+                        </label>
+
+                        <div id="deadline-warning" class="warning-text" style="display: none;">
+                            ※エフェクトや複雑なアニメーションを用いた映像は制作不可となります。
+                        </div>
+                        
+                        <div id="chorusCountOptions" style="display: none;">
+                            <label>
+                                合唱人数：
+                                <select name="p" required>
+                                    <option value="">選択してください</option>
+                                    <option value="1">1人</option>
+                                    <option value="2">2人</option>
+                                    <option value="3">3人</option>
+                                    <option value="4">4人</option>
+                                    <option value="5">5人以上</option>
+                                </select>
+                            </label>
+                        </div>
+                            
+                        <label>
+                            ご希望の連絡手段：
+                            <select name="ct" id="contactSelect" required>
+                                <option value="">選択してください</option>
+                                <option value="email">メール</option>
+                                <option value="x">X(旧Twitter)</option>
+                                <option value="discord">Discord</option>
+                                <option value="slack">Slack</option>
+                            </select>
+                        </label>
+                            
+                        <div id="mailaddress" style="display: none;"><label>メールアドレス：<input type="email" name="email_id"></label></div>
+                        <div id="xDM" style="display: none;"><label>Xのアカウント：<textarea name="x_id" rows="1"></textarea></label></div>
+                        <div id="discordDM" style="display: none;"><label>Discordアカウント：<textarea name="discord_id" rows="1"></textarea></label></div>
+                        <div id="slackDM" style="display: none;"><label>Slack：<textarea name="slack_id" rows="1"></textarea></label></div>
+                    
+                        <fieldset>
+                            <legend>追加オプション（該当するものにチェック）</legend>
+                            <div id="originalOptions-checkbox" style="display: none; margin-bottom: 1.3rem;">
+                                <label><input type="checkbox" name="opt" value="sb"> 絵コンテからの打ち合わせを希望する</label>
+                            </div>
+                            <label><input type="checkbox" name="opt" value="hs" /> 立ち絵の髪揺れあり</label><br />
+                            <label><input type="checkbox" name="opt" value="nc" /> クレジット記載なし</label><br />
+                            <label><input type="checkbox" name="opt" value="ct" /> 著作権譲渡</label><br />
+                            <label><input type="checkbox" name="opt" value="cu" /> 商用利用</label><br />
+                            <label><input type="checkbox" name="opt" value="np" /> ポートフォリオ掲載不可</label><br />
+                            <label><input type="checkbox" name="opt" value="bd" />駆け出しクリエイター応援値引き<br />
+                            <small>※ 活動開始から1年以内の活動者さまのみです。<br />※ 月1のみの対応となります。</small>
+                        </label>
+                        </fieldset>
+                    
+                        <label>
+                            その他ご要望：
+                            <textarea name="msg" rows="4"></textarea>
+                        </label>
+
+                        <div id="price-breakdown"></div>
+                        <div id="totalDisplay">合計金額: ¥0</div>
+                        <button type="submit">フォームに送信</button>
+                    </form>
+
+                <div class="share-buttons">
+                    <button id="shareViaEmail" type="button" title="メールで共有">
+                        <i class="fa-solid fa-envelope"></i>
+                    </button>
+                    <button id="shareViaUrl" type="button" title="URLをコピー">
+                        <i class="fa-solid fa-link"></i>
+                    </button>
+                    <button id="shareViaText" type="button" title="内容をコピー">
+                        <i class="fa-solid fa-clipboard"></i>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
+
+
+
+
+
+
