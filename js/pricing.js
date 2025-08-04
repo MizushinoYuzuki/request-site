@@ -201,3 +201,19 @@ document.addEventListener("DOMContentLoaded", function () {
         deadlineWarning.style.display = isExpress ? 'block' : 'none';
         if (isExpress && cgSelect.value !== '0') cgSelect.value = '0';
     }
+
+     function handleFormChange() {
+        updateDependentUI();
+        calculate();
+        updateUrlFromState();
+    }
+
+    function copyToClipboard(text, message) {
+        navigator.clipboard.writeText(text).then(() => alert(message)).catch(() => alert("コピーに失敗しました。"));
+    }
+
+    function getFullTextFromValue(name, value) {
+        if (!value) return '(未選択)';
+        const el = document.querySelector(`select[name="${name}"] option[value="${value}"]`);
+        return el ? el.textContent : value;
+    }
