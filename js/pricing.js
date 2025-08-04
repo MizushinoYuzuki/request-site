@@ -152,3 +152,20 @@ document.addEventListener("DOMContentLoaded", function () {
         const newUrl = `${window.location.pathname}?${params.toString()}`;
         history.replaceState({}, '', newUrl);
     }
+
+    function applyStateFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        params.forEach((value, key) => {
+            const elements = form.elements[key];
+            if (!elements) return;
+            if (elements.nodeName === 'FIELDSET' || (elements.length && !elements.tagName)) { 
+                const values = params.getAll(key);
+                Array.from(elements).forEach(el => {
+                    if (el.type === 'checkbox') el.checked = values.includes(el.value);
+                });
+            } else {
+                elements.value = value;
+            }
+        });
+        updateDependentUI();
+    }
