@@ -248,6 +248,7 @@
                     }
         
                     let discount = 0;
+                    let DiscountChecked = false;
                     formData.getAll('opt').forEach(value => {
                         const effect = priceConfig.opt[value];
                         if (!effect) return;
@@ -417,6 +418,7 @@
         </main>
     </body>
 </html>
+
 
 
 
