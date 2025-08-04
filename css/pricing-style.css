@@ -212,6 +212,22 @@ header {
     font-weight: normal;
   }
 
+  /* アニメーション対象の基本スタイル */
+  .collapsible {
+      overflow: hidden;
+      height: 0;
+      opacity: 0;
+      transition: height 0.3s ease-out, opacity 0.3s ease-out, margin-top 0.3s ease-out;
+      margin-top: 0;
+  }
+  /* 表示されるときのアニメーション後のスタイル */
+  .collapsible.visible {
+      /* JavaScriptによって設定された高さに変化する */
+      height: var(--element-height);
+      opacity: 1;
+      margin-top: 1.2rem;
+  }
+
   /* 料金内訳のスタイル */
   #price-breakdown {
       margin-top: 1rem;
@@ -371,6 +387,7 @@ header {
     background-color: #fbeae5;
     border-radius: 4px;
 }
+
 
 
 
