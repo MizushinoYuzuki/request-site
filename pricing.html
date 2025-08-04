@@ -71,6 +71,19 @@
                                 </select>
                             </label>
                         </div>
+
+                        <div id="originalOptions" style="display: none;">
+                            <label>
+                                MVスタイル：
+                                <select name="os">
+                                    <option value="">選択してください</option>
+                                    <option value="sp">シンプル</option>
+                                    <option value="st">ストーリー</option>
+                                    <option value="ly">リリックMV</option>
+                                    <option value="o-cho">合唱</option>
+                                </select>
+                            </label>
+                        </div>
                     
                         <label>
                             納期の希望：
@@ -106,7 +119,7 @@
                                 合唱人数（+1人ごとに+¥2,000）：
                                 <select name="p" required>
                                     <option value="">選択してください</option>
-                                    <option value="1">1人</option>
+                                    <!-- <option value="1">1人</option> -->
                                     <option value="2">2人</option>
                                     <option value="3">3人</option>
                                     <option value="4">4人</option>
@@ -195,7 +208,8 @@
                 const deliverySelect = document.querySelector('select[name="d"]');
                 const cgSelect = document.querySelector('select[name="cg"]');
                 const deadlineWarning = document.getElementById('deadline-warning');
-                const mvStyleSelect = document.querySelector('select[name="cs"]');
+                const coverStyleSelect = document.querySelector('select[name="cs"]');
+                const originalStyleSelect = document.querySelector('select[name="os"]');
                 
                 const uiGroups = {
                     t: {
@@ -221,8 +235,10 @@
                     total += priceConfig.cg[formData.get("cg")] || 0;
                     total += priceConfig.d[formData.get("d")] || 0;
 
-                    const mvStyle = formData.get("cs");
-                    if (mvStyle === 'hg' || mvStyle === 'og') {
+                    const coverStyle = formData.get("cs");
+                    const originalStyle = formData.get("os");
+                    
+                    if (coverStyle === 'hg' || coverStyle === 'og' || originalStyle === 'o-cho') {
                         total += priceConfig.p[formData.get("p")] || 0;
                     }
         
@@ -284,10 +300,13 @@
                     toggleVisibility(uiGroups.t, myTypeSelect.value);
                     toggleVisibility(uiGroups.ct, contactSelect.value);
 
-                    const isChorus = (mvStyleSelect.value === 'hg' || mvStyleSelect.value === 'og');
-                    document.getElementById('chorusCountOptions').style.display = isChorus ? 'block' : 'none';
+                    const isCoverChorus = (coverStyleSelect.value === 'hg' || coverStyleSelect.value === 'og');
+                    const isOriginalChorus = (originalStyleSelect.value === 'o-cho');
+                    const showChorusCount = isCoverChorus || isOriginalChorus;
+                    
+                    document.getElementById('chorusCountOptions').style.display = showChorusCount ? 'block' : 'none';
 
-                    if (!isChorus) {
+                    if (!showChorusCount) {
                         const chorusSelect = document.querySelector('select[name="p"]');
                         if (chorusSelect) chorusSelect.value = '1';
                     }
@@ -325,8 +344,16 @@
                         selectedOptionsText.push(`- ${label}`);
                 });
 
-                    const mvStyle = formData.get('cs');
-                    const chorusCountText = (mvStyle === 'hg' || mvStyle === 'og') ? `\n■合唱人数:\n${getFullTextFromValue('p', formData.get('p'))}` : '';
+                    let styleDetails = '';
+                    const type = formData.get('t');
+                    if (type === 'c') {
+                        styleDetails = `  - MVスタイル: ${getFullTextFromValue('cs', formData.get('cs'))}`;
+                    } else if (type === 'o') {
+                        styleDetails = `  - MVスタイル: ${getFullTextFromValue('os', formData.get('os'))}`;
+                    }
+
+                    const isChorus = (formData.get('cs') === 'hg' || formData.get('cs') === 'og' || formData.get('os') === 'chorus');
+                    const chorusCountText = isChorus ? `\n■合唱人数:\n${getFullTextFromValue('p', formData.get('p'))}` : '';
                    
                     const summary = `【ご依頼内容のご相談】
                         ■お名前:
@@ -375,4 +402,5 @@
         </main>
     </body>
 </html>
+
 
