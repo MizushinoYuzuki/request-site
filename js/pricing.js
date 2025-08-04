@@ -28,3 +28,29 @@ document.addEventListener("DOMContentLoaded", function () {
             bd: { isDiscount: true, text: "駆け出しクリエイター応援値引き" }
         }
     };
+
+    // --- 要素の取得 ---
+    const form = document.getElementById("requestForm");
+    const allInputs = form.querySelectorAll('select, input[type="checkbox"], textarea');
+    const totalDisplay = document.getElementById("totalDisplay");
+    const myTypeSelect = document.querySelector('select[name="t"]');
+    const contactSelect = document.getElementById("contactSelect");
+    const deliverySelect = document.querySelector('select[name="d"]');
+    const cgSelect = document.querySelector('select[name="cg"]');
+    const deadlineWarning = document.getElementById('deadline-warning');
+    const coverStyleSelect = document.querySelector('select[name="cs"]');
+    const originalStyleSelect = document.querySelector('select[name="os"]');
+    const breakdownContainer = document.getElementById('price-breakdown');
+
+    const uiGroups = {
+        t: {
+            c: [document.getElementById("coverOptions")],
+            o: [document.getElementById("originalOptions")]
+        },
+        ct: {
+            email: [document.getElementById("mailaddress")], x: [document.getElementById("xDM")],
+            discord: [document.getElementById("discordDM")], slack: [document.getElementById("slackDM")]
+        }
+    };
+
+    let lastCalculatedTotal = 0;
