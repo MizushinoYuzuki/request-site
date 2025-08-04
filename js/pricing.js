@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // アニメーション対象の要素をまとめる
     const collapsibleElements = {
-        mvStyle: document.getElementById('mvStyleContainer');
+        mvStyle: document.getElementById('mvStyleContainer'),
         originalCheckbox: document.getElementById('originalOptions-checkbox'),
         chorus: document.getElementById('chorusCountOptions')
     };
