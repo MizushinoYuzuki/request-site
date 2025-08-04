@@ -200,8 +200,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateDependentUI() {
         const selectedType = myTypeSelect.value;
-
-        // ラッパーのアニメーション
         toggleCollapsible(collapsibleElements.cover, selectedType === 'c');
         toggleCollapsible(collapsibleElements.original, selectedType === 'o');
         toggleCollapsible(collapsibleElements.originalCheckbox, selectedType === 'o');
@@ -211,9 +209,11 @@ document.addEventListener("DOMContentLoaded", function () {
         
         const isCoverChorus = (coverStyleSelect.value === 'hg' || coverStyleSelect.value === 'og');
         const isOriginalChorus = (originalStyleSelect.value === 'o-cho');
-        toggleCollapsible(collapsibleElements.chorus, isCoverChorus || isOriginalChorus);
+        const showChorusCount = isCoverChorus || isOriginalChorus;
         
-        if (!isCoverChorus && !isOriginalChorus) {
+        toggleCollapsible(collapsibleElements.chorus, showChorusCount);
+        
+        if (!showChorusCount) {
             const chorusSelect = document.querySelector('select[name="p"]');
             if (chorusSelect) chorusSelect.value = '';
         }
