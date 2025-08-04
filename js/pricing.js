@@ -264,7 +264,7 @@ document.addEventListener("DOMContentLoaded", function () {
             summaryLines.push(`■${item.label}:\n${valueText}`);
         });
         
-        const summary = const summary = `【ご依頼内容のご相談】\n${summaryLines.join('\n\n')}\n---------------------------------\n■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
+        const summary = `【ご依頼内容のご相談】\n${summaryLines.join('\n\n')}\n---------------------------------\n■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
         return summary.trim();
     }
 
