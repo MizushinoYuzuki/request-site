@@ -9,6 +9,7 @@
         <link rel="icon" href="images/icon/icon_white.png" />
         <title>Mizushino</title>
         <link rel="stylesheet" href="css/pricing-style.css" />
+        <link rel="stylesheet" href="css/custom-style.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     </head>
 
@@ -26,8 +27,6 @@
                     <li><a href="#">Pricing</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
-                <!-- <h1>ご依頼について</h1>
-                <p>以下の内容をご確認の上、フォームからご相談ください。</p> -->
             </nav>
         </header>
 
@@ -119,6 +118,7 @@
                                 合唱人数：
                                 <select name="p" required>
                                     <option value="">選択してください</option>
+                                    <option value="1">1人</option>
                                     <option value="2">2人</option>
                                     <option value="3">3人</option>
                                     <option value="4">4人</option>
@@ -145,7 +145,7 @@
                     
                         <fieldset>
                             <legend>追加オプション（該当するものにチェック）</legend>
-                            <div id="originalOptions" style="display: none; margin-bottom: 1.3rem;">
+                            <div id="originalOptions-checkbox" style="display: none; margin-bottom: 1.3rem;">
                                 <label><input type="checkbox" name="opt" value="sb"> 絵コンテからの打ち合わせを希望する</label>
                             </div>
                             <label><input type="checkbox" name="opt" value="hs" /> 立ち絵の髪揺れあり</label><br />
@@ -185,20 +185,16 @@
                 // --- 設定オブジェクト ---
                 const priceConfig = {
                     base: 8000,
-                    cg: { "1": 5000, "2": 20000 },
-                    p: { "2": 2000, "3": 4000, "4": 6000, "5": 8000 },
+                    cg: { "1": 20000, "2": 40000 },
+                    p: { "1": 0, "2": 2000, "3": 4000, "4": 6000, "5": 8000 },
                     d: { "2w": 10000 },
                     os: { "st": 10000, "ly": 20000 },
                     opt: {
-                        hs: { price: 2000 },
-                        nc: { price: 10000 },
-                        ct: { multiplier: 1.5 },
-                        cu: { multiplier: 1.5 },
-                        np: { multiplier: 2 },
-                        bd: { isDiscount: true }
+                        hs: { price: 2000 }, nc: { price: 10000 }, ct: { multiplier: 1.5 },
+                        cu: { multiplier: 1.5 }, np: { multiplier: 2 }, bd: { isDiscount: true }
                     }
                 };
-        
+
                 // --- 要素の取得 ---
                 const form = document.getElementById("requestForm");
                 const allInputs = form.querySelectorAll('select, input[type="checkbox"], textarea');
@@ -214,36 +210,33 @@
                 const uiGroups = {
                     t: {
                         c: [document.getElementById("coverOptions")],
-                        o: [document.getElementById("originalOptions"), document.getElementById("originalOptions-checkbox")]
+                        // originalOptionsは2つあるので、新しいIDを振って両方制御
+                        o: [document.getElementById("originalOptions"), document.getElementById("originalOptions-checkbox")] 
                     },
                     ct: {
-                        email: [document.getElementById("mailaddress")],
-                        x: [document.getElementById("xDM")],
-                        discord: [document.getElementById("discordDM")],
-                        slack: [document.getElementById("slackDM")]
+                        email: [document.getElementById("mailaddress")], x: [document.getElementById("xDM")],
+                        discord: [document.getElementById("discordDM")], slack: [document.getElementById("slackDM")]
                     }
                 };
-        
+
                 let lastCalculatedTotal = 0;
-        
+
                 // --- 関数定義 ---
                 function calculate() {
                     const formData = new FormData(form);
                     let total = priceConfig.base;
                     let multiplier = 1;
-        
+
                     total += priceConfig.cg[formData.get("cg")] || 0;
                     total += priceConfig.d[formData.get("d")] || 0;
                     total += priceConfig.os[formData.get("os")] || 0;
-
+                    
                     const coverStyle = formData.get("cs");
                     const originalStyle = formData.get("os");
-                    
                     if (coverStyle === 'hg' || coverStyle === 'og' || originalStyle === 'o-cho') {
                         total += priceConfig.p[formData.get("p")] || 0;
                     }
-        
-                    // let discount = 0;
+
                     let isDiscountChecked = false;
                     formData.getAll('opt').forEach(value => {
                         const effect = priceConfig.opt[value];
@@ -252,23 +245,21 @@
                         if (effect.multiplier) multiplier *= effect.multiplier;
                         if (effect.isDiscount) isDiscountChecked = true;
                     });
-
-                    // 割引が選択されている場合、割引後の価格が8,000円にならないように調整する
+                    
                     if (isDiscountChecked) {
-                        const discountedTotal = total / 2; // 割引を計算
-                        total = Math.max(discountedTotal, 8000); // 割引後の価格と比べて、大きい方を採用する
+                        const discountedTotal = total / 2;
+                        total = Math.max(discountedTotal, 8000);
                     }
 
-                    // 最終金額を計算する
                     lastCalculatedTotal = Math.round(total * multiplier);
                     totalDisplay.textContent = `🧮 参考料金：¥${lastCalculatedTotal.toLocaleString()}`;
                 }
-        
+
                 function updateUrlFromState() {
                     const params = new URLSearchParams();
                     allInputs.forEach(input => {
                         const name = input.name;
-                        if (!name || input.disabled || input.closest('[style*="display: none;"]')) return;
+                        if (!name || input.disabled || input.closest('[style*="display: none"]')) return;
                         if (input.type === 'checkbox') {
                             if (input.checked) params.append(name, input.value);
                         } else if (input.value) {
@@ -278,13 +269,13 @@
                     const newUrl = `${window.location.pathname}?${params.toString()}`;
                     history.replaceState({}, '', newUrl);
                 }
-        
+
                 function applyStateFromUrl() {
                     const params = new URLSearchParams(window.location.search);
                     params.forEach((value, key) => {
                         const elements = form.elements[key];
                         if (!elements) return;
-        
+
                         if (elements.nodeName === 'FIELDSET' || (elements.length && !elements.tagName)) { 
                             const values = params.getAll(key);
                             Array.from(elements).forEach(el => {
@@ -296,25 +287,23 @@
                     });
                     updateDependentUI();
                 }
-        
+
                 function toggleVisibility(group, selectedKey) {
                     Object.entries(group).forEach(([key, elements]) => {
                         elements.forEach(el => {
-                            el.style.display = (key === selectedKey) ? 'block' : 'none';
+                            if(el) el.style.display = (key === selectedKey) ? 'block' : 'none';
                         });
                     });
                 }
-        
+
                 function updateDependentUI() {
-                    const selectedType = mvTypeSelect.value;
-                    toggleVisibility(uiGroups.t, myTypeSelect.value);
+                    const selectedType = myTypeSelect.value;
+                    toggleVisibility(uiGroups.t, selectedType);
                     toggleVisibility(uiGroups.ct, contactSelect.value);
 
-                    // 依頼内容が「カバー」でない場合、カバースタイルの選択肢をリセット
                     if (selectedType !== 'c') {
                         coverStyleSelect.value = '';
                     }
-                    // 依頼内容が「オリジナル」でない場合、オリジナルスタイルの選択肢をリセット
                     if (selectedType !== 'o') {
                         originalStyleSelect.value = '';
                     }
@@ -322,12 +311,12 @@
                     const isCoverChorus = (coverStyleSelect.value === 'hg' || coverStyleSelect.value === 'og');
                     const isOriginalChorus = (originalStyleSelect.value === 'o-cho');
                     const showChorusCount = isCoverChorus || isOriginalChorus;
-                    
+
                     document.getElementById('chorusCountOptions').style.display = showChorusCount ? 'block' : 'none';
 
                     if (!showChorusCount) {
                         const chorusSelect = document.querySelector('select[name="p"]');
-                        if (chorusSelect) chorusSelect.value = '';
+                        if (chorusSelect) chorusSelect.value = '1';
                     }
 
                     const isExpress = (deliverySelect.value === '2w');
@@ -338,7 +327,7 @@
                         cgSelect.value = '0';
                     }
                 }
-        
+
                 function handleFormChange() {
                     updateDependentUI();
                     calculate();
@@ -348,7 +337,7 @@
                 function copyToClipboard(text, message) {
                     navigator.clipboard.writeText(text).then(() => alert(message)).catch(() => alert("コピーに失敗しました。"));
                 }
-
+                
                 function getFullTextFromValue(name, value) {
                     if (!value) return '(未選択)';
                     const el = document.querySelector(`select[name="${name}"] option[value="${value}"]`);
@@ -361,8 +350,8 @@
                     formData.getAll('opt').forEach(value => {
                         const label = document.querySelector(`input[name="opt"][value="${value}"]`).parentElement.textContent.trim();
                         selectedOptionsText.push(`- ${label}`);
-                });
-
+                    });
+                    
                     let styleDetails = '';
                     const type = formData.get('t');
                     if (type === 'c') {
@@ -371,46 +360,44 @@
                         styleDetails = `  - MVスタイル: ${getFullTextFromValue('os', formData.get('os'))}`;
                     }
 
-                    const isChorus = (formData.get('cs') === 'hg' || formData.get('cs') === 'og' || formData.get('os') === 'chorus');
+                    const isChorus = (formData.get('cs') === 'hg' || formData.get('cs') === 'og' || formData.get('os') === 'o-cho');
                     const chorusCountText = isChorus ? `\n■合唱人数:\n${getFullTextFromValue('p', formData.get('p'))}` : '';
-                   
+
                     const summary = `【ご依頼内容のご相談】
-                        ■お名前:
-                        ${formData.get('pn') || '(未記入)'}
-                        ■ご依頼内容:
-                        ${getFullTextFromValue('t', formData.get('t'))}
-                        ${formData.get('t') === 'c' ? `  - MVスタイル: ${getFullTextFromValue('cs', formData.get('cs'))}` : ''}
-                        ■納期の希望:
-                        ${getFullTextFromValue('d', formData.get('d'))}
-                        ■3DCGの使用:
-                        ${getFullTextFromValue('cg', formData.get('cg'))}
-                        ■追加オプション:
-                        ${selectedOptionsText.length > 0 ? selectedOptionsText.join('\n') : 'なし'}
-                        ■ご希望の連絡手段:
-                        ${getFullTextFromValue('ct', formData.get('ct'))}
-                        ■その他ご要望:
-                        ${formData.get('msg') || '(未記入)'}
-                        ---------------------------------
-                        ■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
+■お名前:
+${formData.get('pn') || '(未記入)'}
+■ご依頼内容:
+${getFullTextFromValue('t', formData.get('t'))}
+${styleDetails}
+■納期の希望:
+${getFullTextFromValue('d', formData.get('d'))}
+■3DCGの使用:
+${getFullTextFromValue('cg', formData.get('cg'))}${chorusCountText}
+■追加オプション:
+${selectedOptionsText.length > 0 ? selectedOptionsText.join('\n') : 'なし'}
+■ご希望の連絡手段:
+${getFullTextFromValue('ct', formData.get('ct'))}
+■その他ご要望:
+${formData.get('msg') || '(未記入)'}
+---------------------------------
+■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
                     return summary.trim();
                 }
                 
                 // --- イベントリスナーと初期化 ---
                 
                 allInputs.forEach(input => input.addEventListener('change', handleFormChange));
-        
+
                 document.getElementById("shareViaEmail").addEventListener('click', () => {
                     const recipientEmail = "mirock.works@gmail.com";
                     const subject = "ご依頼内容のご相談";
                     const body = `参考料金結果になります。\n\n${window.location.href}\n金額: ¥${lastCalculatedTotal.toLocaleString()}\n\n--- ご依頼概要（曲名など）をこちらに書いてください。 ---\n\nご確認よろしくお願いいたします。`;
                     window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                 });
-        
+
                 document.getElementById("shareViaUrl").addEventListener('click', () => copyToClipboard(window.location.href, "このページのURLをコピーしました。"));
-                document.getElementById("shareViaText").addEventListener('click', () => {
-                    const textToCopy = generateFullTextSummary();
-                    copyToClipboard(generateFullTextSummary(), "ご依頼内容をクリップボードにコピーしました。");
-                });
+
+                document.getElementById("shareViaText").addEventListener('click', () => copyToClipboard(generateFullTextSummary(), "ご依頼内容をクリップボードにコピーしました。"));
                 
                 document.getElementById("hamburger").addEventListener("click", function () {
                     this.classList.toggle("active");
@@ -424,16 +411,3 @@
         </main>
     </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
