@@ -119,7 +119,6 @@
                                 合唱人数：
                                 <select name="p" required>
                                     <option value="">選択してください</option>
-                                    <!-- <option value="1">1人</option> -->
                                     <option value="2">2人</option>
                                     <option value="3">3人</option>
                                     <option value="4">4人</option>
@@ -187,12 +186,9 @@
                 const priceConfig = {
                     base: 8000,
                     cg: { "1": 5000, "2": 20000 },
-                    p: { "1": 0, "2": 2000, "3": 4000, "4": 6000, "5": 8000 },
+                    p: { "2": 2000, "3": 4000, "4": 6000, "5": 8000 },
                     d: { "2w": 10000 },
-                    os: {
-                        "st": 10000,
-                        "ly": 20000,
-                    },
+                    os: { "st": 10000, "ly": 20000 },
                     opt: {
                         hs: { price: 2000 },
                         nc: { price: 10000 },
@@ -248,7 +244,7 @@
                     }
         
                     let discount = 0;
-                    let DiscountChecked = false;
+                    let isDiscountChecked = false;
                     formData.getAll('opt').forEach(value => {
                         const effect = priceConfig.opt[value];
                         if (!effect) return;
@@ -321,7 +317,7 @@
 
                     if (!showChorusCount) {
                         const chorusSelect = document.querySelector('select[name="p"]');
-                        if (chorusSelect) chorusSelect.value = '1';
+                        if (chorusSelect) chorusSelect.value = '';
                     }
 
                     const isExpress = (deliverySelect.value === '2w');
@@ -418,6 +414,7 @@
         </main>
     </body>
 </html>
+
 
 
 
