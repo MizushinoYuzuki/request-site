@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const isOriginalChorus = (originalStyleSelect.value === 'o-cho');       
         toggleCollapsible(collapsibleElements.chorus, isCoverChorus || isOriginalChorus);
         
-        if (!isChorusCount && !isOriginalChorus) {
+        if (!isCoverCount && !isOriginalChorus) {
             const chorusSelect = document.querySelector('select[name="p"]');
             if (chorusSelect) chorusSelect.value = '';
         }
