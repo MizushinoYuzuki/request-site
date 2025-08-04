@@ -253,7 +253,10 @@
                         if (!effect) return;
                         if (effect.price) total += effect.price;
                         if (effect.multiplier) multiplier *= effect.multiplier;
-                        if (effect.isDiscount) discount = total / 2;
+                        if (effect.isDiscount) {
+                            const potentialDiscount = total / 2; // 50%の割引
+                            discount = Math.min(potentialDiscount, 8000); // 計算結果を8,000円と比べ、小さい方を割引額とする
+                        }
                     });
         
                     lastCalculatedTotal = Math.round(total * multiplier - discount);
@@ -410,6 +413,7 @@
         </main>
     </body>
 </html>
+
 
 
 
