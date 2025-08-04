@@ -217,8 +217,7 @@ header {
       overflow: hidden;
       height: 0;
       opacity: 0;
-      transition: height 0.3s ease-out, opacity 0.3s ease-out, margin-top 0.3s ease-out;
-      margin-top: 0;
+      transition: height 0.3s ease-out, opacity 0.3s ease-out;
   }
   /* 表示されるときのアニメーション後のスタイル */
   .collapsible.visible {
@@ -386,6 +385,7 @@ header {
     background-color: #fbeae5;
     border-radius: 4px;
 }
+
 
 
 
