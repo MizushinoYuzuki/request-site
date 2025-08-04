@@ -54,3 +54,86 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     let lastCalculatedTotal = 0;
+
+    // --- 関数定義 ---
+    function calculate() {
+        const formData = new FormData(form);
+        const breakdown = {
+            items: [{ text: '基本料金', price: priceConfig.base }],
+            multipliers: [],
+            hasDiscount: false
+        };
+
+        let total = priceConfig.base;
+        let multiplier = 1;
+
+        //各項目の選択値を取得する
+        const cgVal = formData.get("cg");
+        const dVal = formData.get("d");
+        const osVal = formData.get("os");
+        const csVal = formData.get("cs");
+        const pVal = formData.get("p");
+        const options = formData.getAll('opt');
+
+        // 料金と内訳を同時に更新する
+        const addItem = (config, value) => {
+            if (config && config[value]) {
+                const item = config[value];
+                if (item.price) {
+                    total += item.price;
+                    breakdown.item.push({ text: item.text, price: item.price });
+                }
+            }
+        };
+
+        addItem(priceConfig.cg, cgVal);
+        addItem(priceConfig.d, dVal);
+        addItem(priceConfig.os, osVal);
+        
+        if (csVal === 'hg' || csVal === 'og' || osVal === 'o-cho') {
+            addItem(priceConfig.p, pVal);
+        }
+
+        options.forEach(value => {
+            const effect = priceConfig.opt[value];
+            if (!effect) return;
+            if (effect.price) addItem(priceConfig.opt, value);
+            if (effect.multiplier) {
+                multiplier *= effect.multiplier;
+                breakdown.multipliers.push(`${effect.text} (x${effect.multiplier})`);
+            }
+            if (effect.isDiscount) breakdown.hasDiscount = true;
+        });
+
+        let finalTotal = total * multiplier;
+        let discountAmount = 0;
+
+        if (breakdown.hasDiscount) {
+            const discountedTotal = finalTotal / 2;
+            const totalAfterFloor = Math.max(discountedTotal, 8000);
+            discountAmount = finalTotal - totalAfterFloor;
+            finalTotal = totalAfterFloor;
+        }
+
+        lastCalculatedTotal = Math.round(finalTotal);
+        totalDisplay.textContent = `🧮 参考料金：¥${lastCalculatedTotal.toLocaleString()}`;
+
+        // 内訳HTMLを生成して表示する
+        let breakdownHtml = '<ul>';
+        breakdown.items.forEach(item => {
+            breakdownHtml += `<li><span class="item-text">${item.text}</span><span class="item-price">¥${item.price.toLocaleString()}</span></li>`;
+        });
+        breakdownHtml += '</ul>';
+
+         if (breakdown.multipliers.length > 0) {
+            breakdownHtml += `<div class="summary-item">${breakdown.multipliers.join(', ')}</div>`;
+        }
+        if (discountAmount > 0) {
+            breakdownHtml += `<div class="summary-item">${priceConfig.opt.bd.text}: - ¥${Math.round(discountAmount).toLocaleString()}</div>`;
+        }
+
+        // 項目が基本料金のみは内訳を非表示にする
+        const showBreakdown = breakdown.items.length > 1 || breakdown.multipliers.length > 0 || discountAmount > 0;
+        breakdownContainer.style.display = showBreakdown ? 'block' : 'none';
+        breakdownContainer.innerHTML = breakdownHtml;
+    }
