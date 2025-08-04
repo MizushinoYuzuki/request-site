@@ -225,7 +225,7 @@ header {
       /* JavaScriptによって設定された高さに変化する */
       height: var(--element-height);
       opacity: 1;
-      margin-top: 1.2rem;
+      /* margin-top: 1.2rem; */
   }
 
   /* 料金内訳のスタイル */
@@ -387,6 +387,7 @@ header {
     background-color: #fbeae5;
     border-radius: 4px;
 }
+
 
 
 
