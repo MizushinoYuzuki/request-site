@@ -29,6 +29,26 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
+    const summaryMap = [
+        { label: "お名前", name: "pn", placeholder: "(未記入)" },
+        { label: "依頼内容", name: "t" },
+        { label: "MVスタイル", name: "cs", condition: (formData) => formData.get('t') === 'c' },
+        { label: "MVスタイル", name: "os", condition: (formData) => formData.get('t') === 'o' },
+        { label: "納期の希望", name: "d" },
+        { label: "3DCGの使用", name: "cg" },
+        { 
+            label: "合唱人数", name: "p", 
+            condition: (formData) => {
+                const cs = formData.get('cs');
+                const os = formData.get('os');
+                return cs === 'hg' || cs === 'og' || os === 'o-cho';
+            }
+        },
+        { label: "追加オプション", name: "opt", type: 'checkboxGroup' },
+        { label: "ご希望の連絡手段", name: "ct" },
+        { label: "その他ご要望", name: "msg", placeholder: "(未記入)" }
+    ];
+
     // --- 要素の取得 ---
     const form = document.getElementById("requestForm");
     const allInputs = form.querySelectorAll('select, input[type="checkbox"], textarea');
@@ -220,22 +240,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function generateFullTextSummary() {
         const formData = new FormData(form);
-        const selectedOptionsText = [];
-        formData.getAll('opt').forEach(value => {
-            const label = document.querySelector(`input[name="opt"][value="${value}"]`).parentElement.textContent.trim();
-            selectedOptionsText.push(`- ${label}`);
+        const summaryLines = [];
+        summaryMap.forEach(item => {
+            if (item.condition && !item.condition(formData)) return;
+            let valueText;
+            if (item.type === 'checkboxGroup') {
+                const selectedOptions = formData.getAll(item.name);
+                if (selectedOptions.length > 0) {
+                    valueText = selectedOptions.map(value => 
+                        `- ${document.querySelector(`input[name="${item.name}"][value="${value}"]`).parentElement.textContent.trim()}`
+                    ).join('\n');
+                } else {
+                    valueText = 'なし';
+                }
+            } else {
+                const value = formData.get(item.name);
+                valueText = getFullTextFromValue(item.name, value) || item.placeholder || '(未選択)';
+            }
+            summaryLines.push(`■${item.label}:\n${valueText}`);
         });
         
-        let styleDetails = '';
-        const type = formData.get('t');
-        if (type === 'c') {
-            styleDetails = `  - MVスタイル: ${getFullTextFromValue('cs', formData.get('cs'))}`;
-        } else if (type === 'o') {
-            styleDetails = `  - MVスタイル: ${getFullTextFromValue('os', formData.get('os'))}`;
-        }
-
-        const isChorus = (formData.get('cs') === 'hg' || formData.get('cs') === 'og' || formData.get('os') === 'o-cho');
-        const chorusCountText = isChorus ? `\n■合唱人数:\n${getFullTextFromValue('p', formData.get('p'))}` : '';
+        // const isChorus = (formData.get('cs') === 'hg' || formData.get('cs') === 'og' || formData.get('os') === 'o-cho');
+        // const chorusCountText = isChorus ? `\n■合唱人数:\n${getFullTextFromValue('p', formData.get('p'))}` : '';
 
         const summary = `【ご依頼内容のご相談】
             ■お名前:
