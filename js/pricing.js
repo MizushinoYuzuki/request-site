@@ -68,7 +68,11 @@ document.addEventListener("DOMContentLoaded", function () {
         cover: document.getElementById('coverOptions'),
         original: document.getElementById('originalOptions'),
         originalCheckbox: document.getElementById('originalOptions-checkbox'),
-        chorus: document.getElementById('chorusCountOptions')
+        chorus: document.getElementById('chorusCountOptions'),
+        ct: {
+                email: [document.getElementById("mailaddress")], x: [document.getElementById("xDM")],
+                discord: [document.getElementById("discordDM")], slack: [document.getElementById("slackDM")]
+            }
     };
 
     let lastCalculatedTotal = 0;
