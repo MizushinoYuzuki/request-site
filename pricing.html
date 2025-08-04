@@ -253,13 +253,17 @@
                         if (!effect) return;
                         if (effect.price) total += effect.price;
                         if (effect.multiplier) multiplier *= effect.multiplier;
-                        if (effect.isDiscount) {
-                            const potentialDiscount = total / 2; // 50%の割引
-                            discount = Math.min(potentialDiscount, 8000); // 計算結果を8,000円と比べ、小さい方を割引額とする
-                        }
+                        if (effect.isDiscount) isDiscountChecked = true;
                     });
-        
-                    lastCalculatedTotal = Math.round(total * multiplier - discount);
+
+                    // 割引が選択されている場合、割引後の価格が8,000円にならないように調整する
+                    if (isDiscountChecked) {
+                        const discountedTotal = total / 2; // 割引を計算
+                        total = Math.max(discountedTotal, 8000); // 割引後の価格と比べて、大きい方を採用する
+                    }
+
+                    // 最終金額を計算する
+                    lastCalculatedTotal = Math.round(total * multiplier);
                     totalDisplay.textContent = `🧮 参考料金：¥${lastCalculatedTotal.toLocaleString()}`;
                 }
         
@@ -413,6 +417,7 @@
         </main>
     </body>
 </html>
+
 
 
 
