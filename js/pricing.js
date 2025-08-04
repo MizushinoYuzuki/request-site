@@ -65,7 +65,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // アニメーション対象の要素をまとめる
     const collapsibleElements = {
-        mvStyle: document.getElementById('mvStyleContainer'),
+        cover: document.getElementById('coverOptions'),
+        original: document.getElementById('originalOptions'),
         originalCheckbox: document.getElementById('originalOptions-checkbox'),
         chorus: document.getElementById('chorusCountOptions')
     };
@@ -199,19 +200,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateDependentUI() {
         const selectedType = myTypeSelect.value;
-        const isCover = selectedType === 'c';
-        const isOriginal = selectedType === 'o';
 
         // ラッパーのアニメーション
-        toggleCollapsible(collapsibleElements.mvStyle, isCover || isOriginal);
-        toggleCollapsible(collapsibleElements.originalCheckbox, isOriginal);
+        toggleCollapsible(collapsibleElements.cover, selectedType === 'c');
+        toggleCollapsible(collapsibleElements.original, selectedType === 'o');
+        toggleCollapsible(collapsibleElements.originalCheckbox, selectedType === 'o');
 
-        // ラッパーの中身の表示切替（アニメーションなし）
-        document.getElementById('coverOptions').style.display = isCover ? 'block' : 'none';
-        document.getElementById('originalOptions').style.display = isOriginal ? 'block' : 'none';
-
-        if (!isCover) coverStyleSelect.value = '';
-        if (!isOriginal) originalStyleSelect.value = '';
+        if (selectedType !== 'c') coverStyleSelect.value = '';
+        if (selectedType !== 'o') originalStyleSelect.value = '';
         
         const isCoverChorus = (coverStyleSelect.value === 'hg' || coverStyleSelect.value === 'og');
         const isOriginalChorus = (originalStyleSelect.value === 'o-cho');
@@ -219,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
         if (!isCoverChorus && !isOriginalChorus) {
             const chorusSelect = document.querySelector('select[name="p"]');
-            if (chorusSelect) chorusSelect.value = '1';
+            if (chorusSelect) chorusSelect.value = '';
         }
 
         const isExpress = (deliverySelect.value === '2w');
