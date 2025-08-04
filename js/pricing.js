@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const coverStyleSelect = document.querySelector('select[name="cs"]');
     const originalStyleSelect = document.querySelector('select[name="os"]');
     const breakdownContainer = document.getElementById('price-breakdown');
+    const resetButton = document.getElementById('resetButton');
 
     const uiGroups = {
         t: {
@@ -283,6 +284,12 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("hamburger").addEventListener("click", function () {
         this.classList.toggle("active");
         document.getElementById("nav-menu").classList.toggle("show");
+    });
+
+    // リセットボタンのイベントリスナーを追加する
+    resetButton.addEventListener('click', () => {
+        // URLからパラメータを消してページをリロードする
+        window.location.href = window.location.pathname;
     });
 
     applyStateFromUrl();
