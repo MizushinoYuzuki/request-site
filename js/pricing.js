@@ -2,24 +2,50 @@ document.addEventListener("DOMContentLoaded", function () {
     // --- 設定オブジェクト ---
     const priceConfig = {
         base: 8000,
-        cg: { "1": { price: 5000, text: "3DCG一部使用" }, "2": { price: 20000, text: "3DCG全部使用" } },
-        p: { "1": { price: 0, text: "合唱人数(1人)" }, "2": { price: 2000, text: "合唱人数(2人)" }, "3": { price: 4000, text: "合唱人数(3人)" }, "4": { price: 6000, text: "合唱人数(4人)" }, "5": { price: 8000, text: "合唱人数(5人以上)" } },
+        cg: {
+            "1": { price: 5000, text: "3DCG一部使用" },
+            "2": { price: 20000, text: "3DCG全部使用" }
+        },
+        p: {
+            "1": { price: 0, text: "合唱人数(1人)"},
+            "2": { price: 2000, text: "合唱人数(2人)" },
+            "3": { price: 4000, text: "合唱人数(3人)" },
+            "4": { price: 6000, text: "合唱人数(4人)" },
+            "5": { price: 8000, text: "合唱人数(5人以上)" }
+        },
         d: { "2w": { price: 10000, text: "特急納品(2週間以内)" } },
-        os: { "st": { price: 15000, text: "MVスタイル(ストーリー)" }, "ly": { price: 5000, text: "MVスタイル(リリック)" } },
+        os: {
+            "st": { price: 15000, text: "MVスタイル(ストーリー)" },
+            "ly": { price: 5000, text: "MVスタイル(リリック)" }
+        },
         opt: {
-            hs: { price: 2000, text: "立ち絵の髪揺れ" }, nc: { price: 10000, text: "クレジット記載なし" }, sb: { price: 0, text: "絵コンテ打ち合わせ" },
-            ct: { multiplier: 1.5, text: "著作権譲渡" }, cu: { multiplier: 1.5, text: "商用利用" },
-            np: { multiplier: 2, text: "ポートフォリオ掲載不可" }, bd: { isDiscount: true, text: "駆け出しクリエイター応援値引き" }
+            hs: { price: 2000, text: "立ち絵の髪揺れ" },
+            nc: { price: 10000, text: "クレジット記載なし" },
+            sb: { price: 0, text: "絵コンテ打ち合わせ"},
+            ct: { multiplier: 1.5, text: "著作権譲渡" },
+            cu: { multiplier: 1.5, text: "商用利用" },
+            np: { multiplier: 2, text: "ポートフォリオ掲載不可" },
+            bd: { isDiscount: true, text: "駆け出しクリエイター応援値引き" }
         }
     };
 
     const summaryMap = [
-        { label: "お名前", name: "pn", placeholder: "(未記入)" }, { label: "依頼内容", name: "t" },
+        { label: "お名前", name: "pn", placeholder: "(未記入)" },
+        { label: "依頼内容", name: "t" },
         { label: "MVスタイル", name: "cs", condition: (formData) => formData.get('t') === 'c' },
         { label: "MVスタイル", name: "os", condition: (formData) => formData.get('t') === 'o' },
-        { label: "納期の希望", name: "d" }, { label: "3DCGの使用", name: "cg" },
-        { label: "合唱人数", name: "p", condition: (formData) => { const cs = formData.get('cs'); const os = formData.get('os'); return cs === 'hg' || cs === 'og' || os === 'o-cho'; } },
-        { label: "追加オプション", name: "opt", type: 'checkboxGroup' }, { label: "ご希望の連絡手段", name: "ct" },
+        { label: "納期の希望", name: "d" },
+        { label: "3DCGの使用", name: "cg" },
+        { 
+            label: "合唱人数", name: "p", 
+            condition: (formData) => {
+                const cs = formData.get('cs');
+                const os = formData.get('os');
+                return cs === 'hg' || cs === 'og' || os === 'o-cho';
+            }
+        },
+        { label: "追加オプション", name: "opt", type: 'checkboxGroup' },
+        { label: "ご希望の連絡手段", name: "ct" },
         { label: "その他ご要望", name: "msg", placeholder: "(未記入)" }
     ];
 
@@ -35,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const coverStyleSelect = document.querySelector('select[name="cs"]');
     const originalStyleSelect = document.querySelector('select[name="os"]');
     const breakdownContainer = document.getElementById('price-breakdown');
+    const resetButton = document.getElementById('resetButton');
     
     const uiGroups = {
         t: {
@@ -227,16 +254,15 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("nav-menu").classList.toggle("show");
     });
 
-    // ★★★ 1つ目の修正箇所 ★★★
-    document.getElementById('resetButton').addEventListener('click', () => {
+    resetButton.addEventListener('click', () => {
         window.location.href = window.location.pathname;
     });
 
-    // ★★★ 2つ目の修正箇所 ★★★
+    // ★★★ ここから新しいイベントリスナーを追加 ★★★
     form.addEventListener('submit', (event) => {
         const isConfirmed = confirm('この内容で送信します。よろしいですか？');
-        if (!isConfirmed) { // 'isConfirmd' から 'isConfirmed' に修正
-            event.preventDefault();
+        if (!isConfirmed) {
+            event.preventDefault(); // 送信を中止
         }
     });
 
