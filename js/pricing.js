@@ -137,3 +137,18 @@ document.addEventListener("DOMContentLoaded", function () {
         breakdownContainer.style.display = showBreakdown ? 'block' : 'none';
         breakdownContainer.innerHTML = breakdownHtml;
     }
+
+    function updateUrlFromState() {
+        const params = new URLSearchParams();
+        allInputs.forEach(input => {
+            const name = input.name;
+            if (!name || input.disabled || input.closest('[style*="display: none"]')) return;
+            if (input.type === 'checkbox') {
+                if (input.checked) params.append(name, input.value);
+            } else if (input.value) {
+                params.append(name, input.value);
+            }
+        });
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        history.replaceState({}, '', newUrl);
+    }
