@@ -65,14 +65,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // アニメーション対象の要素をまとめる
     const collapsibleElements = {
-        t: {
-            c: [document.getElementById("coverOptions")],
-            o: [document.getElementById("originalOptions")]
-        },
-        ct: {
-            email: [document.getElementById("mailaddress")], x: [document.getElementById("xDM")],
-            discord: [document.getElementById("discordDM")], slack: [document.getElementById("slackDM")]
-        }
+        cover: document.getElementById('coverOptions'),
+        original: document.getElementById('originalOptions'),
+        originalCheckbox: document.getElementById('originalOptions-checkbox'),
+        chorus: document.getElementById('chorusCountOptions')
     };
 
     let lastCalculatedTotal = 0;
@@ -215,7 +211,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const isOriginalChorus = (originalStyleSelect.value === 'o-cho');
         toggleCollapsible(collapsibleElements.chorus, isCoverChorus || isOriginalChorus);
         
-        document.getElementById('chorusCountOptions').style.display = showChorusCount ? 'block' : 'none';
         if (!isCoverChorus && !isOriginalChorus) {
             const chorusSelect = document.querySelector('select[name="p"]');
             if (chorusSelect) chorusSelect.value = '1';
