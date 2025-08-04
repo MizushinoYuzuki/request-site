@@ -116,7 +116,7 @@
                         
                         <div id="chorusCountOptions" style="display: none;">
                             <label>
-                                合唱人数（+1人ごとに+¥2,000）：
+                                合唱人数：
                                 <select name="p" required>
                                     <option value="">選択してください</option>
                                     <!-- <option value="1">1人</option> -->
@@ -189,6 +189,10 @@
                     cg: { "1": 5000, "2": 20000 },
                     p: { "1": 0, "2": 2000, "3": 4000, "4": 6000, "5": 8000 },
                     d: { "2w": 10000 },
+                    os: {
+                        "story": 10000,
+                        "lyric": 20000,
+                    },
                     opt: {
                         hs: { price: 2000 },
                         nc: { price: 10000 },
@@ -234,6 +238,7 @@
         
                     total += priceConfig.cg[formData.get("cg")] || 0;
                     total += priceConfig.d[formData.get("d")] || 0;
+                    total += priceConfig.os[formData.get("os")] || 0;
 
                     const coverStyle = formData.get("cs");
                     const originalStyle = formData.get("os");
@@ -402,5 +407,6 @@
         </main>
     </body>
 </html>
+
 
 
