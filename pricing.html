@@ -56,31 +56,33 @@
                                 <option value="v">動画編集（Premiere Pro）</option>
                             </select>
                         </label>
-                    
-                        <div id="coverOptions" class="collapsible">
-                            <label>
-                                MVスタイル：
-                                <select name="cs">
-                                    <option value="">選択してください</option>
-                                    <option value="h">本家風MV</option>
-                                    <option value="o">完全オリジナルMV</option>
-                                    <option value="hg">本家風合唱MV</option>
-                                    <option value="og">完全オリジナル合唱MV</option>
-                                </select>
-                            </label>
-                        </div>
-
-                        <div id="originalOptions" class="collapsible">
-                            <label>
-                                MVスタイル：
-                                <select name="os">
-                                    <option value="">選択してください</option>
-                                    <option value="sp">シンプル</option>
-                                    <option value="st">ストーリー</option>
-                                    <option value="ly">リリックMV</option>
-                                    <option value="o-cho">合唱</option>
-                                </select>
-                            </label>
+                        
+                        <div id="mvStyleContainer" class="collapsible">
+                            <div id="coverOptions" style="display: none;">
+                                <label>
+                                    MVスタイル：
+                                    <select name="cs">
+                                        <option value="">選択してください</option>
+                                        <option value="h">本家風MV</option>
+                                        <option value="o">完全オリジナルMV</option>
+                                        <option value="hg">本家風合唱MV</option>
+                                        <option value="og">完全オリジナル合唱MV</option>
+                                    </select>
+                                </label>
+                            </div>
+    
+                            <div id="originalOptions" class="collapsible">
+                                <label>
+                                    MVスタイル：
+                                    <select name="os">
+                                        <option value="">選択してください</option>
+                                        <option value="sp">シンプル</option>
+                                        <option value="st">ストーリー</option>
+                                        <option value="ly">リリックMV</option>
+                                        <option value="o-cho">合唱</option>
+                                    </select>
+                                </label>
+                            </div>
                         </div>
                     
                         <label>
@@ -189,6 +191,7 @@
         
     </body>
 </html>
+
 
 
 
