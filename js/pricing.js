@@ -292,6 +292,13 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = window.location.pathname;
     });
 
+    form.addEventListener('submit', (event) => {
+        const isConfirmed = confirm('この内容で送信します。\nよろしいですか?');
+        if (!isConfirmd) {
+            event.preventDefault(); // 送信を中止する
+        }
+    });
+
     applyStateFromUrl();
     calculate();
 });
