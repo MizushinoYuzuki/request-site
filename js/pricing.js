@@ -217,3 +217,43 @@ document.addEventListener("DOMContentLoaded", function () {
         const el = document.querySelector(`select[name="${name}"] option[value="${value}"]`);
         return el ? el.textContent : value;
     }
+
+    function generateFullTextSummary() {
+        const formData = new FormData(form);
+        const selectedOptionsText = [];
+        formData.getAll('opt').forEach(value => {
+            const label = document.querySelector(`input[name="opt"][value="${value}"]`).parentElement.textContent.trim();
+            selectedOptionsText.push(`- ${label}`);
+        });
+        
+        let styleDetails = '';
+        const type = formData.get('t');
+        if (type === 'c') {
+            styleDetails = `  - MVスタイル: ${getFullTextFromValue('cs', formData.get('cs'))}`;
+        } else if (type === 'o') {
+            styleDetails = `  - MVスタイル: ${getFullTextFromValue('os', formData.get('os'))}`;
+        }
+
+        const isChorus = (formData.get('cs') === 'hg' || formData.get('cs') === 'og' || formData.get('os') === 'o-cho');
+        const chorusCountText = isChorus ? `\n■合唱人数:\n${getFullTextFromValue('p', formData.get('p'))}` : '';
+
+        const summary = `【ご依頼内容のご相談】
+            ■お名前:
+            ${formData.get('pn') || '(未記入)'}
+            ■ご依頼内容:
+            ${getFullTextFromValue('t', formData.get('t'))}
+            ${styleDetails}
+            ■納期の希望:
+            ${getFullTextFromValue('d', formData.get('d'))}
+            ■3DCGの使用:
+            ${getFullTextFromValue('cg', formData.get('cg'))}${chorusCountText}
+            ■追加オプション:
+            ${selectedOptionsText.length > 0 ? selectedOptionsText.join('\n') : 'なし'}
+            ■ご希望の連絡手段:
+            ${getFullTextFromValue('ct', formData.get('ct'))}
+            ■その他ご要望:
+            ${formData.get('msg') || '(未記入)'}
+            ---------------------------------
+            ■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
+        return summary.trim();
+    }
