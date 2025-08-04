@@ -63,7 +63,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const breakdownContainer = document.getElementById('price-breakdown');
     const resetButton = document.getElementById('resetButton');
 
-    const uiGroups = {
+    // アニメーション対象の要素をまとめる
+    const collapsibleElements = {
         t: {
             c: [document.getElementById("coverOptions")],
             o: [document.getElementById("originalOptions")]
@@ -191,28 +192,31 @@ document.addEventListener("DOMContentLoaded", function () {
         updateDependentUI();
     }
 
-    function toggleVisibility(group, selectedKey) {
-        Object.entries(group).forEach(([key, elements]) => {
-            elements.forEach(el => {
-                if(el) el.style.display = (key === selectedKey) ? 'block' : 'none';
-            });
-        });
+    function toggleCollapsible(element, show) {
+        if (!element) return;
+        if (show) {
+            element.classList.add('visible');
+            element.style.setProperty('--element-height', `${element.scrollHeight}px`);
+        } else {
+            element.classList.remove('visible');
+        }
     }
 
     function updateDependentUI() {
         const selectedType = myTypeSelect.value;
-        toggleVisibility(uiGroups.t, selectedType);
-        toggleVisibility(uiGroups.ct, contactSelect.value);
+        toggleCollapsible(collapsibleElements.cover, selectedType === 'c');
+        toggleCollapsible(collapsibleElements.original, selectedType === 'o');
+        toggleCollapsible(collapsibleElements.originalCheckbox, selectedType === 'o');
 
         if (selectedType !== 'c') coverStyleSelect.value = '';
         if (selectedType !== 'o') originalStyleSelect.value = '';
         
         const isCoverChorus = (coverStyleSelect.value === 'hg' || coverStyleSelect.value === 'og');
         const isOriginalChorus = (originalStyleSelect.value === 'o-cho');
-        const showChorusCount = isCoverChorus || isOriginalChorus;
-
+        toggleCollapsible(collapsibleElements.chorus, isCoverChorus || isOriginalChorus);
+        
         document.getElementById('chorusCountOptions').style.display = showChorusCount ? 'block' : 'none';
-        if (!showChorusCount) {
+        if (!isCoverChorus && !isOriginalChorus) {
             const chorusSelect = document.querySelector('select[name="p"]');
             if (chorusSelect) chorusSelect.value = '1';
         }
@@ -287,14 +291,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // リセットボタンのイベントリスナーを追加する
-    resetButton.addEventListener('click', () => {
+    document.getElementById('resetButton').addEventListener('click', () => {
         // URLからパラメータを消してページをリロードする
         window.location.href = window.location.pathname;
     });
 
     form.addEventListener('submit', (event) => {
         const isConfirmed = confirm('この内容で送信します。\nよろしいですか?');
-        if (!isConfirmd) {
+        if (!isConfirmed) {
             event.preventDefault(); // 送信を中止する
         }
     });
