@@ -177,3 +177,27 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
+
+    function updateDependentUI() {
+        const selectedType = myTypeSelect.value;
+        toggleVisibility(uiGroups.t, selectedType);
+        toggleVisibility(uiGroups.ct, contactSelect.value);
+
+        if (selectedType !== 'c') coverStyleSelect.value = '';
+        if (selectedType !== 'o') originalStyleSelect.value = '';
+        
+        const isCoverChorus = (coverStyleSelect.value === 'hg' || coverStyleSelect.value === 'og');
+        const isOriginalChorus = (originalStyleSelect.value === 'o-cho');
+        const showChorusCount = isCoverChorus || isOriginalChorus;
+
+        document.getElementById('chorusCountOptions').style.display = showChorusCount ? 'block' : 'none';
+        if (!showChorusCount) {
+            const chorusSelect = document.querySelector('select[name="p"]');
+            if (chorusSelect) chorusSelect.value = '1';
+        }
+
+        const isExpress = (deliverySelect.value === '2w');
+        cgSelect.disabled = isExpress;
+        deadlineWarning.style.display = isExpress ? 'block' : 'none';
+        if (isExpress && cgSelect.value !== '0') cgSelect.value = '0';
+    }
