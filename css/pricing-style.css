@@ -244,6 +244,7 @@ header {
 .share-buttons {
     margin-top: 1.5rem;
     display: flex;
+    justify-content: center;
     gap: 0.75rem;
 }
 
@@ -301,6 +302,7 @@ header {
     background-color: #fbeae5;
     border-radius: 4px;
 }
+
 
 
 
