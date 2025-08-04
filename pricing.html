@@ -185,16 +185,16 @@
                 // --- 設定オブジェクト ---
                 const priceConfig = {
                     base: 8000,
-                    cg: { "1": 20000, "2": 40000 },
+                    cg: { "1": 5000, "2": 20000 },
                     p: { "1": 0, "2": 2000, "3": 4000, "4": 6000, "5": 8000 },
                     d: { "2w": 10000 },
-                    os: { "st": 10000, "ly": 20000 },
+                    os: { "st": 15000, "ly": 5000 },
                     opt: {
                         hs: { price: 2000 }, nc: { price: 10000 }, ct: { multiplier: 1.5 },
                         cu: { multiplier: 1.5 }, np: { multiplier: 2 }, bd: { isDiscount: true }
                     }
                 };
-
+        
                 // --- 要素の取得 ---
                 const form = document.getElementById("requestForm");
                 const allInputs = form.querySelectorAll('select, input[type="checkbox"], textarea');
@@ -210,23 +210,22 @@
                 const uiGroups = {
                     t: {
                         c: [document.getElementById("coverOptions")],
-                        // originalOptionsは2つあるので、新しいIDを振って両方制御
-                        o: [document.getElementById("originalOptions"), document.getElementById("originalOptions-checkbox")] 
+                        o: [document.getElementById("originalOptions")]
                     },
                     ct: {
                         email: [document.getElementById("mailaddress")], x: [document.getElementById("xDM")],
                         discord: [document.getElementById("discordDM")], slack: [document.getElementById("slackDM")]
                     }
                 };
-
+        
                 let lastCalculatedTotal = 0;
-
+        
                 // --- 関数定義 ---
                 function calculate() {
                     const formData = new FormData(form);
                     let total = priceConfig.base;
                     let multiplier = 1;
-
+        
                     total += priceConfig.cg[formData.get("cg")] || 0;
                     total += priceConfig.d[formData.get("d")] || 0;
                     total += priceConfig.os[formData.get("os")] || 0;
@@ -236,7 +235,7 @@
                     if (coverStyle === 'hg' || coverStyle === 'og' || originalStyle === 'o-cho') {
                         total += priceConfig.p[formData.get("p")] || 0;
                     }
-
+        
                     let isDiscountChecked = false;
                     formData.getAll('opt').forEach(value => {
                         const effect = priceConfig.opt[value];
@@ -246,15 +245,16 @@
                         if (effect.isDiscount) isDiscountChecked = true;
                     });
                     
+                    // ★★★ 割引を無効にする条件(!hasConflict)を削除 ★★★
                     if (isDiscountChecked) {
                         const discountedTotal = total / 2;
                         total = Math.max(discountedTotal, 8000);
                     }
-
+        
                     lastCalculatedTotal = Math.round(total * multiplier);
                     totalDisplay.textContent = `🧮 参考料金：¥${lastCalculatedTotal.toLocaleString()}`;
                 }
-
+        
                 function updateUrlFromState() {
                     const params = new URLSearchParams();
                     allInputs.forEach(input => {
@@ -269,13 +269,13 @@
                     const newUrl = `${window.location.pathname}?${params.toString()}`;
                     history.replaceState({}, '', newUrl);
                 }
-
+        
                 function applyStateFromUrl() {
                     const params = new URLSearchParams(window.location.search);
                     params.forEach((value, key) => {
                         const elements = form.elements[key];
                         if (!elements) return;
-
+        
                         if (elements.nodeName === 'FIELDSET' || (elements.length && !elements.tagName)) { 
                             const values = params.getAll(key);
                             Array.from(elements).forEach(el => {
@@ -287,47 +287,48 @@
                     });
                     updateDependentUI();
                 }
-
+        
                 function toggleVisibility(group, selectedKey) {
                     Object.entries(group).forEach(([key, elements]) => {
                         elements.forEach(el => {
-                            if(el) el.style.display = (key === selectedKey) ? 'block' : 'none';
+                            el.style.display = (key === selectedKey) ? 'block' : 'none';
                         });
                     });
                 }
-
+        
+                // ★★★ 割引チェックボックスを無効化するロジックを削除 ★★★
                 function updateDependentUI() {
                     const selectedType = myTypeSelect.value;
                     toggleVisibility(uiGroups.t, selectedType);
                     toggleVisibility(uiGroups.ct, contactSelect.value);
-
+        
                     if (selectedType !== 'c') {
                         coverStyleSelect.value = '';
                     }
                     if (selectedType !== 'o') {
                         originalStyleSelect.value = '';
                     }
-
+        
                     const isCoverChorus = (coverStyleSelect.value === 'hg' || coverStyleSelect.value === 'og');
                     const isOriginalChorus = (originalStyleSelect.value === 'o-cho');
                     const showChorusCount = isCoverChorus || isOriginalChorus;
-
+        
                     document.getElementById('chorusCountOptions').style.display = showChorusCount ? 'block' : 'none';
-
+        
                     if (!showChorusCount) {
                         const chorusSelect = document.querySelector('select[name="p"]');
                         if (chorusSelect) chorusSelect.value = '1';
                     }
-
+        
                     const isExpress = (deliverySelect.value === '2w');
                     cgSelect.disabled = isExpress;
                     deadlineWarning.style.display = isExpress ? 'block' : 'none';
-
+        
                     if (isExpress && cgSelect.value !== '0') {
                         cgSelect.value = '0';
                     }
                 }
-
+        
                 function handleFormChange() {
                     updateDependentUI();
                     calculate();
@@ -359,44 +360,44 @@
                     } else if (type === 'o') {
                         styleDetails = `  - MVスタイル: ${getFullTextFromValue('os', formData.get('os'))}`;
                     }
-
+        
                     const isChorus = (formData.get('cs') === 'hg' || formData.get('cs') === 'og' || formData.get('os') === 'o-cho');
                     const chorusCountText = isChorus ? `\n■合唱人数:\n${getFullTextFromValue('p', formData.get('p'))}` : '';
-
+        
                     const summary = `【ご依頼内容のご相談】
-■お名前:
-${formData.get('pn') || '(未記入)'}
-■ご依頼内容:
-${getFullTextFromValue('t', formData.get('t'))}
-${styleDetails}
-■納期の希望:
-${getFullTextFromValue('d', formData.get('d'))}
-■3DCGの使用:
-${getFullTextFromValue('cg', formData.get('cg'))}${chorusCountText}
-■追加オプション:
-${selectedOptionsText.length > 0 ? selectedOptionsText.join('\n') : 'なし'}
-■ご希望の連絡手段:
-${getFullTextFromValue('ct', formData.get('ct'))}
-■その他ご要望:
-${formData.get('msg') || '(未記入)'}
----------------------------------
-■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
+        ■お名前:
+        ${formData.get('pn') || '(未記入)'}
+        ■ご依頼内容:
+        ${getFullTextFromValue('t', formData.get('t'))}
+        ${styleDetails}
+        ■納期の希望:
+        ${getFullTextFromValue('d', formData.get('d'))}
+        ■3DCGの使用:
+        ${getFullTextFromValue('cg', formData.get('cg'))}${chorusCountText}
+        ■追加オプション:
+        ${selectedOptionsText.length > 0 ? selectedOptionsText.join('\n') : 'なし'}
+        ■ご希望の連絡手段:
+        ${getFullTextFromValue('ct', formData.get('ct'))}
+        ■その他ご要望:
+        ${formData.get('msg') || '(未記入)'}
+        ---------------------------------
+        ■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
                     return summary.trim();
                 }
                 
                 // --- イベントリスナーと初期化 ---
                 
                 allInputs.forEach(input => input.addEventListener('change', handleFormChange));
-
+        
                 document.getElementById("shareViaEmail").addEventListener('click', () => {
                     const recipientEmail = "mirock.works@gmail.com";
                     const subject = "ご依頼内容のご相談";
                     const body = `参考料金結果になります。\n\n${window.location.href}\n金額: ¥${lastCalculatedTotal.toLocaleString()}\n\n--- ご依頼概要（曲名など）をこちらに書いてください。 ---\n\nご確認よろしくお願いいたします。`;
                     window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                 });
-
+        
                 document.getElementById("shareViaUrl").addEventListener('click', () => copyToClipboard(window.location.href, "このページのURLをコピーしました。"));
-
+        
                 document.getElementById("shareViaText").addEventListener('click', () => copyToClipboard(generateFullTextSummary(), "ご依頼内容をクリップボードにコピーしました。"));
                 
                 document.getElementById("hamburger").addEventListener("click", function () {
@@ -411,3 +412,4 @@ ${formData.get('msg') || '(未記入)'}
         </main>
     </body>
 </html>
+
