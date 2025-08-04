@@ -209,11 +209,13 @@ document.addEventListener("DOMContentLoaded", function () {
         
         const isCoverChorus = (coverStyleSelect.value === 'hg' || coverStyleSelect.value === 'og');
         const isOriginalChorus = (originalStyleSelect.value === 'o-cho');
-        toggleCollapsible(collapsibleElements.chorus, isCoverChorus || isOriginalChorus);
+        const showChorusCount = isCoverChorus || isOriginalChorus;
         
-        if (!isCoverChorus && !isOriginalChorus) {
+        toggleCollapsible(collapsibleElements.chorus, showChorusCount);
+        
+        if (!showChorusCount) {
             const chorusSelect = document.querySelector('select[name="p"]');
-            if (chorusSelect) chorusSelect.value = '1';
+            if (chorusSelect) chorusSelect.value = '';
         }
 
         const isExpress = (deliverySelect.value === '2w');
