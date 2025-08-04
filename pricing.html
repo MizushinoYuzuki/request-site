@@ -207,9 +207,6 @@
                         x: [document.getElementById("xDM")],
                         discord: [document.getElementById("discordDM")],
                         slack: [document.getElementById("slackDM")]
-                    },
-                    coverType: {
-                        chorus: [document.getElementById("chorusCountOptions")]
                     }
                 };
         
@@ -286,7 +283,6 @@
                 function updateDependentUI() {
                     toggleVisibility(uiGroups.t, myTypeSelect.value);
                     toggleVisibility(uiGroups.ct, contactSelect.value);
-                    toggleVisibility(uiGroups.coverType, coverTypeSelect.value);
 
                     const isChorus = (mvStyleSelect.value === 'hg' || mvStyleSelect.value === 'og');
                     document.getElementById('chorusCountOptions').style.display = isChorus ? 'block' : 'none';
@@ -379,3 +375,4 @@
         </main>
     </body>
 </html>
+
