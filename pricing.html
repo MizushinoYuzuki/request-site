@@ -243,14 +243,16 @@
                         if (effect.multiplier) multiplier *= effect.multiplier;
                         if (effect.isDiscount) isDiscountChecked = true;
                     });
+
+                    let finalTotal = total * multiplier;
                     
                     // ★★★ 割引を無効にする条件(!hasConflict)を削除 ★★★
                     if (isDiscountChecked) {
-                        const discountedTotal = total / 2;
-                        total = Math.max(discountedTotal, 8000);
+                        const discountedTotal = finaltotal / 2;
+                        finaltotal = Math.max(discountedTotal, 8000);
                     }
         
-                    lastCalculatedTotal = Math.round(total * multiplier);
+                    lastCalculatedTotal = Math.round(finalTotal);
                     totalDisplay.textContent = `🧮 参考料金：¥${lastCalculatedTotal.toLocaleString()}`;
                 }
         
@@ -411,5 +413,6 @@
         </main>
     </body>
 </html>
+
 
 
