@@ -393,7 +393,10 @@
                 });
         
                 document.getElementById("shareViaUrl").addEventListener('click', () => copyToClipboard(window.location.href, "このページのURLをコピーしました。"));
-                document.getElementById("shareViaText").addEventListener('click', () => copyToClipboard(generateFullTextSummary(), "ご依頼内容をクリップボードにコピーしました。"));
+                document.getElementById("shareViaText").addEventListener('click', () => {
+                    const textToCopy = generateFullTextSummary();
+                    copyToClipboard(generateFullTextSummary(), "ご依頼内容をクリップボードにコピーしました。");
+                });
                 
                 document.getElementById("hamburger").addEventListener("click", function () {
                     this.classList.toggle("active");
@@ -407,6 +410,7 @@
         </main>
     </body>
 </html>
+
 
 
 
