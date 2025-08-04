@@ -226,7 +226,7 @@ header {
   /* 表示されるときのアニメーション後のスタイル */
   .collapsible.visible {
       /* JavaScriptによって設定された高さに変化する */
-      height: var(--element-height);
+      /* height: var(--element-height); */
       opacity: 1;
   }
 
@@ -389,6 +389,7 @@ header {
     background-color: #fbeae5;
     border-radius: 4px;
 }
+
 
 
 
