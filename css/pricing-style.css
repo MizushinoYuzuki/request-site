@@ -271,7 +271,7 @@ header {
     transform: scale(0.95);
 }
 
-#shareVialEmail {
+#shareViaEmail {
     background-color: #007bff;
 }
 #shareViaEmail:hover {
@@ -301,6 +301,7 @@ header {
     background-color: #fbeae5;
     border-radius: 4px;
 }
+
 
 
 
