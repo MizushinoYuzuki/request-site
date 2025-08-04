@@ -314,10 +314,9 @@
                     if (selectedType !== 'c') {
                         coverStyleSelect.value = '';
                     }
-
                     // 依頼内容が「オリジナル」でない場合、オリジナルスタイルの選択肢をリセット
                     if (selectedType !== 'o') {
-                        coverStyleSelect.value = '';
+                        originalStyleSelect.value = '';
                     }
 
                     const isCoverChorus = (coverStyleSelect.value === 'hg' || coverStyleSelect.value === 'og');
@@ -425,6 +424,7 @@
         </main>
     </body>
 </html>
+
 
 
 
