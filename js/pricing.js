@@ -264,24 +264,7 @@ document.addEventListener("DOMContentLoaded", function () {
             summaryLines.push(`■${item.label}:\n${valueText}`);
         });
         
-        const summary = `【ご依頼内容のご相談】
-            ■お名前:
-            ${formData.get('pn') || '(未記入)'}
-            ■ご依頼内容:
-            ${getFullTextFromValue('t', formData.get('t'))}
-            ${styleDetails}
-            ■納期の希望:
-            ${getFullTextFromValue('d', formData.get('d'))}
-            ■3DCGの使用:
-            ${getFullTextFromValue('cg', formData.get('cg'))}${chorusCountText}
-            ■追加オプション:
-            ${selectedOptionsText.length > 0 ? selectedOptionsText.join('\n') : 'なし'}
-            ■ご希望の連絡手段:
-            ${getFullTextFromValue('ct', formData.get('ct'))}
-            ■その他ご要望:
-            ${formData.get('msg') || '(未記入)'}
-            ---------------------------------
-            ■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
+        const summary = const summary = `【ご依頼内容のご相談】\n${summaryLines.join('\n\n')}\n---------------------------------\n■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
         return summary.trim();
     }
 
