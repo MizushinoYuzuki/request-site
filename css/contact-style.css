@@ -192,8 +192,9 @@ header {
   background-color: #cfcfcf;
 }
 
-.fa:before {
+i[class*="fa-"]:before {
     display: inline-block;
     text-decoration: none;
 }
+
 
