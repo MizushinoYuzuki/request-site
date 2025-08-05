@@ -170,6 +170,21 @@ header {
   list-style: none;
 }
 
+.social a:before {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.social a {
+  display: inline-block;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.social a:hover {
+  color: #000;
+}
+
 .social li {
   width: 60px;
   height: 60px;
@@ -185,18 +200,3 @@ header {
 .social li:hover {
   background-color: #cfcfcf;
 }
-
-.social a {
-  display: inline-block;
-  text-decoration: none;
-  color: #333;
-  transition: color 0.3s;
-}
-
-.social a:hover {
-  color: #000;
-}
-
-
-
-
