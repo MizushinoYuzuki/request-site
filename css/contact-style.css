@@ -188,6 +188,7 @@ header {
 
 .social a {
   display: inline-block;
+  text-decoration: none;
   color: #333;
   transition: color 0.3s;
 }
@@ -195,6 +196,7 @@ header {
 .social a:hover {
   color: #000;
 }
+
 
 
 
