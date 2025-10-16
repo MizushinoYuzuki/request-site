@@ -187,11 +187,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const isCoverChorus = (coverStyleSelect.value === 'hg' || coverStyleSelect.value === 'og');
         const isOriginalChorus = (originalStyleSelect.value === 'o-cho');
         const showChorusCount = isCoverChorus || isOriginalChorus;
-        document.getElementById('chorusCountOptions').style.display = showChorusCount ? 'block' : 'none';
-        if (!showChorusCount) {
-            const chorusSelect = document.querySelector('select[name="p"]');
-            if (chorusSelect) chorusSelect.value = '1';
-        }
+        const chorusOptionsDiv = document.getElementById('chorusCountOptions');
+        const chorusSelect = document.querySelector('select[name="p"]');
+        
+        chorusOptionsDiv.style.display = showChorusCount ? 'block' : 'none';
+        // 表示されている時だけ必須にする
+        chorusSelect.required = showChorusCount; 
+
+        if (!showChorusCount) {
+            // 非表示になったら選択をリセットする
+            chorusSelect.value = ''; 
+        }
         const isExpress = (deliverySelect.value === '2w');
         cgSelect.disabled = isExpress;
         deadlineWarning.style.display = isExpress ? 'block' : 'none';
