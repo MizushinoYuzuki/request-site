@@ -162,6 +162,36 @@ header {
   color: #444;
 }
 
+/* --- 受付状況 --- */
+.availability-status {
+    padding: 1.5em;
+    margin: 2em auto;
+    background-color: #f4f7f9;
+    border: 1px solid #e0e6c;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 500px;
+}
+
+.availability-status h3 {
+    margin-top: 0;
+    margin-bottom: 1em;
+    font-size: 1.2em;
+}
+
+/* --- リストのスタイル --- */
+.availability-status ul {
+    list-style: none;
+    padding: 0;
+    margin:0 ;
+}
+
+.availability-status li {
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 0.25em 0;
+}
+
 /* --- SNSリンクエリア --- */
 .social ul {
   display: flex;
@@ -196,5 +226,6 @@ i[class*="fa-"]:before {
     display: inline-block;
     text-decoration: none;
 }
+
 
 
