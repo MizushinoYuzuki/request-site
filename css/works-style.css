@@ -78,7 +78,7 @@ header {
 
 /* アニメーション */
 .hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px -5px);
+  transform: translateY(10px) rotate(45deg);
 }
 
 .hamburger.active span:nth-child(2) {
@@ -86,7 +86,7 @@ header {
 }
 
 .hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px -5px);
+  transform: translateY(-10px) rotate(-45deg);
 }
 
 /* レスポンシブ */
@@ -210,3 +210,4 @@ header {
     grid-template-columns: 1fr;
   }
 }
+
