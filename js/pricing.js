@@ -62,6 +62,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const originalStyleSelect = document.querySelector('select[name="os"]');
     const breakdownContainer = document.getElementById('price-breakdown');
     const resetButton = document.getElementById('resetButton');
+    const revisionInfo = document.getElementById('revision-info');
+    const revisionText = document.getElementById('revision-text');
     
     const uiGroups = {
         t: {
@@ -202,6 +204,25 @@ document.addEventListener("DOMContentLoaded", function () {
         cgSelect.disabled = isExpress;
         deadlineWarning.style.display = isExpress ? 'block' : 'none';
         if (isExpress && cgSelect.value !== '0') { cgSelect.value = '0'; }
+
+        if (revisionInfo && revisionText) {
+            const mvTypes = ['c', 'o'];
+            const pvTypes = ['3d', 'mg', 'v'];
+
+            if (mvTypes.includes(selectedType)) {
+                revisionInfo.style.display = 'block';
+                revisionText.textContent = '各ビデオコンテで2回まで無料で修正対応';
+                revisionInfo.classList.remove('is-pv');
+                revisionInfo.classList.add('is-mv');
+            } else if (pvTypes.includes(selectedType)) {
+                revisionInfo.style.display = 'block';
+                revisionText.textContent = '要相談（擦り合わせた後、回数決定）';
+                revisionInfo.classList.remove('is-mv');
+                revisionInfo.classList.add('is-pv');
+            } else {
+                revisionInfo.style.display = 'none';
+            }
+        }
     }
 
     function handleFormChange() {
