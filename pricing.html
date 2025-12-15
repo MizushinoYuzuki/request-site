@@ -35,6 +35,26 @@
                 <ul>
                 <li>基本料金：¥8,000</li>
                 </ul>
+
+                <div class="notes-container">
+                    <h3>注意事項</h3>
+                    <ul class="notes-list">
+                        <li>
+                            <strong>キャンセル料について</strong>
+                            <ul>
+                                <li>制作着手前：<span class="highlight-blue">無料</span></li>
+                                <li>素材共有後・制作着手後：依頼料金の<span class="highlight-red">50%</span></li>
+                                <li>ビデオコンテ提出後：依頼料金の<span class="highlight-red">100%</span></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>構成決定後の変更について</strong>
+                            <ul>
+                                <li>ビデオコンテ提出し、構成が決定した後の大幅な変更：<br>依頼料金の<span class="highlight-red">80%を追加で請求いたします。</span></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </section>
 
             <section class="form">
@@ -56,6 +76,11 @@
                                 <option value="v">動画編集（Premiere Pro）</option>
                             </select>
                         </label>
+
+                        <div id="revision-info" class="revision-info" style="display: none;">
+                            <span class="rivision-label">無料修正回数：</span>
+                            <span id="revision-text"></span>
+                        </div>
                     
                         <div id="coverOptions" style="display: none;">
                             <label>
@@ -189,5 +214,6 @@
         
     </body>
 </html>
+
 
 
