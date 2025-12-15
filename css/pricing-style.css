@@ -149,6 +149,77 @@ header {
     margin-bottom: 1rem;
     color: #087f5b;
   }
+
+  /* --- 注意事項エリアのスタイル --- */
+.notes-container {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: #f9f9f9; /* 薄いグレー背景 */
+    border-radius: 8px;
+    text-align: left;
+    border: 1px solid #eee;
+}
+
+.notes-container h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.5rem;
+}
+
+.notes-list ul {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    list-style-type: disc;
+    color: #555;
+}
+
+/* 強調表示（赤・青） */
+.highlight-red {
+    color: #e74c3c;
+    font-weight: bold;
+}
+.highlight-blue {
+    color: #3498db;
+    font-weight: bold;
+}
+
+/* --- 無料修正回数エリアのスタイル --- */
+.revision-info {
+    margin: 10px 0 20px 0;
+    padding: 15px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease;
+}
+
+.revision-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* MV選択時の色（例：青系） */
+.revision-info.is-mv {
+    background-color: #e8f4fd;
+    border-left: 5px solid #3498db;
+    color: #2c3e50;
+}
+
+/* PV選択時の色（例：オレンジ系） */
+.revision-info.is-pv {
+    background-color: #fdf2e9;
+    border-left: 5px solid #e67e22;
+    color: #2c3e50;
+}
+
+/* ふわっと表示させるアニメーション */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
   
   .pricing ul {
     list-style: none;
@@ -394,6 +465,7 @@ header {
     background-color: #fbeae5;
     border-radius: 4px;
 }
+
 
 
 
