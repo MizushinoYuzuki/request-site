@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
         base: 8000,
         cg: {
             "1": { price: 5000, text: "3DCG一部使用" },
-            "2": { price: 20000, text: "3DCG全部使用" }
+            "2": { price: 40000, text: "3DCG全部使用" }
         },
         p: {
             "1": { price: 0, text: "合唱人数(1人)"},
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "4": { price: 6000, text: "合唱人数(4人)" },
             "5": { price: 8000, text: "合唱人数(5人以上)" }
         },
-        d: { "2w": { price: 10000, text: "特急納品(2週間以内)" } },
+        d: { "2w": { price: 20000, text: "特急納品(2週間以内)" } },
         os: {
             "st": { price: 15000, text: "MVスタイル(ストーリー)" },
             "ly": { price: 5000, text: "MVスタイル(リリック)" }
