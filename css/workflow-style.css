@@ -106,6 +106,8 @@ header {
     box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
     /* align-items: center; */
 
+    z-index: 100;
+
     transform: translateY(100%);
     transition: transform 0.3s ease-out, visibility 0.3s;
     visibility: hidden;
@@ -260,7 +262,7 @@ header {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-@media (mid-width: 700px) {
+@media (min-width: 700px) {
     .timeline::before {
         left: 50%;
         transform: translateX(-50%);
@@ -288,4 +290,5 @@ header {
         padding-left: 40px;
         text-align: left;
     }
+
 }
