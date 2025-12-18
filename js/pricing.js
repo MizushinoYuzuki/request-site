@@ -225,13 +225,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+
+        toast.className = "show";
+
+        setTimeout(function(){
+            toast.className = toast.className.replace("show", "");
+        }, 3000);
+    }
+
     function handleFormChange() {
         updateDependentUI();
         calculate();
         updateUrlFromState();
     }
     
-    function copyToClipboard(text, message) { navigator.clipboard.writeText(text).then(() => alert(message)).catch(() => alert("コピーに失敗しました。")); }
+    function copyToClipboard(text, message) {
+        navigator.clipboard.writeText(text)
+            .then(() => showToast(message))
+            .catch(() => showToast("コピーに失敗しました。")); }
     
     function getFullTextFromValue(name, value) {
         if (!value) return null;
