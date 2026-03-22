@@ -145,6 +145,9 @@ document.addEventListener("DOMContentLoaded", function () {
         breakdownHtml += `<div class="summary-item">消費税（10%）: ¥${taxAmount.toLocaleString()}</div>`;
 
         const showBreakdown = breakdown.items.length > 1 || breakdown.multipliers.length > 0 || discountAmount > 0 || taxAmount > 0;
+
+        breakdownContainer.style.display = showBreakdown ? 'block' : 'none';
+        breakdownContainer.innerHTML     = breakdownHTML;
     }
 
     function updateUrlFromState() {
