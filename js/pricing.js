@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
         opt: {
             hs: { price: 2000, text: "立ち絵の髪揺れ" },
             nc: { price: 10000, text: "クレジット記載なし" },
-            sb: { price: 0, text: "絵コンテ打ち合わせ"},
+            sb: { price: 4000, text: "絵コンテ打ち合わせ"},
             ct: { multiplier: 1.5, text: "著作権譲渡" },
             cu: { multiplier: 1.5, text: "商用利用" },
             np: { multiplier: 2, text: "ポートフォリオ掲載不可" },
