@@ -121,8 +121,13 @@ document.addEventListener("DOMContentLoaded", function () {
             discountAmount = finalTotal - totalAfterFloor;
             finalTotal = totalAfterFloor;
         }
-        lastCalculatedTotal = Math.round(finalTotal);
-        totalDisplay.textContent = `🧮 参考料金：¥${lastCalculatedTotal.toLocaleString()}`;
+
+        const subTotal = Math.round(finalTotal);
+        const taxRate = 0.10;
+        const taxAmount = Math.floor(subTotal * taxRate);
+        
+        lastCalculatedTotal = subTotal + taxAmount;
+        totalDisplay.textContent = `🧮 参考料金：¥${lastCalculatedTotal.toLocaleString()}（税込）`;
         
         let breakdownHtml = '<ul>';
         breakdown.items.forEach(item => {
@@ -135,9 +140,11 @@ document.addEventListener("DOMContentLoaded", function () {
         if (discountAmount > 0) {
             breakdownHtml += `<div class="summary-item">${priceConfig.opt.bd.text}: - ¥${Math.round(discountAmount).toLocaleString()}</div>`;
         }
-        const showBreakdown = breakdown.items.length > 1 || breakdown.multipliers.length > 0 || discountAmount > 0;
-        breakdownContainer.style.display = showBreakdown ? 'block' : 'none';
-        breakdownContainer.innerHTML = breakdownHtml;
+        
+        breakdownHtml += `<div class="summary-item" style="margin-top: 8px; border-top: 1px dashed #ccc; padding-top: 8px;">小計: ¥${subTotal.toLocaleString()}</div>`;
+        breakdownHtml += `<div class="summary-item">消費税（10%）: ¥${taxAmount.toLocaleString()}</div>`;
+
+        const showBreakdown = breakdown.items.length > 1 || breakdown.multipliers.length > 0 || discountAmount > 0 || taxAmount > 0;
     }
 
     function updateUrlFromState() {
@@ -272,7 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             summaryLines.push(`■${item.label}:\n${valueText}`);
         });
-        const summary = `【ご依頼内容のご相談】\n${summaryLines.join('\n\n')}\n---------------------------------\n■参考料金: ¥${lastCalculatedTotal.toLocaleString()}`;
+        const summary = `【ご依頼内容のご相談】\n${summaryLines.join('\n\n')}\n---------------------------------\n■参考料金: ¥${lastCalculatedTotal.toLocaleString()}（税込）`;
         return summary.trim();
     }
     
@@ -283,7 +290,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("shareViaEmail").addEventListener('click', () => {
         const recipientEmail = "mirock.works@gmail.com";
         const subject = "ご依頼内容のご相談";
-        const body = `参考料金結果になります。\n\n${window.location.href}\n金額: ¥${lastCalculatedTotal.toLocaleString()}\n\n--- ご依頼概要（曲名など）をこちらに書いてください。 ---\n\nご確認よろしくお願いいたします。`;
+        const body = `参考料金結果になります。\n\n${window.location.href}\n金額: ¥${lastCalculatedTotal.toLocaleString()}（税込）\n\n--- ご依頼概要（曲名など）をこちらに書いてください。 ---\n\nご確認よろしくお願いいたします。`;
         window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     });
 
