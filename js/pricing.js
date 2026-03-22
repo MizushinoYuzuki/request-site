@@ -80,76 +80,79 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // --- 関数定義 ---
     function calculate() {
-        const formData = new FormData(form);
-        const breakdown = { items: [{ text: '基本料金', price: priceConfig.base }], multipliers: [], hasDiscount: false };
-        let total = priceConfig.base;
-        let multiplier = 1;
-        const addItem = (config, value) => {
-            if (config && config[value]) {
-                const item = config[value];
-                if (typeof item.price === 'number') {
-                    total += item.price;
-                    breakdown.items.push({ text: item.text, price: item.price });
-                }
-            }
-        };
-        addItem(priceConfig.cg, formData.get("cg"));
-        addItem(priceConfig.d, formData.get("d"));
-        addItem(priceConfig.os, formData.get("os"));
-        const coverStyle = formData.get("cs");
-        const originalStyle = formData.get("os");
-        if (coverStyle === 'hg' || coverStyle === 'og' || originalStyle === 'o-cho') {
-            addItem(priceConfig.p, formData.get("p"));
-        }
-        formData.getAll('opt').forEach(value => {
-            const effect = priceConfig.opt[value];
-            if (!effect) return;
-            addItem(priceConfig.opt, value);
-            if (effect.multiplier) {
-                multiplier *= effect.multiplier;
-                breakdown.multipliers.push(`${effect.text} (x${effect.multiplier})`);
-            }
-            if (effect.isDiscount) {
-                breakdown.hasDiscount = true;
-            }
-        });
-        let finalTotal = total * multiplier;
-        let discountAmount = 0;
-        if (breakdown.hasDiscount) {
-            const discountedTotal = finalTotal / 2;
-            const totalAfterFloor = Math.max(discountedTotal, 8000);
-            discountAmount = finalTotal - totalAfterFloor;
-            finalTotal = totalAfterFloor;
-        }
+        const formData = new FormData(form);
+        const breakdown = { items: [{ text: '基本料金', price: priceConfig.base }], multipliers: [], hasDiscount: false };
+        let total = priceConfig.base;
+        let multiplier = 1;
+        const addItem = (config, value) => {
+            if (config && config[value]) {
+                const item = config[value];
+                if (typeof item.price === 'number') {
+                    total += item.price;
+                    breakdown.items.push({ text: item.text, price: item.price });
+                }
+            }
+        };
+        addItem(priceConfig.cg, formData.get("cg"));
+        addItem(priceConfig.d, formData.get("d"));
+        addItem(priceConfig.os, formData.get("os"));
+        const coverStyle = formData.get("cs");
+        const originalStyle = formData.get("os");
+        if (coverStyle === 'hg' || coverStyle === 'og' || originalStyle === 'o-cho') {
+            addItem(priceConfig.p, formData.get("p"));
+        }
+        formData.getAll('opt').forEach(value => {
+            const effect = priceConfig.opt[value];
+            if (!effect) return;
+            addItem(priceConfig.opt, value);
+            if (effect.multiplier) {
+                multiplier *= effect.multiplier;
+                breakdown.multipliers.push(`${effect.text} (x${effect.multiplier})`);
+            }
+            if (effect.isDiscount) {
+                breakdown.hasDiscount = true;
+            }
+        });
+        let finalTotal = total * multiplier;
+        let discountAmount = 0;
+        if (breakdown.hasDiscount) {
+            const discountedTotal = finalTotal / 2;
+            const totalAfterFloor = Math.max(discountedTotal, 8000);
+            discountAmount = finalTotal - totalAfterFloor;
+            finalTotal = totalAfterFloor;
+        }
 
-        const subTotal = Math.round(finalTotal);
-        const taxRate = 0.10;
-        const taxAmount = Math.floor(subTotal * taxRate);
-        
-        lastCalculatedTotal = subTotal + taxAmount;
-        totalDisplay.textContent = `🧮 参考料金：¥${lastCalculatedTotal.toLocaleString()}（税込）`;
-        
-        let breakdownHtml = '<ul>';
-        breakdown.items.forEach(item => {
-            breakdownHtml += `<li><span class="item-text">${item.text}</span><span class="item-price">¥${item.price.toLocaleString()}</span></li>`;
-        });
-        breakdownHtml += '</ul>';
-        if (breakdown.multipliers.length > 0) {
-            breakdownHtml += `<div class="summary-item">${breakdown.multipliers.join(', ')}</div>`;
-        }
-        if (discountAmount > 0) {
-            breakdownHtml += `<div class="summary-item">${priceConfig.opt.bd.text}: - ¥${Math.round(discountAmount).toLocaleString()}</div>`;
-        }
-        
-        breakdownHtml += `<div class="summary-item" style="margin-top: 8px; border-top: 1px dashed #ccc; padding-top: 8px;">小計: ¥${subTotal.toLocaleString()}</div>`;
-        breakdownHtml += `<div class="summary-item">消費税（10%）: ¥${taxAmount.toLocaleString()}</div>`;
+        const subTotal = Math.round(finalTotal);
+        const taxRate = 0.10;
+        const taxAmount = Math.floor(subTotal * taxRate);
+        
+        lastCalculatedTotal = subTotal + taxAmount;
+        totalDisplay.textContent = `🧮 参考料金：¥${lastCalculatedTotal.toLocaleString()}（税込）`;
+        
+        let breakdownHtml = '<ul>';
+        breakdown.items.forEach(item => {
+            breakdownHtml += `<li><span class="item-text">${item.text}</span><span class="item-price">¥${item.price.toLocaleString()}</span></li>`;
+        });
+        breakdownHtml += '</ul>';
+        if (breakdown.multipliers.length > 0) {
+            breakdownHtml += `<div class="summary-item">${breakdown.multipliers.join(', ')}</div>`;
+        }
+        if (discountAmount > 0) {
+            breakdownHtml += `<div class="summary-item">${priceConfig.opt.bd.text}: - ¥${Math.round(discountAmount).toLocaleString()}</div>`;
+        }
+        
+        breakdownHtml += `<div class="summary-item" style="margin-top: 8px; border-top: 1px dashed #ccc; padding-top: 8px;">小計: ¥${subTotal.toLocaleString()}</div>`;
+        breakdownHtml += `<div class="summary-item">消費税（10%）: ¥${taxAmount.toLocaleString()}</div>`;
 
-        const showBreakdown = breakdown.items.length > 1 || breakdown.multipliers.length > 0 || discountAmount > 0 || taxAmount > 0;
-
-        breakdownContainer.style.display = showBreakdown ? 'block' : 'none';
-        breakdownContainer.innerHTML     = breakdownHTML;
-    }
-
+        const showBreakdown = breakdown.items.length > 1 || breakdown.multipliers.length > 0 || discountAmount > 0 || taxAmount > 0;
+        
+        // ★エラーが起きないよう確実にHTMLへ書き込む
+        if (breakdownContainer) {
+            breakdownContainer.style.display = showBreakdown ? 'block' : 'none';
+            breakdownContainer.innerHTML = breakdownHtml;
+        }
+    }
+    
     function updateUrlFromState() {
         const params = new URLSearchParams();
         allInputs.forEach(input => {
