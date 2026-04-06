@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let finalTotal = total * multiplier;
         let discountAmount = 0;
         if (breakdown.hasDiscount) {
-            const discountedTotal = finalTotal / 2;
+            const discountedTotal = finalTotal / 1.3;
             const totalAfterFloor = Math.max(discountedTotal, 8000);
             discountAmount = finalTotal - totalAfterFloor;
             finalTotal = totalAfterFloor;
