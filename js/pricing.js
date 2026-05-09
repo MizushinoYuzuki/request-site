@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
             o: [document.getElementById("originalOptions"), document.getElementById("originalOptions-checkbox")]
         },
         ct: {
-            email: [document.getElementById("mailaddress")], x: [document.getElementById("xDM")],
+            email: [document.getElementById("mailaddress")],
             discord: [document.getElementById("discordDM")], slack: [document.getElementById("slackDM")]
         }
     };
