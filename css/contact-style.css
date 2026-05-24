@@ -185,6 +185,13 @@ header {
     font-size: 1.2em;
 }
 
+.status-note {
+    font-size: 0.85em;
+    color: #666;
+    margin-top: -0.5em;
+    margin-bottom: 1em;
+}
+
 /* --- リストのスタイル --- */
 .availability-status ul {
     list-style: none;
