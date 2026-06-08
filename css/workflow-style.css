@@ -292,3 +292,17 @@ header {
     }
 
 }
+
+/* --- フッター (コピーライト) --- */
+footer {
+    text-align: center;
+    padding: 2rem 0 1rem; /* 上に少し余白を取り、下は控えめに */
+    background-color: transparent; /* 背景に馴染ませる */
+    color: #888; /* 本文より少し薄いグレーにして控えめに */
+}
+
+footer small {
+    font-size: 0.85rem;
+    font-family: 'Josefin Sans', sans-serif; /* 英字を綺麗に見せる */
+    letter-spacing: 0.05em; /* 少し字間を空けてスタイリッシュに */
+}
