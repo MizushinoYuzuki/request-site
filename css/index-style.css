@@ -167,4 +167,17 @@ header {
   color: #111;
 }
 
+/* --- フッター --- */
+footer {
+  text-align:        center;
+  padding:           2rem 0 1rem;
+  background-color:  transparent;
+  color:             #888;
+}
+
+footer small {
+  font-size:      0.85rem;
+  font-family:    'Josefin Sans', sans-serif;
+  letter-spacing: 0.05em;
+}
 
