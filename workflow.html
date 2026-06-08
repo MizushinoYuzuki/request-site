@@ -97,7 +97,13 @@
             </section>
         </main>
 
+        <footer>
+            <p><small>&copy; 2025 - <span id="currentYear"></span> mzsn. All Rights Reserved.</small></p>
+        </footer>
+
         <script>
+            document.getElementById("currentYear").textContent = new Date().getFullYear();
+            
             document.addEventListener("DOMContentLoaded", function () {
                 const hamburger = document.getElementById("hamburger");
                 const navMenu = document.getElementById("nav-menu");
