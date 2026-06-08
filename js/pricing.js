@@ -1,3 +1,5 @@
+document.getElementById("currentYear").textContent = new Date().getFullYear();
+
 document.addEventListener("DOMContentLoaded", function () {
     // --- 設定オブジェクト ---
     const priceConfig = {
