@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const priceConfig = {
         base: 8000,
         cg: {
-            "1": { price: 5000, text: "3DCG一部使用" },
-            "2": { price: 40000, text: "3DCG全部使用" }
+            "1": { price: 5000, text: "3DCGワンポイント演出" },
+            "2": { price: 40000, text: "3DCG空間演出" }
         },
         p: {
             "1": { price: 0, text: "合唱人数(1人)"},
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "4": { price: 6000, text: "合唱人数(4人)" },
             "5": { price: 8000, text: "合唱人数(5人以上)" }
         },
-        d: { "2w": { price: 20000, text: "特急納品(2週間以内)" } },
+        d: { "2w": { price: 20000, text: "特急対応(2週間以内)" } },
         os: {
             "st": { price: 15000, text: "MVスタイル(ストーリー)" },
             "ly": { price: 5000, text: "MVスタイル(リリック)" }
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         { label: "追加オプション", name: "opt", type: 'checkboxGroup' },
         { label: "ご希望の連絡手段", name: "ct" },
-        { label: "その他ご要望", name: "msg", placeholder: "(未記入)" }
+        { label: "備考", name: "msg", placeholder: "(未記入)" }
     ];
 
     // --- 要素の取得 ---
@@ -317,7 +317,6 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = window.location.pathname;
     });
 
-    // ★★★ ここから新しいイベントリスナーを追加 ★★★
     form.addEventListener('submit', (event) => {
         const isConfirmed = confirm('この内容で送信します。よろしいですか？');
         if (!isConfirmed) {
