@@ -144,6 +144,30 @@ header {
   margin-bottom: 1rem;
 }
 
+.icon-link {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-link .main-icon {
+  transition: opacity 0.3s ease;
+}
+
+.icon-link .hover-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.icon-link:hover .normal-icon {
+  opacity: 0;
+}
+
+.icon-link:hover .hover-icon {
+  opacity: 1;
+}
+
 /* --- テキスト部分 --- */
 .name {
   font-size: 1.8rem;
